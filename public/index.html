@@ -1,0 +1,53 @@
+<html>
+<head>
+<title>Slashman Virtual Dungeon</title>
+<script src = "js/virtualDungeon-min.js"></script>
+<script src = "js/adapter.js"></script>
+<link rel="stylesheet" type="text/css" href="virtualDungeon.css">
+</head>
+<body onload = "bootstrap();">
+<section id = "newGame">
+	<table>
+		<tr>
+			<td>
+				Party Size
+			</td>
+			<td>
+				<input type = "text" id = "txtPartySize" value="4">
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Dungeon Size
+			</td>
+			<td>
+				<input type = "text" id = "txtDungeonW" value="5"> x
+				<input type = "text" id = "txtDungeonH" value="5">
+			</td>
+		</tr>
+		<tr>
+			<td>
+			</td>
+			<td>
+				<button id = "btnStartGame">Start Game</button>
+			</td>
+		</tr>
+	</table>
+</section>
+<canvas id = "mapCanvas" width="250" height = "250"></canvas>
+<section id = "movementButtons">
+	<button id = "btnMoveNorth">North</button>
+	<button id = "btnMoveSouth">South</button>
+	<button id = "btnMoveWest">West</button>
+	<button id = "btnMoveEast">East</button>
+</section>
+<section id = "roomDescription">
+</section>
+<section id = "roomEnemies">
+</section>
+<section id = "roomItems">
+</section>
+<section id = "useItems">
+</section>
+</body>
+</html>
