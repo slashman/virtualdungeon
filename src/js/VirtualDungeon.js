@@ -28,6 +28,7 @@ var VirtualDungeon = {
 	},
 	move: function(dx, dy){
 		Party.move(dx, dy);
+		UI.updateRoomData(Party.getCurrentRoom());
 	}
 };
 

@@ -6,6 +6,12 @@ function Room(level, features){
 	this.description = null;
 	this.x = null;
 	this.y = null;
+	this.corridors = {
+		north: null,
+		south: null,
+		west: null,
+		east: null
+	}
 	this.init(level, features);
 }
 
