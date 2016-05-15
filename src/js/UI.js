@@ -13,16 +13,36 @@ var UI = {
 	update: function(){
 		var ctx = this.mapCanvasCtx;
 		var level = Party.level;
-		var scale = 50;
-		var size = 50;
+		var blockSize = 20;
+		var size = blockSize * 3;
+		var scale = 40;
 		for (var i = 0; i < level.rooms.length; i++){
 			var room = level.rooms[i];
+			// Base white room
+			ctx.fillStyle = "#FFFFFF";
+			ctx.fillRect(room.x * scale, room.y * scale, size, size);
+
+			// Fill the 4 fixed blocks with blackness
+			ctx.fillStyle = "#000000";
+			ctx.fillRect(room.x * scale, room.y * scale, blockSize, blockSize);
+			ctx.fillRect(room.x * scale, room.y * scale + 2 * blockSize, blockSize, blockSize);
+			ctx.fillRect(room.x * scale + 2 * blockSize, room.y * scale, blockSize, blockSize);
+			ctx.fillRect(room.x * scale + 2 * blockSize, room.y * scale + 2 * blockSize, blockSize, blockSize);
+			// Now, fill the corridors
+			if (!room.corridors.north)
+				ctx.fillRect(room.x * scale + blockSize, room.y * scale, blockSize, blockSize);
+			if (!room.corridors.south)
+				ctx.fillRect(room.x * scale + blockSize, room.y * scale + 2 * blockSize, blockSize, blockSize);
+			if (!room.corridors.west)
+				ctx.fillRect(room.x * scale, room.y * scale + blockSize, blockSize, blockSize);
+			if (!room.corridors.east)
+				ctx.fillRect(room.x * scale + 2 * blockSize, room.y * scale + blockSize, blockSize, blockSize);
+
+			// Center block
 			if (Party.location.x == room.x && Party.location.y == room.y){
 				ctx.fillStyle = "#FF0000";
-			} else {
-				ctx.fillStyle = "#00FF00";
+				ctx.fillRect(room.x * scale + blockSize, room.y * scale + blockSize, blockSize, blockSize);
 			}
-			ctx.fillRect(room.x * scale, room.y * scale, size, size);
 		}
 		var sUI = this;
 		window.requestAnimationFrame(function(){
