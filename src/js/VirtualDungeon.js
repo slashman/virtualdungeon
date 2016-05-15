@@ -17,7 +17,8 @@ var VirtualDungeon = {
 			w: config.dungeonSize.w,
 			h: config.dungeonSize.h,
 			depth: 1,
-			startingLocation: Party.location
+			startingLocation: Party.location,
+			roomDensity: config.roomDensity
 		});
 		Party.setLevel(level);
 		console.log("Level", level);

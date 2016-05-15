@@ -12,7 +12,18 @@ var DungeonGenerator = {
 		var h = specs.h;
 		var depth = specs.depth;
 		this.level = new Level(w, h, depth);
-		var remainingRooms = 10;
+		switch (specs.roomDensity){
+			case 'hi':
+				specs.roomDensity = 0.8;
+				break;
+			case 'mid':
+				specs.roomDensity = 0.6;
+				break;
+			case 'low':
+				specs.roomDensity = 0.4;
+				break;
+		}
+		var remainingRooms = Math.floor(w * h * specs.roomDensity) - 1;
 		// Put starting room
 		var startingRoom = RoomGenerator.generateRoom(this.level);
 		this.placeRoom(null, specs.startingLocation.x, specs.startingLocation.y, startingRoom);

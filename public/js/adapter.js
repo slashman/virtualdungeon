@@ -7,12 +7,14 @@ function startGame(){
 	var partySize = parseInt(document.getElementById('txtPartySize').value);
 	var dungeonW = parseInt(document.getElementById('txtDungeonW').value);
 	var dungeonH = parseInt(document.getElementById('txtDungeonH').value);
+	var roomDensity = document.getElementById('cmbRoomDensity').value;
 	window.VirtualDungeon.startGame({
 		partySize: partySize,
 		dungeonSize: {
 			w: dungeonW,
 			h: dungeonH
-		}
+		},
+		roomDensity: roomDensity 
 	});
 	return false;
 }
