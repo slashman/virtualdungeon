@@ -3,7 +3,7 @@ var Corridor = require('./Corridor.class');
 var CorridorGenerator = {
 	generateCorridor: function(level){
 		return new Corridor(level, {	
-			description: "",
+			description: "A plain corridor",
 			trap: null,
 			obstacle: null
 		});

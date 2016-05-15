@@ -5,14 +5,14 @@ var RoomGenerator = {
 	generateRoom: function(level){
 		if (Utils.chance(30)){
 			return new Room(level, {	
-				description: "This room is uninteresting.",
+				description: "A plain room.",
 				items: [],
 				enemies: this._getEnemyParty(level),
 				features: []
 			});	
 		} else {
 			return new Room(level, {	
-				description: "This room is uninteresting.",
+				description: "A plain room.",
 				items: [],
 				enemies: [],
 				features: []
