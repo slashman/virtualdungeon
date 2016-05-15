@@ -1,3 +1,5 @@
+var Utils = require('./Utils');
+
 function Level(w, h, depth){
 	this.map = null;
 	this.rooms = null;
@@ -6,7 +8,7 @@ function Level(w, h, depth){
 
 Level.prototype = {
 	init: function(w, h, depth){
-		this.map = []; //TODO: Remove?
+		this.map = [];
 		this.rooms = [];
 		for (var x = 0; x < w; x++){
 			this.map[x] = [];
@@ -20,27 +22,18 @@ Level.prototype = {
 		this.map[x][y] = room;
 		this.rooms.push(room);
 		if (fromRoom){
-			fromRoom.corridors[this.getDirection(fromRoom, room)] = corridor;
-			room.corridors[this.getDirection(room, fromRoom)] = corridor;
-		}
-	},
-	getDirection: function(from, to){
-		if (from.x == to.x){
-			if (from.y > to.y){
-				return 'north';
-			} else {
-				return 'south';
-			}
-		} else {
-			if (from.x > to.x){
-				return 'west';
-			} else {
-				return 'east';
-			}
+			fromRoom.corridors[Utils.getDirection(fromRoom, room)] = corridor;
+			room.corridors[Utils.getDirection(room, fromRoom)] = corridor;
 		}
 	},
 	getRoom: function(location){
 		return this.map[location.x][location.y];
+	},
+	getRoomAt: function(x, y){
+		return this.map[x][y];
+	},
+	isValidRoomLocation: function(x, y){
+		return x >= 0 && y >= 0 && x < this.map.length && y < this.map[0].length;
 	}
 }
 
