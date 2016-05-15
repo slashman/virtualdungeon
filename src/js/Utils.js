@@ -5,6 +5,9 @@ var Utils = {
 	randomElementOf: function(array){
     	return array[Math.floor(Math.random()*array.length)];
 	},
+	chance: function(probability){
+		return this.rand(0, 100) <= probability;
+	},
 	pullRandomElementOf: function(array){
 		var index = Math.floor(Math.random()*array.length);
 		var value = array[index];
