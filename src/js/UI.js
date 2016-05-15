@@ -61,7 +61,7 @@ var UI = {
 		document.getElementById('movementButtons').style.display = 'block';
 	},
 	updateRoomData: function(room){
-		document.getElementById('roomDescription').innerHTML = room.description;
+		var html = '<p>'+room.description+'</p>';
 		var corridorsHTML = '';
 		if (room.corridors.north){
 			corridorsHTML += '<strong>North:</strong> '+room.corridors.north.description+ '<br/>';
@@ -75,34 +75,34 @@ var UI = {
 		if (room.corridors.east){
 			corridorsHTML += '<strong>East:</strong> '+room.corridors.east.description+ '<br/>';
 		}
-		document.getElementById('roomExits').innerHTML = corridorsHTML;
-		if (room.enemies.length == 0){
-			document.getElementById('roomEnemies').innerHTML = '';
-		} else {
-			document.getElementById('roomEnemies').innerHTML = '<b>Monsters!</b><br>'+this._buildList(room.enemies, 
+		if (corridorsHTML.length > 0){
+			html += '<p>'+corridorsHTML+'</p>';
+		}
+		if (room.enemies.length > 0){
+			html += '<h3>Monsters!</h3><p>'+this._buildList(room.enemies, 
 				function(element){
 					return element.raceName;
 				}
-			);
+			)+'</p>';
 		}
-		if (room.items.length == 0){
-			document.getElementById('roomItems').innerHTML = '';
-		} else {
-			document.getElementById('roomItems').innerHTML = this._buildList(room.items, 
+		if (room.items.length > 0){
+			html += '<h3>Items</h3><p>'+this._buildList(room.items, 
 				function(element){
 					return element.description;
 				}
-			);
+			)+'</p>';
 		}
-		if (room.features.length == 0){
-			document.getElementById('useItems').innerHTML = '';
-		} else {
-			document.getElementById('useItems').innerHTML = this._buildList(room.features, 
+		if (room.features.length > 0){
+			html += '<h3>Highlights</h3><p>'+this._buildList(room.features, 
 				function(element){
 					return element.description;
 				}
-			);
+			)+'</p>';
 		}
+		if (room.isExit){
+			html += '<p>There is a stairway going down here</p>';
+		}
+		document.getElementById('roomDescription').innerHTML = html;
 	},
 	_buildList: function(arr, renderer){
 		var html = '<ul>';
