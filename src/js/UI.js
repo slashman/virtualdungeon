@@ -22,7 +22,6 @@ var UI = {
 			// Base white room
 			ctx.fillStyle = "#FFFFFF";
 			ctx.fillRect(room.x * scale, room.y * scale, size, size);
-
 			// Fill the 4 fixed blocks with blackness
 			ctx.fillStyle = "#000000";
 			ctx.fillRect(room.x * scale, room.y * scale, blockSize, blockSize);
@@ -44,7 +43,15 @@ var UI = {
 				ctx.strokeStyle="#ff00d5";
 				ctx.strokeRect(room.x * scale + blockSize + lineWidth / 2, room.y * scale + blockSize + lineWidth / 2, blockSize - lineWidth, blockSize - lineWidth );
 			}
-
+			// Add stairs down and up
+			if (room.isExit){
+				ctx.fillStyle = "#00FF00";
+				ctx.fillRect(room.x * scale + blockSize, room.y * scale + blockSize, blockSize, blockSize);
+			}
+			if (room.isEntrance){
+				ctx.fillStyle = "#0000FF";
+				ctx.fillRect(room.x * scale + blockSize, room.y * scale + blockSize, blockSize, blockSize);
+			}
 			// Show party location
 			if (Party.location.x == room.x && Party.location.y == room.y){
 				ctx.fillStyle = "#FF0000";
