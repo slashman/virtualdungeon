@@ -35,6 +35,20 @@ var UI = {
 	},
 	updateRoomData: function(room){
 		document.getElementById('roomDescription').innerHTML = room.description;
+		var corridorsHTML = '';
+		if (room.corridors.north){
+			corridorsHTML += '<strong>North:</strong>: '+room.corridors.north.description+ '<br/>';
+		}
+		if (room.corridors.south){
+			corridorsHTML += '<strong>South:</strong>: '+room.corridors.south.description+ '<br/>';
+		}
+		if (room.corridors.west){
+			corridorsHTML += '<strong>West:</strong>: '+room.corridors.west.description+ '<br/>';
+		}
+		if (room.corridors.east){
+			corridorsHTML += '<strong>East:</strong>: '+room.corridors.east.description+ '<br/>';
+		}
+		document.getElementById('roomExits').innerHTML = corridorsHTML;
 		if (room.enemies.length == 0){
 			document.getElementById('roomEnemies').innerHTML = 'No enemies';
 		} else {
