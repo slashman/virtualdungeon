@@ -7,6 +7,7 @@ var DungeonGenerator = {
 	potentialCorridors: null,
 	level: null,
 	generateLevel: function(specs){
+		console.log('generateLevel', specs);
 		this.potentialCorridors = [];
 		var w = specs.w;
 		var h = specs.h;
@@ -25,8 +26,8 @@ var DungeonGenerator = {
 		}
 		var remainingRooms = Math.floor(w * h * specs.roomDensity) - 1;
 		// Put starting room
-		var startingRoom = RoomGenerator.generateRoom(this.level);
-		startingRoom.isEntrance = true;
+		var startingRoom = RoomGenerator.generateRoom(this.level, {addStairsUp: depth > 1, isEntrance: true});
+		
 		this.placeRoom(null, specs.startingLocation.x, specs.startingLocation.y, startingRoom);
 		while (remainingRooms > 0){
 			var potentialCorridor = Utils.pullRandomElementOf(this.potentialCorridors);
@@ -34,15 +35,10 @@ var DungeonGenerator = {
 			if (existingRoom){
 				continue;
 			}
-
-			var newRoom = RoomGenerator.generateRoom(this.level);
+			remainingRooms--;
+			var newRoom = RoomGenerator.generateRoom(this.level, {addStairsDown: remainingRooms == 0, isExit: remainingRooms == 0});
 			var corridor = CorridorGenerator.generateCorridor(this.level);
 			this.placeRoom(potentialCorridor.room, potentialCorridor.toX, potentialCorridor.toY, newRoom, corridor);
-			remainingRooms--;
-			if (remainingRooms == 0){
-				// Last room!
-				newRoom.isExit = true;
-			}
 		}
 		return this.level;
 	},

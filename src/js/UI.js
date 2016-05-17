@@ -17,6 +17,9 @@ var UI = {
 		var size = blockSize * 3;
 		var scale = 40;
 		var lineWidth = 2;
+		// Fill background
+		ctx.fillStyle = "#FFFFFF";
+		ctx.fillRect(0, 0, 250, 250);
 		for (var i = 0; i < level.rooms.length; i++){
 			var room = level.rooms[i];
 			// Base white room
@@ -100,14 +103,21 @@ var UI = {
 			)+'</p>';
 		}
 		if (room.features.length > 0){
-			html += '<h3>Highlights</h3><p>'+this._buildList(room.features, 
+			html += '<p>'+this._buildList(room.features, 
 				function(element){
-					return element.description;
+					var description = element.description;
+					var action = "";
+					switch (element.type){
+						case 'upstairs':
+							action = '<button onclick="VirtualDungeon.upstairs();">Go Up</button>';
+						break;
+						case 'downstairs':
+						action = '<button onclick="VirtualDungeon.downstairs();">Go Down</button>';
+						break;
+					}
+					return description + action;
 				}
 			)+'</p>';
-		}
-		if (room.isExit){
-			html += '<p>There is a stairway going down here</p>';
 		}
 		document.getElementById('roomDescription').innerHTML = html;
 	},

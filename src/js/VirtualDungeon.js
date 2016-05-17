@@ -3,6 +3,7 @@ var DungeonGenerator = require('./DungeonGenerator')
 var Party = require('./Party')
 
 var VirtualDungeon = {
+	levels: {},
 	init: function(){
 		console.log("Initializing VirtualDungeon");
 	},
@@ -29,6 +30,29 @@ var VirtualDungeon = {
 	},
 	move: function(dx, dy){
 		Party.move(dx, dy);
+		UI.updateRoomData(Party.getCurrentRoom());
+	},
+	upstairs: function(){
+		this._gotoDepth(Party.level.depth - 1);
+	},
+	downstairs: function(){
+		this._gotoDepth(Party.level.depth + 1);
+	},
+	_gotoDepth: function(depth){
+		var level = this.levels[depth];
+		if (!level){
+			var config = this.config;
+			level = DungeonGenerator.generateLevel({
+				w: config.dungeonSize.w,
+				h: config.dungeonSize.h,
+				depth: depth,
+				startingLocation: Party.location,
+				roomDensity: config.roomDensity
+			});
+			this.levels[depth] = level;
+			console.log("this.levels", this.levels);
+		}
+		Party.setLevel(level)
 		UI.updateRoomData(Party.getCurrentRoom());
 	}
 };

@@ -8,6 +8,7 @@ function Level(w, h, depth){
 
 Level.prototype = {
 	init: function(w, h, depth){
+		this.depth = depth;
 		this.map = [];
 		this.rooms = [];
 		for (var x = 0; x < w; x++){
