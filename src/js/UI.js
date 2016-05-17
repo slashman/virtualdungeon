@@ -1,14 +1,27 @@
 var Party = require('./Party');
+var DOM = require('./DOM');
 
 var UI = {
 	mapCanvas: null,
 	init: function(){
-		this.mapCanvas = document.getElementById('mapCanvas');
+		this._bindEvents();
+		this.createNewPlayerRow();
+	},
+	initMap: function(){
+		this.mapCanvas = DOM.byId('mapCanvas');
 		this.mapCanvasCtx = this.mapCanvas.getContext("2d");
 		var sUI = this;
 		window.requestAnimationFrame(function(){
 			sUI.update();
 		});
+	},
+	_bindEvents: function(){
+		DOM.onClick('btnMoveNorth', function() { move(0, -1); });
+		DOM.onClick('btnMoveSouth', function() { move(0, 1); });
+		DOM.onClick('btnMoveWest', function() { move(-1, 0); });
+		DOM.onClick('btnMoveEast', function() { move(1, 0); });
+		DOM.onClick('btnStartGame', startGame);
+		DOM.onClick('btnAddPlayer', this.createNewPlayerRow);
 	},
 	update: function(){
 		var ctx = this.mapCanvasCtx;
@@ -67,8 +80,8 @@ var UI = {
 		});
 	},
 	startGame: function(){
-		document.getElementById('newGame').style.display = 'none';
-		document.getElementById('movementButtons').style.display = 'block';
+		DOM.byId('newGame').style.display = 'none';
+		DOM.byId('movementButtons').style.display = 'block';
 	},
 	updateRoomData: function(room){
 		var html = '<p>'+room.description+'</p>';
@@ -119,7 +132,7 @@ var UI = {
 				}
 			)+'</p>';
 		}
-		document.getElementById('roomDescription').innerHTML = html;
+		DOM.byId('roomDescription').innerHTML = html;
 	},
 	_buildList: function(arr, renderer){
 		var html = '<ul>';
@@ -129,6 +142,74 @@ var UI = {
 
 		html += '</ul>';
 		return html;
+	},
+	createNewPlayerRow: function(){
+		var table = DOM.byId('tblPlayersInfo');
+		var currentIndex = 0;
+		currentIndex++;
+		var tr = DOM.create('tr');
+		var td = DOM.create('td');
+		var component = DOM.create('input');
+		component.type = 'text';
+		component.id = 'txtName_'+currentIndex;
+		td.appendChild(component);
+		tr.appendChild(td);
+
+		td = DOM.create('td');
+		component = DOM.create('select');
+		component.id = 'cmbTeam_'+currentIndex;
+		var child = DOM.create('option');
+		child.value = 'heroes';
+		child.innerHTML = 'Heroes';
+		component.appendChild(child);
+		child = DOM.create('option');
+		child.value = 'dungeon';
+		child.innerHTML = 'Dungeon';
+		component.appendChild(child);
+		td.appendChild(component);
+		tr.appendChild(td);
+
+		td = DOM.create('td');
+		component = DOM.create('select');
+		component.id = 'cmbRole_'+currentIndex;
+		child = DOM.create('option');
+		child.value = 'n/a';
+		child.innerHTML = 'N/A';
+		component.appendChild(child);
+		child = DOM.create('option');
+		child.value = 'leader';
+		child.innerHTML = 'Leader';
+		component.appendChild(child);
+		child = DOM.create('option');
+		child.value = 'mapper';
+		child.innerHTML = 'Mapper';
+		component.appendChild(child);
+		td.appendChild(component);
+		tr.appendChild(td);
+
+		td = DOM.create('td');
+		component = DOM.create('select');
+		component.id = 'cmbClass_'+currentIndex;
+		child = DOM.create('option');
+		child.value = 'n/a';
+		child.innerHTML = 'N/A';
+		component.appendChild(child);
+		child = DOM.create('option');
+		child.value = 'fighter';
+		child.innerHTML = 'Fighter';
+		component.appendChild(child);
+		child = DOM.create('option');
+		child.value = 'mage';
+		child.innerHTML = 'Mage';
+		component.appendChild(child);
+		child = DOM.create('option');
+		child.value = 'bard';
+		child.innerHTML = 'Bard';
+		component.appendChild(child);
+		td.appendChild(component);
+		tr.appendChild(td);
+
+		table.appendChild(tr);
 	}
 };
 

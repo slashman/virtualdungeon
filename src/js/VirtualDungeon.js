@@ -6,6 +6,7 @@ var VirtualDungeon = {
 	levels: {},
 	init: function(){
 		console.log("Initializing VirtualDungeon");
+		UI.init();
 	},
 	startGame: function(config){
 		console.log("New Game, config", config);
@@ -24,9 +25,9 @@ var VirtualDungeon = {
 		Party.setLevel(level);
 		console.log("Level", level);
 		console.log("Party", Party);
-		UI.init();
 		UI.startGame();
 		UI.updateRoomData(Party.getCurrentRoom());
+		UI.initMap();
 	},
 	move: function(dx, dy){
 		Party.move(dx, dy);
