@@ -35,6 +35,12 @@ Party.prototype = {
 				corridor.triggerTrap(corridor.trap);
 			}
 		}
+		this.passTurn();
+	},
+	passTurn: function(){
+		for (var i = 0; i < this.players.length; i++){
+			this.players[i].passTurn();
+		}
 	}
 }
 

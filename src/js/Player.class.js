@@ -44,6 +44,15 @@ Player.AILMENT_EFFECTS[Player.POISONED] = 'is poisoned';
 Player.AILMENT_EFFECTS[Player.MUTE] = 'cannot speak';
 Player.AILMENT_EFFECTS[Player.CLAMPED] = 'is immobilized in the spot';
 
+Player.AILMENT_RECOVERY = {};
+Player.AILMENT_RECOVERY[Player.UNCONSCIOUS] = 'recovers consciousness';
+Player.AILMENT_RECOVERY[Player.BLIND] = 'can see again';
+Player.AILMENT_RECOVERY[Player.PARALYZED] = 'can move again';
+Player.AILMENT_RECOVERY[Player.ASLEEP] = 'wakes up';
+Player.AILMENT_RECOVERY[Player.POISONED] = 'is no longer poisoned';
+Player.AILMENT_RECOVERY[Player.MUTE] = 'can speak again';
+Player.AILMENT_RECOVERY[Player.CLAMPED] = 'frees from the trap';
+
 Player.prototype = {
 	sustainInjury: function(bodyPart, turns){
 		if (!turns){
@@ -56,24 +65,29 @@ Player.prototype = {
 		if (!turns){
 			turns = Utils.rand(3, 6); 
 		}
-		this.statusAilments.push([{
+		this.statusAilments.push({
 			ailment: ailment,
 			turns: turns
-		}]);
+		});
 		this.party.controller.ui.showMessage(this.name +' '+ Player.AILMENT_EFFECTS[ailment]);
 	},
 	turnHeal: function(){
 		for (bodyPart in this.injuredMap){
 			if (this.injuredMap[bodyPart] && --this.injuredMap[bodyPart].turns <= 0){
+				this.party.controller.ui.showMessage(this.name +'\'s '+Player.BODY_PART_NAMES[bodyPart]+' is no longer injured.');
 				this.injuredMap[bodyPart] = false;
 			}
 		}
-		for (var i = 0; i < statusAilments.length; i++){
+		for (var i = 0; i < this.statusAilments.length; i++){
 			if (--this.statusAilments[i].turns <= 0){
+				this.party.controller.ui.showMessage(this.name +' '+ Player.AILMENT_RECOVERY[this.statusAilments[i].ailment]);
 				this.statusAilments.splice(i,1);
 				i--;
 			}
 		}
+	},
+	passTurn: function(){
+		this.turnHeal();
 	}
 }
 
