@@ -20,8 +20,8 @@ var UI = {
 		DOM.onClick('btnMoveSouth', function() { move(0, 1); });
 		DOM.onClick('btnMoveWest', function() { move(-1, 0); });
 		DOM.onClick('btnMoveEast', function() { move(1, 0); });
-		DOM.onClick('btnStartGame', controller.startGame);
-		DOM.onClick('btnAddPlayer', this.createNewPlayerRow);
+		DOM.onClick('btnStartGame', controller.startGame, controller);
+		DOM.onClick('btnAddPlayer', this.createNewPlayerRow, this);
 	},
 	update: function(){
 		var ctx = this.mapCanvasCtx;
