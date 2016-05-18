@@ -6,13 +6,13 @@ var Utils = require('./Utils');
 var DungeonGenerator = {
 	potentialCorridors: null,
 	level: null,
-	generateLevel: function(specs){
+	generateLevel: function(specs, controller){
 		console.log('generateLevel', specs);
 		this.potentialCorridors = [];
 		var w = specs.w;
 		var h = specs.h;
 		var depth = specs.depth;
-		this.level = new Level(w, h, depth);
+		this.level = new Level(w, h, depth, controller);
 		switch (specs.roomDensity){
 			case 'hi':
 				specs.roomDensity = 0.8;

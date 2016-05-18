@@ -1,12 +1,13 @@
-var Party = require('./Party');
 var DOM = require('./DOM');
 
-var UI = {
-	mapCanvas: null,
-	init: function(controller){
-		this._bindEvents(controller);
-		this.createNewPlayerRow();
-	},
+function UI(controller){
+	this.controller = controller;
+	this._bindEvents(controller);
+	this.createNewPlayerRow();
+	this.mapCanvas = null;
+};
+
+UI.prototype = {
 	initMap: function(){
 		this.mapCanvas = DOM.byId('mapCanvas');
 		this.mapCanvasCtx = this.mapCanvas.getContext("2d");
@@ -25,7 +26,8 @@ var UI = {
 	},
 	update: function(){
 		var ctx = this.mapCanvasCtx;
-		var level = Party.level;
+		var party = this.controller.party;
+		var level = party.level;
 		var blockSize = 20;
 		var size = blockSize * 3;
 		var scale = 40;
@@ -69,7 +71,7 @@ var UI = {
 				ctx.fillRect(room.x * scale + blockSize, room.y * scale + blockSize, blockSize, blockSize);
 			}
 			// Show party location
-			if (Party.location.x == room.x && Party.location.y == room.y){
+			if (party.location.x == room.x && party.location.y == room.y){
 				ctx.fillStyle = "#FF0000";
 				ctx.fillRect(room.x * scale + blockSize, room.y * scale + blockSize, blockSize, blockSize);
 			}
@@ -236,6 +238,14 @@ var UI = {
 		tr.appendChild(td);
 
 		table.appendChild(tr);
+	},
+	showMessage: function(message){
+		var component = DOM.create('p');
+		component.innerHTML = message;
+		DOM.byId('messageArea').appendChild(component);
+	},
+	clearMessages: function(){
+		DOM.byId('messageArea').innerHTML = '';
 	}
 };
 

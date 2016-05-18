@@ -1,14 +1,20 @@
 var Utils = require('./Utils');
+var Player = require('./Player.class');
 
-var Party = {
-	location: {
+function Party(specs, controller){
+	this.controller = controller;
+	this.players = [];
+	for (var i = 0; i < specs.players.length; i++){
+		this.players.push(new Player(specs.players[i], this));
+	}
+	this.location = {
 		x: null,
 		y: null
-	},
-	level: null,
-	init: function(specs){
-		this.players = specs.players;
-	},
+	};
+	this.level = null;
+}
+
+Party.prototype = {
 	locate: function(x, y){
 		this.location.x = x;
 		this.location.y = y;
@@ -24,7 +30,10 @@ var Party = {
 		var corridor = this.getCurrentRoom().corridors[direction];
 		if (corridor && !corridor.obstacle){
 			this.location.x += dx;
-			this.location.y += dy;	
+			this.location.y += dy;
+			if (corridor.trap){
+				corridor.triggerTrap(corridor.trap);
+			}
 		}
 	}
 }

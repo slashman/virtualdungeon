@@ -1,46 +1,47 @@
-var UI = require('./UI')
+var UI = require('./UI.class')
 var DungeonGenerator = require('./DungeonGenerator')
-var Party = require('./Party')
+var Party = require('./Party.class')
 
 var VirtualDungeon = {
 	levels: {},
 	init: function(){
 		console.log("Initializing VirtualDungeon");
-		UI.init(this);
+		this.ui = new UI(this);
 	},
 	startGame: function(){
-		var config = UI.getNewGameConfig();
+		var config = this.ui.getNewGameConfig();
 		console.log("New Game, config", config);
 		this.config = config;
-		Party.init({
+		this.party = new Party({
 			players: config.players
-		});
-		Party.locate(Math.floor(config.dungeonSize.w / 2), Math.floor(config.dungeonSize.h / 2));
+		}, this);
+		this.party.locate(Math.floor(config.dungeonSize.w / 2), Math.floor(config.dungeonSize.h / 2));
 		var level = DungeonGenerator.generateLevel({
 			w: config.dungeonSize.w,
 			h: config.dungeonSize.h,
 			depth: 1,
-			startingLocation: Party.location,
+			startingLocation: this.party.location,
 			roomDensity: config.roomDensity
-		});
+		}, this);
 		this.levels[1] = level;
-		Party.setLevel(level);
+		this.party.setLevel(level);
 		console.log("Level", level);
-		console.log("Party", Party);
-		UI.updateRoomData(Party.getCurrentRoom());
-		UI.initMap();
-		UI.hideNewGamePanel();
+		console.log("Party", this.party);
+		this.ui.updateRoomData(this.party.getCurrentRoom());
+		this.ui.initMap();
+		this.ui.hideNewGamePanel();
 
 	},
 	move: function(dx, dy){
-		Party.move(dx, dy);
-		UI.updateRoomData(Party.getCurrentRoom());
+		this.ui.clearMessages();
+		this.party.move(dx, dy);
+		this.ui.updateRoomData(this.party.getCurrentRoom());
 	},
 	upstairs: function(){
-		this._gotoDepth(Party.level.depth - 1);
+		this._gotoDepth(this.party.level.depth - 1);
 	},
 	downstairs: function(){
-		this._gotoDepth(Party.level.depth + 1);
+		this._gotoDepth(this.party.level.depth + 1);
 	},
 	_gotoDepth: function(depth){
 		var level = this.levels[depth];
@@ -50,14 +51,14 @@ var VirtualDungeon = {
 				w: config.dungeonSize.w,
 				h: config.dungeonSize.h,
 				depth: depth,
-				startingLocation: Party.location,
+				startingLocation: this.party.location,
 				roomDensity: config.roomDensity
-			});
+			}, this);
 			this.levels[depth] = level;
 			console.log("this.levels", this.levels);
 		}
-		Party.setLevel(level)
-		UI.updateRoomData(Party.getCurrentRoom());
+		this.party.setLevel(level)
+		this.ui.updateRoomData(this.party.getCurrentRoom());
 	}
 };
 

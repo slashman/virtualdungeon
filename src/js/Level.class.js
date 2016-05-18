@@ -1,6 +1,7 @@
 var Utils = require('./Utils');
 
-function Level(w, h, depth){
+function Level(w, h, depth, controller){
+	this.controller = controller;
 	this.map = null;
 	this.rooms = null;
 	this.init(w, h, depth);
