@@ -23,6 +23,7 @@ var VirtualDungeon = {
 			startingLocation: Party.location,
 			roomDensity: config.roomDensity
 		});
+		this.levels[1] = level;
 		Party.setLevel(level);
 		console.log("Level", level);
 		console.log("Party", Party);
