@@ -28,7 +28,11 @@ Party.prototype = {
 	move: function(dx, dy){
 		var direction = Utils.getDirection(this.location, {x: this.location.x+dx, y: this.location.y+dy})
 		var corridor = this.getCurrentRoom().corridors[direction];
-		if (corridor && !corridor.obstacle){
+		if (!corridor){
+			this.controller.ui.showMessage('You can\'t go there.');
+			return;
+		}
+		if (!corridor.obstacle){
 			this.location.x += dx;
 			this.location.y += dy;
 			if (corridor.trap){
