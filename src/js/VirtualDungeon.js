@@ -6,13 +6,14 @@ var VirtualDungeon = {
 	levels: {},
 	init: function(){
 		console.log("Initializing VirtualDungeon");
-		UI.init();
+		UI.init(this);
 	},
-	startGame: function(config){
+	startGame: function(){
+		var config = UI.getNewGameConfig();
 		console.log("New Game, config", config);
 		this.config = config;
 		Party.init({
-			size: config.partySize
+			players: config.players
 		});
 		Party.locate(Math.floor(config.dungeonSize.w / 2), Math.floor(config.dungeonSize.h / 2));
 		var level = DungeonGenerator.generateLevel({
@@ -25,9 +26,10 @@ var VirtualDungeon = {
 		Party.setLevel(level);
 		console.log("Level", level);
 		console.log("Party", Party);
-		UI.startGame();
 		UI.updateRoomData(Party.getCurrentRoom());
 		UI.initMap();
+		UI.hideNewGamePanel();
+
 	},
 	move: function(dx, dy){
 		Party.move(dx, dy);

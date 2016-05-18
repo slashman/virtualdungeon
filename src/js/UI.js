@@ -3,8 +3,8 @@ var DOM = require('./DOM');
 
 var UI = {
 	mapCanvas: null,
-	init: function(){
-		this._bindEvents();
+	init: function(controller){
+		this._bindEvents(controller);
 		this.createNewPlayerRow();
 	},
 	initMap: function(){
@@ -15,12 +15,12 @@ var UI = {
 			sUI.update();
 		});
 	},
-	_bindEvents: function(){
+	_bindEvents: function(controller){
 		DOM.onClick('btnMoveNorth', function() { move(0, -1); });
 		DOM.onClick('btnMoveSouth', function() { move(0, 1); });
 		DOM.onClick('btnMoveWest', function() { move(-1, 0); });
 		DOM.onClick('btnMoveEast', function() { move(1, 0); });
-		DOM.onClick('btnStartGame', startGame);
+		DOM.onClick('btnStartGame', controller.startGame);
 		DOM.onClick('btnAddPlayer', this.createNewPlayerRow);
 	},
 	update: function(){
@@ -79,9 +79,37 @@ var UI = {
 			sUI.update();
 		});
 	},
-	startGame: function(){
+	hideNewGamePanel: function(){
 		DOM.byId('newGame').style.display = 'none';
 		DOM.byId('movementButtons').style.display = 'block';
+	},
+	getNewGameConfig: function(){
+		var dungeonW = parseInt(DOM.val('txtDungeonW'));
+		var dungeonH = parseInt(DOM.val('txtDungeonH'));
+		var roomDensity = DOM.val('cmbRoomDensity');
+
+		var players = [];
+		var names = DOM.selectAll('.playerNameText');
+		var teams = DOM.selectAll('.playerTeamCombo');
+		var roles = DOM.selectAll('.playerRoleCombo');
+		var classes = DOM.selectAll('.playerClassCombo');
+		for (var i = 0; i < names.length; i++){
+			players.push({
+				name: names[i].value,
+				team: teams[i].value,
+				role: roles[i].value,
+				job: classes[i].value
+			});
+		}
+
+		return {
+			dungeonSize: {
+				w: dungeonW,
+				h: dungeonH
+			},
+			roomDensity: roomDensity,
+			players: players
+		}
 	},
 	updateRoomData: function(room){
 		var html = '<p>'+room.description+'</p>';
@@ -145,19 +173,17 @@ var UI = {
 	},
 	createNewPlayerRow: function(){
 		var table = DOM.byId('tblPlayersInfo');
-		var currentIndex = 0;
-		currentIndex++;
 		var tr = DOM.create('tr');
 		var td = DOM.create('td');
 		var component = DOM.create('input');
 		component.type = 'text';
-		component.id = 'txtName_'+currentIndex;
+		component.className = 'playerNameText';
 		td.appendChild(component);
 		tr.appendChild(td);
 
 		td = DOM.create('td');
 		component = DOM.create('select');
-		component.id = 'cmbTeam_'+currentIndex;
+		component.className = 'playerTeamCombo';
 		var child = DOM.create('option');
 		child.value = 'heroes';
 		child.innerHTML = 'Heroes';
@@ -171,7 +197,7 @@ var UI = {
 
 		td = DOM.create('td');
 		component = DOM.create('select');
-		component.id = 'cmbRole_'+currentIndex;
+		component.className = 'playerRoleCombo';
 		child = DOM.create('option');
 		child.value = 'n/a';
 		child.innerHTML = 'N/A';
@@ -189,7 +215,7 @@ var UI = {
 
 		td = DOM.create('td');
 		component = DOM.create('select');
-		component.id = 'cmbClass_'+currentIndex;
+		component.className = 'playerClassCombo';
 		child = DOM.create('option');
 		child.value = 'n/a';
 		child.innerHTML = 'N/A';

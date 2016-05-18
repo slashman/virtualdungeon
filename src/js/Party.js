@@ -7,7 +7,7 @@ var Party = {
 	},
 	level: null,
 	init: function(specs){
-		this.specs = specs;
+		this.players = specs.players;
 	},
 	locate: function(x, y){
 		this.location.x = x;
