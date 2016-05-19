@@ -1,0 +1,15 @@
+Description
+===========
+This Scenario is based on the Ultima series of games
+
+Jobs
+====
+              STR  INT  DEX
+Bard           10   10   30
+Druid          10   20   20
+Mage           10   30   10
+Paladin        20   20   10
+Fighter        30   10   10
+Tinker         20   10   20
+Shepherd       10   10   10
+Ranger         15   15   20

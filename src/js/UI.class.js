@@ -92,13 +92,11 @@ UI.prototype = {
 
 		var players = [];
 		var names = DOM.selectAll('.playerNameText');
-		var teams = DOM.selectAll('.playerTeamCombo');
 		var roles = DOM.selectAll('.playerRoleCombo');
 		var classes = DOM.selectAll('.playerClassCombo');
 		for (var i = 0; i < names.length; i++){
 			players.push({
 				name: names[i].value,
-				team: teams[i].value,
 				role: roles[i].value,
 				job: classes[i].value
 			});
@@ -184,26 +182,12 @@ UI.prototype = {
 		tr.appendChild(td);
 
 		td = DOM.create('td');
-		component = DOM.create('select');
-		component.className = 'playerTeamCombo';
-		var child = DOM.create('option');
-		child.value = 'heroes';
-		child.innerHTML = 'Heroes';
-		component.appendChild(child);
-		child = DOM.create('option');
-		child.value = 'dungeon';
-		child.innerHTML = 'Dungeon';
-		component.appendChild(child);
-		td.appendChild(component);
+		td.innerHTML = 'Heroes';
 		tr.appendChild(td);
 
 		td = DOM.create('td');
 		component = DOM.create('select');
 		component.className = 'playerRoleCombo';
-		child = DOM.create('option');
-		child.value = 'n/a';
-		child.innerHTML = 'N/A';
-		component.appendChild(child);
 		child = DOM.create('option');
 		child.value = 'leader';
 		child.innerHTML = 'Leader';
@@ -212,28 +196,23 @@ UI.prototype = {
 		child.value = 'mapper';
 		child.innerHTML = 'Mapper';
 		component.appendChild(child);
+		child = DOM.create('option');
+		child.value = 'none';
+		child.innerHTML = 'None';
+		component.appendChild(child);
 		td.appendChild(component);
 		tr.appendChild(td);
 
 		td = DOM.create('td');
 		component = DOM.create('select');
 		component.className = 'playerClassCombo';
-		child = DOM.create('option');
-		child.value = 'n/a';
-		child.innerHTML = 'N/A';
-		component.appendChild(child);
-		child = DOM.create('option');
-		child.value = 'fighter';
-		child.innerHTML = 'Fighter';
-		component.appendChild(child);
-		child = DOM.create('option');
-		child.value = 'mage';
-		child.innerHTML = 'Mage';
-		component.appendChild(child);
-		child = DOM.create('option');
-		child.value = 'bard';
-		child.innerHTML = 'Bard';
-		component.appendChild(child);
+		for (var i = 0; i < this.controller.scenario.jobs.length; i++){
+			var job = this.controller.scenario.jobs[i];
+			child = DOM.create('option');
+			child.value = job.code ? job.code : job.name;
+			child.innerHTML = job.name;
+			component.appendChild(child);	
+		}
 		td.appendChild(component);
 		tr.appendChild(td);
 

@@ -10,7 +10,7 @@ function Player(specs, party){
 	this.statusAilments = [];
 	this.name = specs.name;
 	this.role = specs.role;
-	this.job = specs.job;
+	this.job = party.controller.scenario.getJob(specs.job);
 };
 
 Player.LEFT = 'left';
@@ -88,6 +88,10 @@ Player.prototype = {
 	},
 	passTurn: function(){
 		this.turnHeal();
+	},
+	evadesTrap: function(){
+		var evadeChance = this.job.dex * 2;
+		return Utils.chance(evadeChance);
 	}
 }
 

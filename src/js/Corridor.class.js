@@ -42,13 +42,22 @@ Corridor.prototype = {
 		this.level.controller.ui.showMessage(Corridor.TRAP_DESCRIPTIONS[trap.description ? trap.description : trap.type]);
 		var party = this.level.controller.party;
 		if (trap.multiTarget){
-			// Hit all players in the Party
+			// Try to hit all players in the Party
 			for (var i = 0; i < party.players.length; i++){
-				this.applyTrapEffect(trap, party.players[i]);
+				if (party.players[i].evadesTrap()){
+					this.level.controller.ui.showMessage(party.players[i].name + ' evades the trap');
+				} else {
+					this.applyTrapEffect(trap, party.players[i]);
+				}
 			}
 		} else {
 			// Pick a single target
-			this.applyTrapEffect(trap, Utils.randomElementOf(party.players));
+			var target = Utils.randomElementOf(party.players);
+			if (target.evadesTrap()){
+				this.level.controller.ui.showMessage(target.name + ' evades the '+trap.description);
+			} else {
+				this.applyTrapEffect(trap, target);
+			}
 		}
 	}, 
 	applyTrapEffect: function(trap, player){

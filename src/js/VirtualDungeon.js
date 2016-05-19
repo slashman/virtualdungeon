@@ -1,11 +1,13 @@
 var UI = require('./UI.class')
 var DungeonGenerator = require('./DungeonGenerator')
 var Party = require('./Party.class')
+var Scenario = require('./Scenario.class')
 
 var VirtualDungeon = {
 	levels: {},
 	init: function(){
 		console.log("Initializing VirtualDungeon");
+		this.scenario = new Scenario();
 		this.ui = new UI(this);
 	},
 	startGame: function(){

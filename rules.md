@@ -8,6 +8,20 @@ The Dungeon Guide
 =================
 Uses the virtualDungeon program to guide the adventuring party through the dungeon.
 
+Stats
+=====
+There are 3 base stats which are determined by the player choice of Job/Class. The available choices
+depend on the scenario being played.
+
+* Strength
+* Magic
+* Dexterity
+
+These 3 base stats are used by the game to calculate the following secondary stats:
+* Max Hit Points = STR
+* Max Magic Points = INT
+* Evade Trap Chance = (DEX * 2)%
+
 Status Ailments
 ===============
 Combat or traps may cause a player to become injured or otherwise have his movement and combat
@@ -47,7 +61,9 @@ Traps
 Traps found in the dungeon can cause any of the status ailments to one or more members of the party.
 
 Some traps can be avoided with quick reaction by the player, in those cases, it's up to the dungeon
-guide to determine what players for the party evaded the trap. 
+guide to determine what players for the party evaded the trap.
+
+Players also have a chance to evade traps based on their Dexterity stat.
 
 * Arrow traps: Can be avoided by quickly ducking. Slow players may be affected by injury in a single
 body part.
