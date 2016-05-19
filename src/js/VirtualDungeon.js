@@ -29,9 +29,10 @@ var VirtualDungeon = {
 		this.party.setLevel(level);
 		console.log("Level", level);
 		console.log("Party", this.party);
+		this.ui.hideNewGamePanel();
 		this.ui.updateRoomData(this.party.getCurrentRoom());
 		this.ui.initMap();
-		this.ui.hideNewGamePanel();
+		
 
 	},
 	move: function(dx, dy){

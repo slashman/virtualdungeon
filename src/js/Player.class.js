@@ -11,6 +11,7 @@ function Player(specs, party){
 	this.name = specs.name;
 	this.role = specs.role;
 	this.job = party.controller.scenario.getJob(specs.job);
+	this.number = specs.number;
 };
 
 Player.LEFT = 'left';
@@ -53,6 +54,16 @@ Player.AILMENT_RECOVERY[Player.POISONED] = 'is no longer poisoned';
 Player.AILMENT_RECOVERY[Player.MUTE] = 'can speak again';
 Player.AILMENT_RECOVERY[Player.CLAMPED] = 'frees from the trap';
 
+Player.AILMENT_NAMES = {};
+Player.AILMENT_NAMES[Player.UNCONSCIOUS] = 'Unconscious';
+Player.AILMENT_NAMES[Player.BLIND] = 'Blind';
+Player.AILMENT_NAMES[Player.PARALYZED] = 'Paralyzed';
+Player.AILMENT_NAMES[Player.ASLEEP] = 'Asleep';
+Player.AILMENT_NAMES[Player.POISONED] = 'Poisoned';
+Player.AILMENT_NAMES[Player.MUTE] = 'Mute';
+Player.AILMENT_NAMES[Player.CLAMPED] = 'Clamped';
+
+
 Player.prototype = {
 	sustainInjury: function(bodyPart, turns){
 		if (!turns){
@@ -92,6 +103,25 @@ Player.prototype = {
 	evadesTrap: function(){
 		var evadeChance = this.job.dex * 2;
 		return Utils.chance(evadeChance);
+	},
+	getStatusLine: function(){
+		var line = '<b>'+this.name+'</b>';
+		for (var i = 0; i < this.statusAilments.length; i++){
+			line += ' ' + Player.AILMENT_NAMES[this.statusAilments[i].ailment];
+		}
+		var injuries = '';
+		for (bodyPart in this.injuredMap){
+			if (this.injuredMap[bodyPart]){
+				injuries += Player.BODY_PART_NAMES[bodyPart]+' ';
+			}
+		}
+		if (injuries !== ''){
+			line += ' Injuries: '+injuries;
+		}
+		if (this.statusAilments.length == 0 && injuries === ''){
+			line += ' OK';
+		}
+		return line;
 	}
 }
 

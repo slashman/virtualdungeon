@@ -5,6 +5,7 @@ function Party(specs, controller){
 	this.controller = controller;
 	this.players = [];
 	for (var i = 0; i < specs.players.length; i++){
+		specs.players[i].number = i + 1;
 		this.players.push(new Player(specs.players[i], this));
 	}
 	this.location = {

@@ -84,6 +84,13 @@ UI.prototype = {
 	hideNewGamePanel: function(){
 		DOM.byId('newGame').style.display = 'none';
 		DOM.byId('movementButtons').style.display = 'block';
+		var partyMembers = DOM.byId('partyMembersSection');
+		for (var i = 0; i < this.controller.party.players.length; i++){
+			var player = this.controller.party.players[i];
+			var playerInfoDiv = DOM.create('div');
+			playerInfoDiv.id = 'player'+player.number+'Status';
+			partyMembers.appendChild(playerInfoDiv);
+		}
 	},
 	getNewGameConfig: function(){
 		var dungeonW = parseInt(DOM.val('txtDungeonW'));
@@ -161,6 +168,11 @@ UI.prototype = {
 			)+'</p>';
 		}
 		DOM.byId('roomDescription').innerHTML = html;
+		// Party status
+		for (var i = 0; i < this.controller.party.players.length; i++){
+			var player = this.controller.party.players[i];
+			DOM.byId('player'+player.number+'Status').innerHTML = player.getStatusLine();
+		}
 	},
 	_buildList: function(arr, renderer){
 		var html = '<ul>';
