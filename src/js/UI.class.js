@@ -1,4 +1,5 @@
 var DOM = require('./DOM');
+var Player = require('./Player.class');
 
 function UI(controller){
 	this.controller = controller;
@@ -101,9 +102,31 @@ UI.prototype = {
 			playerInfoDiv.id = 'player'+player.number+'Status';
 			playerRow.appendChild(playerInfoDiv);
 
+			var bodyPartSelect = this._createBodyPartSelect();
+			bodyPartSelect.id = 'bodyPartSelect'+player.number;
+			playerRow.appendChild(bodyPartSelect);
+
 			partyMembers.appendChild(playerRow);
 		}
 		DOM.selectAll('.selectPlayerCheckbox', function(e){e.style.display = 'none'});
+	},
+	_createBodyPartSelect: function(){
+		var select = DOM.create('select');
+		select.className = 'playerBodyPartSelect';
+		var options = [
+			{value: Player.TORSO, label: 'Torso'},
+			{value: Player.LEFT_ARM, label: 'Left Arm'},
+			{value: Player.RIGHT_ARM, label: 'Right Arm'},
+			{value: Player.LEFT_LEG, label: 'Left Leg'},
+			{value: Player.RIGHT_LEG, label: 'Right Leg'},
+		];
+		for (var i = 0; i < options.length; i++){
+			var option = DOM.create('option');
+			option.value =  options[i].value;
+			option.innerHTML = options[i].label;
+			select.appendChild(option);	
+		}
+		return select;
 	},
 	getNewGameConfig: function(){
 		var dungeonW = parseInt(DOM.val('txtDungeonW'));
@@ -286,6 +309,9 @@ UI.prototype = {
 		this.targetSelectedCb(targets);
 		this.controller.setInputStatus(this.controller.MOVE);
 		this.updateRoomData();
+	},
+	activateCombat: function(){
+
 	}
 };
 

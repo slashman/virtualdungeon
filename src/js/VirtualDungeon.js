@@ -6,6 +6,7 @@ var Scenario = require('./Scenario.class')
 var VirtualDungeon = {
 	MOVE: 'move',
 	PICK_TARGET: 'pickTarget',
+	COMBAT: 'combat',
 	inputStatus: null,
 	levels: {},
 	init: function(){
@@ -70,10 +71,13 @@ var VirtualDungeon = {
 		switch (this.inputStatus){
 			case this.MOVE:
 				this.ui.enableMovement();
-			break;
+				break;
 			case this.PICK_TARGET:
 				this.ui.selectTargets(this.pickTargetCallback);
-			break;
+				break;
+			case this.COMBAT:
+				this.ui.activateCombat();
+				braek;
 		}
 	}
 };

@@ -18,6 +18,8 @@ Player.LEFT = 'left';
 Player.RIGHT = 'right';
 Player.ARM = 'arm';
 Player.LEG = 'leg';
+
+Player.TORSO = 'torso';
 Player.LEFT_LEG = 'left-leg';
 Player.RIGHT_LEG = 'right-leg';
 Player.LEFT_ARM = 'left-arm';

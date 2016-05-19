@@ -48,9 +48,7 @@ Party.prototype = {
 							corridor.triggerTrapOn(corridor.trap, targets);
 						}
 						corridor.trap = false;
-						party.location.x += dx;
-						party.location.y += dy;
-						party.passTurn();
+						party._doMove(dx, dy);
 					};
 					this.controller.setInputStatus(this.controller.PICK_TARGET);
 					return; // Party doesn't move
@@ -60,9 +58,16 @@ Party.prototype = {
 				}
 			}
 		}
-		party.location.x += dx;
-		party.location.y += dy;
+		this._doMove(dx,dy);
+	},
+	_doMove: function(dx, dy){
+		this.location.x += dx;
+		this.location.y += dy;
 		this.passTurn();
+		if (this.getCurrentRoom().enemies.length > 0){
+			// Enter combat mode!
+			this.controller.setInputStatus(this.controller.COMBAT);
+		}
 	},
 	passTurn: function(){
 		for (var i = 0; i < this.players.length; i++){
