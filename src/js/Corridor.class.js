@@ -86,7 +86,7 @@ Corridor.prototype = {
 			case Corridor.FALLING_TRAP:
 				switch (Utils.rand(0,2)){
 					case 0:
-						player.sustainInjury(PLAYER.RIGHT_ARM);
+						player.sustainInjury(Player.RIGHT_ARM);
 						break;
 					case 1:
 						player.sustainInjury(Player.LEFT_ARM);
