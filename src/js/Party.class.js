@@ -38,6 +38,7 @@ Party.prototype = {
 			this.location.y += dy;
 			if (corridor.trap){
 				corridor.triggerTrap(corridor.trap);
+				corridor.trap = false;
 			}
 		}
 		this.passTurn();
