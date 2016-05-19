@@ -38,8 +38,11 @@ Corridor.prototype = {
 		this.trap = features.trap;
 		this.obstacle = features.obstacle;
 	},
-	triggerTrap: function(trap){
+	showTrapTriggered: function(trap){
 		this.level.controller.ui.showMessage(Corridor.TRAP_DESCRIPTIONS[trap.description ? trap.description : trap.type]);
+	},
+	triggerTrap: function(trap){
+		this.showTrapTriggered(trap);
 		var party = this.level.controller.party;
 		if (trap.multiTarget){
 			// Try to hit all players in the Party
@@ -58,6 +61,11 @@ Corridor.prototype = {
 			} else {
 				this.applyTrapEffect(trap, target);
 			}
+		}
+	},
+	triggerTrapOn: function(trap, targets){
+		for (var i = 0; i < targets.length; i++){
+			this.applyTrapEffect(trap, targets[i]);
 		}
 	}, 
 	applyTrapEffect: function(trap, player){

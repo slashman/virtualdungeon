@@ -5,6 +5,7 @@ function UI(controller){
 	this._bindEvents(controller);
 	this.createNewPlayerRow();
 	this.mapCanvas = null;
+	this._disableActionButtons();
 };
 
 UI.prototype = {
@@ -23,6 +24,7 @@ UI.prototype = {
 		DOM.onClick('btnMoveEast', function() { move(1, 0); });
 		DOM.onClick('btnStartGame', controller.startGame, controller);
 		DOM.onClick('btnAddPlayer', this.createNewPlayerRow, this);
+		DOM.onClick('btnSelectTargets', this._targetsSelected, this);
 	},
 	update: function(){
 		var ctx = this.mapCanvasCtx;
@@ -87,10 +89,21 @@ UI.prototype = {
 		var partyMembers = DOM.byId('partyMembersSection');
 		for (var i = 0; i < this.controller.party.players.length; i++){
 			var player = this.controller.party.players[i];
-			var playerInfoDiv = DOM.create('div');
+			var playerRow = DOM.create('div');
+			
+			var selectPlayerCheckbox = DOM.create('input');
+			selectPlayerCheckbox.type = 'checkbox';
+			selectPlayerCheckbox.className = 'selectPlayerCheckbox';
+			selectPlayerCheckbox.playerId = player.number;
+			playerRow.appendChild(selectPlayerCheckbox);
+
+			var playerInfoDiv = DOM.create('span');
 			playerInfoDiv.id = 'player'+player.number+'Status';
-			partyMembers.appendChild(playerInfoDiv);
+			playerRow.appendChild(playerInfoDiv);
+
+			partyMembers.appendChild(playerRow);
 		}
+		DOM.selectAll('.selectPlayerCheckbox', function(e){e.style.display = 'none'});
 	},
 	getNewGameConfig: function(){
 		var dungeonW = parseInt(DOM.val('txtDungeonW'));
@@ -118,7 +131,8 @@ UI.prototype = {
 			players: players
 		}
 	},
-	updateRoomData: function(room){
+	updateRoomData: function(){
+		var room = this.controller.party.getCurrentRoom();
 		var html = '<p>'+room.description+'</p>';
 		var corridorsHTML = '';
 		if (room.corridors.north){
@@ -237,6 +251,41 @@ UI.prototype = {
 	},
 	clearMessages: function(){
 		DOM.byId('messageArea').innerHTML = '';
+	},
+	_disableActionButtons: function(){
+		DOM.selectAll('.actionButton', function(e){
+			e.style.display = 'none';
+		});
+	},
+	enableMovement: function(){
+		this._disableActionButtons();
+		DOM.selectAll('.movementButton', function(e){
+			e.style.display = 'inline';
+		});
+	},
+	selectTargets: function(cb){
+		this._disableActionButtons();
+		DOM.byId('btnSelectTargets').style.display = 'inline';
+
+		DOM.selectAll('.selectPlayerCheckbox', function(e){
+			e.checked = false;
+			e.style.display = 'inline';
+		});
+		
+		this.targetSelectedCb = cb;
+
+	},
+	_targetsSelected: function(){
+		var targets = [];
+		var party = this.controller.party;
+		DOM.selectAll('.selectPlayerCheckbox', function(e){
+			e.style.display = 'none';
+			if (e.checked)
+				targets.push(party.getPlayerByNumber(e.playerId));
+		});
+		this.targetSelectedCb(targets);
+		this.controller.setInputStatus(this.controller.MOVE);
+		this.updateRoomData();
 	}
 };
 

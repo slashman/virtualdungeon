@@ -65,14 +65,19 @@ guide to determine what players for the party evaded the trap.
 
 Players also have a chance to evade traps based on their Dexterity stat.
 
-* Arrow traps: Can be avoided by quickly ducking. Slow players may be affected by injury in a single
-body part.
+* Arrow traps: Injure a single body part to one or all party members. Can be avoided by quickly 
+ducking.
 * Poisoned arrow traps: Same as arrow traps, but may cause Poisoned status in addition to injury.
 * Stun arrow traps: Same as arrow traps, but may cause Paralyzed status in addition to injury.
-* Spikes, Clamping Traps, Caltrops, Pit traps: Cause damage to one or both legs. 
-* Falling Rocks: Cause damage to one or both arms, or may cause unconsciousness.
+* Spikes, Clamping Traps, Caltrops, Pit traps: Cause damage to one or both legs. Can be avoided by
+quickly jumping.
+* Falling Rocks: Cause damage to one or both arms, or may cause unconsciousness. Can be avoided by 
+quickly running to the next room.
 * Bomb Traps: May cause injuries to any body part (and more than one), as well as unconsciousness.
-* Powder traps: May cause Blindness, Paralysis, Asleep, Poisoned or Mute ailments.
+* Powder traps: May cause Blindness, Paralysis, Asleep, Poisoned or Mute ailments. Can be avoided by
+covering the nose, closing eyes and mouth quickly and crawling to the next room.
+
+
 
 Combat
 ======

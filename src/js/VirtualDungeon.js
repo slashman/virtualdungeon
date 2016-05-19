@@ -4,6 +4,9 @@ var Party = require('./Party.class')
 var Scenario = require('./Scenario.class')
 
 var VirtualDungeon = {
+	MOVE: 'move',
+	PICK_TARGET: 'pickTarget',
+	inputStatus: null,
 	levels: {},
 	init: function(){
 		console.log("Initializing VirtualDungeon");
@@ -30,15 +33,14 @@ var VirtualDungeon = {
 		console.log("Level", level);
 		console.log("Party", this.party);
 		this.ui.hideNewGamePanel();
-		this.ui.updateRoomData(this.party.getCurrentRoom());
+		this.ui.updateRoomData();
 		this.ui.initMap();
-		
-
+		this.setInputStatus(VirtualDungeon.MOVE);
 	},
 	move: function(dx, dy){
 		this.ui.clearMessages();
 		this.party.move(dx, dy);
-		this.ui.updateRoomData(this.party.getCurrentRoom());
+		this.ui.updateRoomData();
 	},
 	upstairs: function(){
 		this._gotoDepth(this.party.level.depth - 1);
@@ -62,6 +64,17 @@ var VirtualDungeon = {
 		}
 		this.party.setLevel(level)
 		this.ui.updateRoomData(this.party.getCurrentRoom());
+	},
+	setInputStatus: function(inputStatus){
+		this.inputStatus = inputStatus;
+		switch (this.inputStatus){
+			case this.MOVE:
+				this.ui.enableMovement();
+			break;
+			case this.PICK_TARGET:
+				this.ui.selectTargets(this.pickTargetCallback);
+			break;
+		}
 	}
 };
 

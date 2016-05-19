@@ -11,8 +11,14 @@ var DOM = {
 	val: function(id){
 		return this.byId(id).value;
 	},
-	selectAll: function(query){
-		return document.querySelectorAll(query);
+	selectAll: function(query, filter){
+		var elements = document.querySelectorAll(query);
+		if (filter){
+			for (var i = 0; i < elements.length; i++){
+				filter(elements[i]);
+			}
+		}
+		return elements;
 	}
 }
 module.exports = DOM;

@@ -33,19 +33,46 @@ Party.prototype = {
 			this.controller.ui.showMessage('You can\'t go there.');
 			return;
 		}
+		var party = this;
+		var controller = this.controller;
 		if (!corridor.obstacle){
-			this.location.x += dx;
-			this.location.y += dy;
 			if (corridor.trap){
-				corridor.triggerTrap(corridor.trap);
-				corridor.trap = false;
+				if (corridor.trap.slow){
+					corridor.showTrapTriggered(corridor.trap);
+					controller.ui.showMessage(corridor.trap.evadeMessage);
+					controller.ui.showMessage('Select the party members who couldn\'t evade the trap.');
+					this.controller.pickTargetCallback = function(targets){
+						if (targets.length == 0){
+							controller.ui.showMessage('All party members evade the trap.');
+						} else {
+							corridor.triggerTrapOn(corridor.trap, targets);
+						}
+						corridor.trap = false;
+						party.location.x += dx;
+						party.location.y += dy;
+						party.passTurn();
+					};
+					this.controller.setInputStatus(this.controller.PICK_TARGET);
+					return; // Party doesn't move
+				} else {
+					corridor.triggerTrap(corridor.trap);
+					corridor.trap = false;
+				}
 			}
 		}
+		party.location.x += dx;
+		party.location.y += dy;
 		this.passTurn();
 	},
 	passTurn: function(){
 		for (var i = 0; i < this.players.length; i++){
 			this.players[i].passTurn();
+		}
+	},
+	getPlayerByNumber: function(number){
+		for (var i = 0; i < this.players.length; i++){
+			if (this.players[i].number == number)
+				return this.players[i];
 		}
 	}
 }

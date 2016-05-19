@@ -16,7 +16,9 @@ var CorridorGenerator = {
 					trap = {
 						type: Corridor.ARROWS_TRAP,
 						effect: effect,
-						multiTarget: Utils.chance(20)
+						multiTarget: Utils.chance(20),
+						slow: Utils.chance(50),
+						evadeMessage: 'Duck quickly to evade the trap'
 					};
 					break;
 				case 1:
@@ -29,13 +31,17 @@ var CorridorGenerator = {
 						type: Corridor.FLOOR_TRAP,
 						description: description,
 						effect: effect,
-						multiTarget: description !== Corridor.CLAMPING_TRAP
+						multiTarget: description !== Corridor.CLAMPING_TRAP,
+						slow: Utils.chance(50),
+						evadeMessage: 'Jump quickly to evade the trap'
 					};
 					break;
 				case 2:
 					trap = {
 						type: Corridor.FALLING_TRAP,
-						multiTarget: true
+						multiTarget: true,
+						slow: Utils.chance(50),
+						evadeMessage: 'Run quickly to the next room to evade the trap'
 					};
 					break;
 				case 3:
@@ -49,7 +55,9 @@ var CorridorGenerator = {
 					trap = {
 						type: Corridor.POWDER_TRAP,
 						effect: effect,
-						multiTarget: true
+						multiTarget: true,
+						slow: Utils.chance(50),
+						evadeMessage: 'Cover your nose, close your eyes and mouth and crawl quickly to the next room to evade the trap'
 					};
 					break;
 			}
