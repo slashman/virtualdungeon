@@ -76,10 +76,15 @@ Player.prototype = {
 		if (!turns){
 			turns = Utils.rand(3, 6); 
 		}
-		this.statusAilments.push({
-			ailment: ailment,
-			turns: turns
-		});
+		var currentAilment = this.getAilment(ailment);
+		if  (currentAilment){
+			currentAilment.turns = turns;
+		} else {		
+			this.statusAilments.push({
+				ailment: ailment,
+				turns: turns
+			});
+		}
 		this.party.controller.ui.showMessage(this.name +' '+ Player.AILMENT_EFFECTS[ailment]);
 	},
 	turnHeal: function(){
@@ -96,6 +101,14 @@ Player.prototype = {
 				i--;
 			}
 		}
+	},
+	getAilment: function(ailment){
+		for (var i = 0; i < this.statusAilments.length; i++){
+			if (this.statusAilments[i].ailment === ailment){
+				return this.statusAilments[i];
+			}
+		}
+		return false;
 	},
 	passTurn: function(){
 		this.turnHeal();
