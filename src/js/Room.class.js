@@ -26,6 +26,10 @@ Room.prototype = {
 	locate: function(x, y){
 		this.x = x;
 		this.y = y;
+	},
+	endBattle: function(){
+		this.spawnEnemies = false;
+		this.enemies = [];
 	}
 }
 

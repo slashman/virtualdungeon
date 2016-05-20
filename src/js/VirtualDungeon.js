@@ -1,7 +1,8 @@
-var UI = require('./UI.class')
-var DungeonGenerator = require('./DungeonGenerator')
-var Party = require('./Party.class')
-var Scenario = require('./Scenario.class')
+var UI = require('./UI.class');
+var DungeonGenerator = require('./DungeonGenerator');
+var Party = require('./Party.class');
+var Staff = require('./Staff.class');
+var Scenario = require('./Scenario.class');
 
 var VirtualDungeon = {
 	MOVE: 'move',
@@ -20,6 +21,9 @@ var VirtualDungeon = {
 		this.config = config;
 		this.party = new Party({
 			players: config.players
+		}, this);
+		this.staff = new Staff({
+			staffPlayers: config.staffPlayers
 		}, this);
 		this.party.locate(Math.floor(config.dungeonSize.w / 2), Math.floor(config.dungeonSize.h / 2));
 		var level = DungeonGenerator.generateLevel({
@@ -77,7 +81,7 @@ var VirtualDungeon = {
 				break;
 			case this.COMBAT:
 				this.ui.activateCombat();
-				braek;
+				break;
 		}
 	}
 };

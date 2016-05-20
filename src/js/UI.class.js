@@ -25,7 +25,9 @@ UI.prototype = {
 		DOM.onClick('btnMoveEast', function() { move(1, 0); });
 		DOM.onClick('btnStartGame', controller.startGame, controller);
 		DOM.onClick('btnAddPlayer', this.createNewPlayerRow, this);
+		DOM.onClick('btnAddStaffPlayer', this.createNewStaffPlayerRow, this);
 		DOM.onClick('btnSelectTargets', this._targetsSelected, this);
+		DOM.onClick('btnEndCombat', this._battleOver, this);
 	},
 	update: function(){
 		var ctx = this.mapCanvasCtx;
@@ -59,7 +61,7 @@ UI.prototype = {
 			if (!room.corridors.east)
 				ctx.fillRect(room.x * scale + 2 * blockSize, room.y * scale + blockSize, blockSize, blockSize);
 			// Show enemies
-			if (room.enemies.length > 0){
+			if (room.spawnEnemies || room.enemies.length > 0){
 				ctx.lineWidth= lineWidth;
 				ctx.strokeStyle="#ff00d5";
 				ctx.strokeRect(room.x * scale + blockSize + lineWidth / 2, room.y * scale + blockSize + lineWidth / 2, blockSize - lineWidth, blockSize - lineWidth );
@@ -85,6 +87,7 @@ UI.prototype = {
 		});
 	},
 	hideNewGamePanel: function(){
+		var ui = this;
 		DOM.byId('newGame').style.display = 'none';
 		DOM.byId('movementButtons').style.display = 'block';
 		var partyMembers = DOM.byId('partyMembersSection');
@@ -104,7 +107,22 @@ UI.prototype = {
 
 			var bodyPartSelect = this._createBodyPartSelect();
 			bodyPartSelect.id = 'bodyPartSelect'+player.number;
+			bodyPartSelect.className = 'combatComponent';
+			bodyPartSelect.classList.add('actionButton');
 			playerRow.appendChild(bodyPartSelect);
+
+			var takeDamageButton = DOM.create('button');
+			takeDamageButton.innerHTML = 'Hit!';
+			takeDamageButton.className = 'combatComponent';
+			takeDamageButton.classList.add('actionButton');
+			(function(player){
+				DOM.onClick(takeDamageButton, function() {
+					var bodyPart = DOM.val('bodyPartSelect'+player.number);
+					player.takeInjury(bodyPart);
+					ui.updateRoomData();
+				});
+			})(player);
+			playerRow.appendChild(takeDamageButton);
 
 			partyMembers.appendChild(playerRow);
 		}
@@ -145,13 +163,23 @@ UI.prototype = {
 			});
 		}
 
+		var staffPlayers = [];
+		var staffNames = DOM.selectAll('.staffPlayerNameText');
+		for (var i = 0; i < staffNames.length; i++){
+			staffPlayers.push({
+				name: staffNames[i].value
+			});
+		}
+
+
 		return {
 			dungeonSize: {
 				w: dungeonW,
 				h: dungeonH
 			},
 			roomDensity: roomDensity,
-			players: players
+			players: players,
+			staffPlayers: staffPlayers
 		}
 	},
 	updateRoomData: function(){
@@ -176,7 +204,7 @@ UI.prototype = {
 		if (room.enemies.length > 0){
 			html += '<h3>Monsters!</h3><p>'+this._buildList(room.enemies, 
 				function(element){
-					return element.raceName;
+					return 'Lv'+element.level+' ' + element.race.name + ' ('+element.staffPlayer.name+')';
 				}
 			)+'</p>';
 		}
@@ -267,6 +295,30 @@ UI.prototype = {
 
 		table.appendChild(tr);
 	},
+	createNewStaffPlayerRow: function(){
+		var table = DOM.byId('tblPlayersInfo');
+		var tr = DOM.create('tr');
+		var td = DOM.create('td');
+		var component = DOM.create('input');
+		component.type = 'text';
+		component.className = 'staffPlayerNameText';
+		td.appendChild(component);
+		tr.appendChild(td);
+
+		td = DOM.create('td');
+		td.innerHTML = 'Dungeon';
+		tr.appendChild(td);
+
+		td = DOM.create('td');
+		td.innerHTML = 'Any';
+		tr.appendChild(td);
+
+		td = DOM.create('td');
+		td.innerHTML = 'Any';
+		tr.appendChild(td);
+
+		table.appendChild(tr);
+	},
 	showMessage: function(message){
 		var component = DOM.create('p');
 		component.innerHTML = message;
@@ -311,7 +363,16 @@ UI.prototype = {
 		this.updateRoomData();
 	},
 	activateCombat: function(){
-
+		this._disableActionButtons();
+		DOM.selectAll('.combatComponent', function(e){
+			e.style.display = 'inline';
+		});
+	},
+	_battleOver: function(){
+		this.showMessage('All enemies are vanquished!');
+		this.controller.party.getCurrentRoom().endBattle();
+		this.controller.setInputStatus(this.controller.MOVE);
+		this.updateRoomData();
 	}
 };
 

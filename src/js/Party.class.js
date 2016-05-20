@@ -64,7 +64,10 @@ Party.prototype = {
 		this.location.x += dx;
 		this.location.y += dy;
 		this.passTurn();
-		if (this.getCurrentRoom().enemies.length > 0){
+		if (this.getCurrentRoom().spawnEnemies){
+			// Select an enemy party
+			var enemyParty = this.controller.staff.selectEnemyParty();
+			this.getCurrentRoom().enemies = enemyParty;
 			// Enter combat mode!
 			this.controller.setInputStatus(this.controller.COMBAT);
 		}

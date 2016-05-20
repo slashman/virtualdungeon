@@ -5,8 +5,11 @@ var DOM = {
 	create: function(type){
 		return document.createElement(type);
 	},
-	onClick: function(id, cb, context){
-		this.byId(id).addEventListener('click', cb.bind(context));
+	onClick: function(element, cb, context){
+		if (typeof element === 'string'){
+			element = this.byId(element);
+		}
+		element.addEventListener('click', cb.bind(context));
 	},
 	val: function(id){
 		return this.byId(id).value;

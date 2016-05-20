@@ -10,26 +10,19 @@ var RoomGenerator = {
 		if (specs && specs.addStairsDown){
 			features.push({type:'downstairs', description: 'Stairway going down'});
 		}
-		var enemies = [];
-		if (Utils.chance(30)){
-			enemies = this._getEnemyParty(level);
-		}
+		var enemies = []; // Room can potentially start with a set of enemies
 		var room = new Room(level, {	
 			description: "A plain room.",
 			items: [],
 			enemies: enemies,
 			features: features
 		});	
+		room.spawnEnemies = Utils.chance(30);
 		if (specs && specs.isEntrance)
 			room.isEntrance = true;
 		if (specs && specs.isExit)
 			room.isExit = true;
 		return room;
-	},
-	_getEnemyParty: function(level){
-		return [{
-			raceName: 'Orc'
-		}];
 	}
 };
 

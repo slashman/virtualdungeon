@@ -137,6 +137,10 @@ Player.prototype = {
 			line += ' OK';
 		}
 		return line;
+	},
+	takeInjury: function(bodyPart){
+		this.sustainInjury(bodyPart);
+		//TODO: Reduce HP
 	}
 }
 
