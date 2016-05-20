@@ -3,10 +3,64 @@ General Guidelines
 * Fair play for fun: It's up to each player to abide to the game rules to the best of his knowledge,
 it makes no sense to "cheat", since the main point of the game is to have fun with friends and
 immerse into the experience.
+* Performing and mimicking actions is encouraged.
 
-The Dungeon Guide
+The Game Team
+=============
+The game should be played by at least 2 players plus the Game Master.
+
+* Game Master: Uses the virtualDungeon program to guide the adventuring party through the dungeon.
+* The player's party: 1 to 4 players adventuring inside the dungeon
+* The staff party: 1 to 4 players acting as monsters and NPCs into the dungeon.
+
+The optimal setup is 8 players; if an 8 players party cannot be assembled, the following is the
+suggested distribution:
+
+Total Players     8 7 6 5 4 3 2
+Player's Party    4 4 3 3 2 1 1
+Staff             4 3 3 2 2 2 1
+
+The game is better played if there are at least 5 players, it can potentially be played by any
+number of players, but things may get out of hand.
+   
+
+The Playing Field
 =================
-Uses the virtualDungeon program to guide the adventuring party through the dungeon.
+
++----+----+-2--+----+----+
+|    |    |    |    |    |
+|    |    |    |    |    |
++----+----+----+----+----+     +----+
+|    |    |    |    |    |     | 3  |
+|    |    |    |    |    |     |    |
++----+----+----+----+----+     +----+
+2    |    | 1  |    |    2
+|    |    |    |    |    |
++----+----+----+----+----+
+|    |    |    |    |    |
+|    |    |    |    |    |
++----+----+----+----+----+
+|    |    |    |    |    |
+|    |    |    |    |    |
++----+----+-2--+----+----+
+
+1 - Main field: This is where most of the action happens, it is a big open space, about 25x25 
+meters. Before starting the game, the Game Master prepares the field by placing markers on the
+boundaries (2)
+2 - Field boundaries: The Game Master uses these to properly locate the party on the playing field.
+3 - The Dungeon Armory: The Staff Players await here for indications from the Dungeon Master to get
+into battle; the armory contains equipment for both the players and the monsters to use.
+
+Equipment
+=========
+Basic equipment for the game consists of:
+* The VirtualDungeon game program, loaded on a portable device.
+* One weapon for each player participating (At least 2, 8 is p)
+* Shields for participating players (Optional)
+
+          Minimum Setup     Optimal
+Weapons         2              8
+Shields         0              8
 
 Stats
 =====
@@ -77,9 +131,61 @@ quickly running to the next room.
 * Powder traps: May cause Blindness, Paralysis, Asleep, Poisoned or Mute ailments. Can be avoided by
 covering the nose, closing eyes and mouth quickly and crawling to the next room.
 
+Starting Combat
+===============
+Combat in the game can happen in two different situations:
 
+* Entering a room with enemies
+* Waiting on a room ("Passing a turn") may make monsters show up
 
-Combat
-======
+Whenever combat starts, the game will pick players from the staff in order from them to play as
+monsters, assigning a monster race to each one of them, as well as their equipment (weapon type
+and shield)
+
+When one of the staff players is assigned as a monster, he may pick the mask representing the
+monster race, as well as his equipment from the dungeon armory. He will then proceed to attack the
+player's party.
+
+Weapons
+=======
+All weapons inside the game are covered with foam. There may be different shapes and lengths to
+simulate different types of weapons such as:
+* Small weapons: Up to 30cm long
+* Swords: Up to 50cm long
+* Two Handed Weapons: Up to 100cm long
+
+Shields
+=======
+Players may decide to wear a shield in exchange for a two handed weapon
+
+Attack Styles
+=============
+Broadly speaking, there are three different kinds of attacks which can be used by players inside the
+game; but it's up to the player to use the most effective fighting style based on the weapon type he
+is wielding (it will not be strongly enforced).
+
+* Slash: Cut the enemy with one side of the weapon. Effective for swords.
+* Hack: Similar to slash, but also combining concussive effect. Effective for axes.
+* Thrust: Pierce the enemy with the pointy end of the weapon. Effective for swords, daggers
+and some polearms.
+* Bash: Hit the enemy with either the sides or the tip of the weapon for concussion damage. 
+Effective for hammers and maces.
+
+Rules for Combat
+================
+The goal of the combat is to make soft contact with the enemy, reducing his hitpoints and taking
+him down. Each successful hit reduces one hit point, regardless of the hit area.
+
+Excessive agression is NOT allowed, neither are head hits. If a player feels another player is being
+overly agressive he will notify the Game Master about it, and the player may be given a warning or
+removed from the game.
+
 When hit by an enemy on a leg or arm, that part becomes injured and cannot be used (as described in
-the status ailments section)
+the status ailments section). This applies to both players and monsters.
+
+Monsters have a number of hitpoints when they are assigned, staff players should keep their hitpoint
+count in mind, and drop to the floor when the player has defeated them.
+
+Players also have a number of hitpoints; the game master will help keep track of them using the
+game, and registering the hits he sees. Players keep track of their injuries the same way as 
+monsters, but should also drop dead by command of the Game Master if notified.
