@@ -34,6 +34,7 @@ Player.MUTE = 'mute';
 Player.CLAMPED = 'clamped';
 
 Player.BODY_PART_NAMES = {};
+Player.BODY_PART_NAMES[Player.TORSO] = 'Torso';
 Player.BODY_PART_NAMES[Player.LEFT_ARM] = 'Left Arm';
 Player.BODY_PART_NAMES[Player.RIGHT_ARM] = 'Right Arm';
 Player.BODY_PART_NAMES[Player.LEFT_LEG] = 'Left Leg';
