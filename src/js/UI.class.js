@@ -204,7 +204,7 @@ UI.prototype = {
 		if (room.enemies.length > 0){
 			html += '<h3>Monsters!</h3><p>'+this._buildList(room.enemies, 
 				function(element){
-					return 'Lv'+element.level+' ' + element.race.name + ' ('+element.staffPlayer.name+')';
+					return element.race.name + ' HP: '+element.hitPoints+' ('+element.staffPlayer.name+')';
 				}
 			)+'</p>';
 		}

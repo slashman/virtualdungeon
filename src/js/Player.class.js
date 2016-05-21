@@ -12,6 +12,7 @@ function Player(specs, party){
 	this.role = specs.role;
 	this.job = party.controller.scenario.getJob(specs.job);
 	this.number = specs.number;
+	this.hitPoints = this.job.str;
 };
 
 Player.LEFT = 'left';
@@ -120,7 +121,8 @@ Player.prototype = {
 		return Utils.chance(evadeChance);
 	},
 	getStatusLine: function(){
-		var line = '<b>'+this.name+'</b>';
+		var line = '<b>'+this.name+'</b> HP: '+this.hitPoints;
+
 		for (var i = 0; i < this.statusAilments.length; i++){
 			line += ' ' + Player.AILMENT_NAMES[this.statusAilments[i].ailment];
 		}
@@ -140,7 +142,7 @@ Player.prototype = {
 	},
 	takeInjury: function(bodyPart){
 		this.sustainInjury(bodyPart);
-		//TODO: Reduce HP
+		this.hitPoints --;
 	}
 }
 
