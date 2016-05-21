@@ -36,7 +36,16 @@ var DungeonGenerator = {
 				continue;
 			}
 			remainingRooms--;
-			var newRoom = RoomGenerator.generateRoom(this.level, {addStairsDown: remainingRooms == 0, isExit: remainingRooms == 0});
+			var specs = {};
+			if (remainingRooms == 0){
+				if (depth == 8){
+					specs.addWinArtifact = true;
+				} else {
+					specs.addStairsDown = true;
+				}
+				specs.isExit = true;
+			}
+			var newRoom = RoomGenerator.generateRoom(this.level, specs);
 			var corridor = CorridorGenerator.generateCorridor(this.level);
 			this.placeRoom(potentialCorridor.room, potentialCorridor.toX, potentialCorridor.toY, newRoom, corridor);
 		}

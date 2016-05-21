@@ -53,6 +53,9 @@ var VirtualDungeon = {
 	downstairs: function(){
 		this._gotoDepth(this.party.level.depth + 1);
 	},
+	winArtifact: function(){
+		this.ui.showMessage('You win the game!!!');
+	},
 	_gotoDepth: function(depth){
 		var level = this.levels[depth];
 		if (!level){

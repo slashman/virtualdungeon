@@ -223,10 +223,13 @@ UI.prototype = {
 					switch (element.type){
 						case 'upstairs':
 							action = '<button onclick="VirtualDungeon.upstairs();">Go Up</button>';
-						break;
+							break;
 						case 'downstairs':
-						action = '<button onclick="VirtualDungeon.downstairs();">Go Down</button>';
-						break;
+							action = '<button onclick="VirtualDungeon.downstairs();">Go Down</button>';
+							break;
+						case 'winArtifact':
+							action = '<button onclick="VirtualDungeon.winArtifact();">Take the Artifact</button>';
+							break;
 					}
 					return description + action;
 				}

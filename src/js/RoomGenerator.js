@@ -10,6 +10,9 @@ var RoomGenerator = {
 		if (specs && specs.addStairsDown){
 			features.push({type:'downstairs', description: 'Stairway going down'});
 		}
+		if (specs && specs.addWinArtifact){
+			features.push({type:'winArtifact', description: 'Winning Artifact'});
+		}
 		var enemies = []; // Room can potentially start with a set of enemies
 		var room = new Room(level, {	
 			description: "A plain room.",
