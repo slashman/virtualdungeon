@@ -31,6 +31,13 @@ Corridor.TRAP_DESCRIPTIONS[Corridor.CLAMPING_TRAP] = 'You step on a clamping tra
 Corridor.TRAP_DESCRIPTIONS[Corridor.CALTROPS_TRAP] = 'Sharp caltrops are hidden in the floor!';
 Corridor.TRAP_DESCRIPTIONS[Corridor.PIT_TRAP] = 'You fall into a pit!';
 
+Corridor.HALLWAY = 'hallway';
+Corridor.TUNNEL = 'tunnel';
+Corridor.GAP = 'gap';
+Corridor.TIGHT = 'tight';
+
+Corridor.SPECIAL_TYPES = [Corridor.TUNNEL, Corridor.GAP, Corridor.TIGHT];
+
 Corridor.prototype = {
 	init: function(level, features){
 		this.level = level;

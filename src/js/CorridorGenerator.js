@@ -4,8 +4,12 @@ var Utils = require('./Utils');
 
 var CorridorGenerator = {
 	generateCorridor: function(level){
-		var trap = null;
+		var corridorType = Corridor.HALLWAY;
 		if (Utils.chance(20)){
+			corridorType = Utils.randomElementOf(Corridor.SPECIAL_TYPES);
+		}
+		var trap = null;
+		if (corridorType === Corridor.HALLWAY && Utils.chance(20)){
 			switch (Utils.rand(0,4)){
 				case 0:
 					var effect = false;
@@ -63,10 +67,24 @@ var CorridorGenerator = {
 			}
 		}
 		return new Corridor(level, {	
-			description: "A plain corridor",
+			description: this.getDescription(corridorType),
+			type: corridorType,
 			trap: trap,
 			obstacle: null
 		});
+	},
+	getDescription: function(corridorType){
+		// TODO: Spice up descriptions
+		switch (corridorType){
+			case Corridor.HALLWAY:
+				return 'A stone hallway';
+			case Corridor.TUNNEL:
+				return 'A tunnel';
+			case Corridor.GAP:
+				return 'A gap you can jump';
+			case Corridor.TIGHT:
+				return 'A tight opening you can squeeze into'
+		}
 	}
 };
 
