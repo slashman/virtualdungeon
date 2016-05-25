@@ -131,6 +131,13 @@ quickly running to the next room.
 * Powder traps: May cause Blindness, Paralysis, Asleep, Poisoned or Mute ailments. Can be avoided by
 covering the nose, closing eyes and mouth quickly and crawling to the next room.
 
+Magic - Outside of Combat
+=========================
+Several spells can be cast outside of combat; during the exploration phase, the party leader may
+inform the game master than one of the members of the party will cast an Spell. This may result
+on one of the party members recovering from illness or injury, or the party moving around or
+obtaining additional information, based on the spells defined on the scenario.
+
 Starting Combat
 ===============
 Combat in the game can happen in two different situations:
@@ -189,3 +196,17 @@ count in mind, and drop to the floor when the player has defeated them.
 Players also have a number of hitpoints; the game master will help keep track of them using the
 game, and registering the hits he sees. Players keep track of their injuries the same way as 
 monsters, but should also drop dead by command of the Game Master if notified.
+
+Magic - Combat
+==============
+When a magic spell is cast on combat, the player (either from the heroes or the dungeon party) will
+yell "SPELL" followed by the spell name. All players should immediately freeze, while the caster
+performs the spell following the indications of the game master.
+
+Targetted spells will require the spell caster to throw a magic token to the target; if the token
+misses, the spell won't have any effect. Else it will cause the amount of damage or the status 
+ailment as told by the game master.
+
+Non-targetted spells will cause an immediate effect on the players as defined by the game master.
+
+After the spell has been cast, the game master will yell "RESUME!" and the combat will continue.

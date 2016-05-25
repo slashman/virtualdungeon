@@ -13,3 +13,74 @@ Fighter        30   10   10
 Tinker         20   10   20
 Shepherd       10   10   10
 Ranger         15   15   20
+
+Spells
+======
+* Awaken (1MP) AN ZU: Causes all Asleep members in the party to recover.
+* Cure (1MP): Removes status ailments from a single party member (not injuries).
+* Magic Missile (1MP): Causes 2 points of physical damage.
+* Open (1MP) AN SANCT: Opens a chest content without triggering any trap.
+* Heal (2MP): Recovers 3 hit points and cures injury on a single body part.
+* Protection (3MP) UUS SANCT: Renders a player invincible for 30 seconds. 
+* Fireball (3MP): Causes 5 points of fire damage.
+* Blink (3MP): Teleports the party to a nearby room in a given direction without triggering any 
+traps. Cannot be used in battle.
+* Sleep (3MP) IN ZU: Causes an enemy to sleep for 30 seconds.
+* Repel Undead (3MP) AN XEN CORP: Causes 5 points of holy damage to all undead enemies
+* Peer (3MP) VAS WIS: Allows the caster to see the dungeon map for 5 seconds. Cannot be used in
+battle.
+* Quickness (4MP) REL TYM: Make all enemies moves slowly for 30 seconds.
+* Dispel (4MP): Removes a fire or energy field from a corridor. Cannot be used in battle.
+* Iceball (4MP): Causes 5 points of ice damage.
+* Negate Magic (4MP) AN ORT: Prevents all magic spells for 1 minute.
+* Kill (5MP): Strikes an enemy with a deadly ray of energy.
+* Jinx (6MP) VAS AN XEN EX: Turns an enemy into an ally temporarily for 30 seconds
+* Resurrect (7MP) IN MANI CORP: Revives a player with 1 HP.
+* Tremor (6MP) VAS POR YLEM: Causes 5 points of physical damage to all non-flying enemies
+
+Enemy Skills
+============
+Enemies don't have Magic Points, instead they start with a set of Skill Points based on their type.
+
+Using a skill costs 1 skill point.
+
+Following is the list of basic skills
+
+* Throw rock (1MP): Causes 2 points of physical damage, can only be used from far.
+* Throw boulder (1MP): Causes 3 points of physical damage, can only be used from far.
+
+Some enemies have spells-like skills, which have the same rules as the player-based spells and use a
+single skill point:
+
+* Sleep
+* Tremor
+* Fireball
+* Magic Missile
+* Tremor
+
+Monster Features
+================
+* Undead: Resistant to physical damage.
+* Fire Resistant: Resistant to fire damage.
+* Flying: Immune to tremor damage.
+* Immobile: Cannot move around
+
+Monsters
+========
+* Skeleton: [Undead]
+* Headless
+* Orc
+* Rogue
+* Troll: Throw rock, 2 SP
+* Lava Lizard: [Fire Resistant] Fireball, 2 SP
+* Ettin: Throw boulder, 2 SP
+* Daemon: [Fire resistant, Flying] Magic missile, 3 SP
+* Cyclops: Throw boulder, 2 SP
+* Mage: Magic Missile, 3 SP
+* Liche: [Undead] Magic Missile, 3 SP
+* Hydra: [Fire Resistant] Fireball, 3 SP
+* Dragon: [Fire Resistant, Flying] Fireball, 3 SP
+* Zorn: Negate, 1 SP
+* Gazer: [Flying] Sleep, 3 SP
+* Reaper: [Immobile] Sleep, 5 SP
+* Balron: [Fire Resistant, Flying] Fireball, Sleep, 3 SP
