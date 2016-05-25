@@ -17,6 +17,10 @@ var VirtualDungeon = {
 	},
 	startGame: function(){
 		var config = this.ui.getNewGameConfig();
+		if (error = this.getConfigErrors(config)){
+			alert(error);
+			return;
+		}
 		this.config = config;
 		this.party = new Party({
 			players: config.players
@@ -38,6 +42,25 @@ var VirtualDungeon = {
 		this.ui.updateRoomData();
 		this.ui.initMap();
 		this.setInputStatus(VirtualDungeon.MOVE);
+	},
+	getConfigErrors: function(config){
+		if (config.players.length == 0){
+			return "At least one hero is required.";
+		}
+		if (config.staffPlayers.length == 0){
+			return "At least one dweller is required.";
+		}
+		for (var i = 0;  i < config.players.length; i++){
+			if (config.players[i].name.trim() === ''){
+				return "Please provide a name for all players.";
+			}
+		}
+		for (i = 0;  i < config.staffPlayers.length; i++){
+			if (config.staffPlayers[i].name.trim() === ''){
+				return "Please provide a name for all players.";
+			}
+		}
+		return false;
 	},
 	move: function(dx, dy){
 		this.ui.clearMessages();
