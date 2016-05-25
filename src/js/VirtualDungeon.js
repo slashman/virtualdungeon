@@ -3,6 +3,7 @@ var DungeonGenerator = require('./DungeonGenerator');
 var Party = require('./Party.class');
 var Staff = require('./Staff.class');
 var Scenario = require('./Scenario.class');
+var Utils = require('./Utils');
 
 var VirtualDungeon = {
 	MOVE: 'move',
@@ -11,13 +12,11 @@ var VirtualDungeon = {
 	inputStatus: null,
 	levels: {},
 	init: function(){
-		console.log("Initializing VirtualDungeon");
 		this.scenario = new Scenario();
 		this.ui = new UI(this);
 	},
 	startGame: function(){
 		var config = this.ui.getNewGameConfig();
-		console.log("New Game, config", config);
 		this.config = config;
 		this.party = new Party({
 			players: config.players
@@ -35,8 +34,6 @@ var VirtualDungeon = {
 		}, this);
 		this.levels[1] = level;
 		this.party.setLevel(level);
-		console.log("Level", level);
-		console.log("Party", this.party);
 		this.ui.hideNewGamePanel();
 		this.ui.updateRoomData();
 		this.ui.initMap();
@@ -68,7 +65,6 @@ var VirtualDungeon = {
 				roomDensity: config.roomDensity
 			}, this);
 			this.levels[depth] = level;
-			console.log("this.levels", this.levels);
 		}
 		this.party.setLevel(level)
 		this.ui.updateRoomData(this.party.getCurrentRoom());
@@ -85,6 +81,17 @@ var VirtualDungeon = {
 			case this.COMBAT:
 				this.ui.activateCombat();
 				break;
+		}
+	},
+	passTurn: function(){
+		this.party.passTurn();
+		if (Utils.chance(20)){
+			this.ui.showMessage('Ambushed!');
+			var enemyParty = this.staff.selectEnemyParty();
+			this.party.getCurrentRoom().enemies = enemyParty;
+			this.setInputStatus(this.COMBAT);
+		} else {
+			this.setInputStatus(this.MOVE);
 		}
 	}
 };

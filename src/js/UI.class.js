@@ -28,6 +28,7 @@ UI.prototype = {
 		DOM.onClick('btnAddStaffPlayer', this.createNewStaffPlayerRow, this);
 		DOM.onClick('btnSelectTargets', this._targetsSelected, this);
 		DOM.onClick('btnEndCombat', this._battleOver, this);
+		DOM.onClick('btnPass', this._passTurn, this);
 	},
 	update: function(){
 		var ctx = this.mapCanvasCtx;
@@ -375,6 +376,12 @@ UI.prototype = {
 		this.showMessage('All enemies are vanquished!');
 		this.controller.party.getCurrentRoom().endBattle();
 		this.controller.setInputStatus(this.controller.MOVE);
+		this.updateRoomData();
+	},
+	_passTurn: function(){
+		this.clearMessages();
+		this.showMessage('** Waiting **');
+		this.controller.passTurn();
 		this.updateRoomData();
 	}
 };
