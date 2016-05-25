@@ -119,6 +119,12 @@ Player.prototype = {
 	},
 	evadesTrap: function(){
 		var evadeChance = this.job.dex * 2;
+		if (this.injuredMap[Player.LEFT_LEG]){
+			evadeChance = Math.round(evadeChance / 2);
+		}
+		if (this.injuredMap[Player.RIGHT_LEG]){
+			evadeChance = Math.round(evadeChance / 2);
+		}
 		return Utils.chance(evadeChance);
 	},
 	getStatusLine: function(){
