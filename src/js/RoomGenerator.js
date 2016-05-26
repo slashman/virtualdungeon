@@ -13,6 +13,9 @@ var RoomGenerator = {
 		if (specs && specs.addWinArtifact){
 			features.push({type:'winArtifact', description: 'Winning Artifact'});
 		}
+		if (specs.addFountain){
+			features.push({type:'fountain', description: 'A fountain'});
+		}
 		var enemies = []; // Room can potentially start with a set of enemies
 		var room = new Room(level, {	
 			description: "A plain room.",
@@ -21,6 +24,7 @@ var RoomGenerator = {
 			features: features
 		});	
 		room.spawnEnemies = Utils.chance(30);
+
 		if (specs && specs.isEntrance)
 			room.isEntrance = true;
 		if (specs && specs.isExit)
