@@ -186,6 +186,10 @@ UI.prototype = {
 	updateRoomData: function(){
 		var room = this.controller.party.getCurrentRoom();
 		var html = '<p>'+room.description+'</p>';
+		if (room.gmTips){
+			html += '<p><b>'+room.gmTips.name+'</b></p>';
+			html += '<p class = "gmTip">'+room.gmTips.helpText+'</p>';
+		}
 		var corridorsHTML = '';
 		if (room.corridors.north){
 			corridorsHTML += '<strong>North:</strong> '+room.corridors.north.description+ '<br/>';

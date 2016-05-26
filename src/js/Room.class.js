@@ -12,6 +12,7 @@ function Room(level, features){
 		west: null,
 		east: null
 	}
+	this.gmTips = null;
 	this.init(level, features);
 }
 
@@ -22,6 +23,7 @@ Room.prototype = {
 		this.enemies = features.enemies;
 		this.items = features.items;
 		this.features = features.features;
+		this.gmTips = features.gmTips;
 	},
 	locate: function(x, y){
 		this.x = x;

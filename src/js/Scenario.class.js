@@ -1,4 +1,5 @@
 //TODO: gulp script creates this file based on config
+var Abyss = require('./dungeons/Abyss');
 
 function Scenario(){
 	this.jobs = [
@@ -11,25 +12,8 @@ function Scenario(){
 		{name: 'Shepherd', str: 10, magic: 10, dex: 10},
 		{name: 'Ranger', str: 15, magic: 15, dex: 20}
 	];
-	this.enemies = [
-		{name: 'Skeleton', from: 1, to: 2},
-		{name: 'Headless', from: 1, to: 2},
-		{name: 'Orc', from: 1, to: 3},
-		{name: 'Rogue', from: 1, to: 3},
-		{name: 'Troll', from: 2, to: 3},
-		{name: 'Lava Lizard', from: 2, to: 4},
-		{name: 'Ettin', from: 2, to: 4},
-		{name: 'Daemon', from: 3, to: 4},
-		{name: 'Cyclops', from: 3, to: 5},
-		{name: 'Mage', from: 3, to: 5},
-		{name: 'Liche', from: 4, to: 5},
-		{name: 'Hydra', from: 4, to: 6},
-		{name: 'Dragon', from: 5, to: 6},
-		{name: 'Zorn', from: 5, to: 7},
-		{name: 'Gazer', from: 6, to: 7},
-		{name: 'Reaper', from: 6, to: 8},
-		{name: 'Balron', from: 7, to: 8}
-	];
+	this.enemies = Abyss.enemies;
+	this.endRooms = Abyss.endRooms;
 	this.compileEcosystems();
 }
 

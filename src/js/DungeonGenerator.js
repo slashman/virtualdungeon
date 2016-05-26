@@ -44,6 +44,7 @@ var DungeonGenerator = {
 					specs.addStairsDown = true;
 				}
 				specs.isExit = true;
+				specs.gmTips = controller.scenario.endRooms[depth];
 			}
 			var newRoom = RoomGenerator.generateRoom(this.level, specs);
 			var corridor = CorridorGenerator.generateCorridor(this.level);

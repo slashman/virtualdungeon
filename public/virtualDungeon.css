@@ -1,3 +1,7 @@
 #movementButtons {
 	display: none;
 }
+
+.gmTip {
+	font-style: italic;
+}

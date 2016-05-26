@@ -18,7 +18,8 @@ var RoomGenerator = {
 			description: "A plain room.",
 			items: [],
 			enemies: enemies,
-			features: features
+			features: features,
+			gmTips: specs.gmTips
 		});	
 		room.spawnEnemies = Utils.chance(30);
 		if (specs && specs.isEntrance)
