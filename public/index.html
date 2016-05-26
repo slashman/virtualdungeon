@@ -58,9 +58,22 @@
 	<button id = "btnMoveSouth" class = "movementButton actionButton">South</button>
 	<button id = "btnMoveWest"  class = "movementButton actionButton">West</butto n>
 	<button id = "btnMoveEast"  class = "movementButton actionButton">East</button>
-	<button id = "btnPass" class = "movementButton actionButton">Pass turn</button>
 	<button id = "btnSelectTargets" class = "actionButton">Select Targets</button>
 	<button id = "btnEndCombat" class = "actionButton combatComponent">All Enemies Vanquished</button>
+	<table id = 'actionsTable'>
+		<tr>
+			<td>Action</td>
+			<td><select id = "roomActions" class = "movementButton actionButton"></select></td>
+		</tr>
+		<tr>
+			<td>Spell</td>
+			<td><select id = "spellsCmb" class = "movementButton actionButton"></select></td>
+		</tr>
+		<tr>
+			<td>Player</td>
+			<td><select id = "playersCmb" class = "movementButton actionButton"></select></td>
+		</tr>
+	</table>
 </section>
 <section id = "roomDescription">
 </section>
