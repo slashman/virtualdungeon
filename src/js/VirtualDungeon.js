@@ -84,7 +84,17 @@ var VirtualDungeon = {
 		this.ui.updateRoomData();
 	},
 	castSpell: function(params){
-		console.log('casting '+params.spell);
+		var caster = this.party.getPlayerByNumber(params.player);
+		params.spellTarget = this.party.getPlayerByNumber(params.spellTarget);
+		var spell = this.scenario.getSpell(params.spell);
+		caster.castSpell(spell, params);
+		this.ui.updateRoomData();
+	},
+	spellFailed: function(params){
+		var caster = this.party.getPlayerByNumber(params.player);
+		var spell = this.scenario.getSpell(params.spell);
+		caster.spendMP(spell.cost);
+		this.ui.updateRoomData();
 	},
 	_gotoDepth: function(depth){
 		var level = this.levels[depth];

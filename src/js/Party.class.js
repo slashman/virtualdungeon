@@ -82,6 +82,11 @@ Party.prototype = {
 			if (this.players[i].number == number)
 				return this.players[i];
 		}
+	},
+	cureAilment: function(ailment){
+		for (var i = 0; i < this.players.length; i++){
+			this.players[i].cureAilment(ailment);
+		}	
 	}
 }
 

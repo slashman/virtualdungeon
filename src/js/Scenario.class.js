@@ -22,6 +22,14 @@ Scenario.prototype = {
 		}
 		return false;
 	},
+	getSpell: function(name){
+		for (var i = 0; i < this.spells.length; i++){
+			if (this.spells[i].name === name){
+				return this.spells[i];
+			}
+		}
+		return false;
+	},
 	getPossibleEnemies: function(depth){
 		return this.ecosystems[depth];
 	},

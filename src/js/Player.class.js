@@ -13,6 +13,7 @@ function Player(specs, party){
 	this.job = party.controller.scenario.getJob(specs.job);
 	this.number = specs.number;
 	this.hitPoints = this.job.str;
+	this.magicPoints = this.job.magic;
 };
 
 Player.LEFT = 'left';
@@ -151,8 +152,24 @@ Player.prototype = {
 		this.sustainInjury(bodyPart);
 		this.hitPoints --;
 	},
+	heal: function(bodyPart, healing){
+		this.injuredMap[bodyPart] = false;
+		this.hitPoints += healing; //TODO: Cap
+	},
 	cureAilments: function(){
 		this.statusAilments = [];
+	},
+	cureAilment: function(ailment){
+		for (var i = 0; i < this.statusAilments.length; i++){
+			if (this.statusAilments[i].ailment === ailment){
+				this.statusAilments.splice(i,1);
+				return;
+			}
+		}
+	},
+	revive: function(){
+		if (this.hitPoints <= 0)
+			this.hitPoints = 1;
 	},
 	drinkFromFountain: function(){
 		switch (Utils.randSplit([0.3, 0.2, 0.1, 0.2, 0.2])){
@@ -174,6 +191,48 @@ Player.prototype = {
 				break;
 			case 4:
 				this.party.controller.ui.showMessage('"Hmm--No Effect!"');
+				break;
+		}
+	},
+	castSpell: function(spell, params){
+		switch (spell.effect){
+			case 'removeAilmentFromAll':
+				this.party.controller.ui.showMessage('All party members are healed from '+spell.param+'.');
+				this.party.cureAilment(spell.param);
+				break;
+			case 'removeAllAilments':
+				this.party.controller.ui.showMessage(params.spellTarget.name+' is cured from all ailments.');
+				params.spellTarget.cureAilments();
+				break;
+			case 'openChest':
+				// TODO: Implement
+				break;
+			case 'heal':
+				this.party.controller.ui.showMessage(params.spellTarget.name+' heals '+spell.param);
+				params.spellTarget.heal(params.bodyPart, spell.param);
+				break;
+			case 'counter':
+				/*var counter = {
+					time: spell.param.time
+				}
+				if (spell.targeted){
+					counter.message = params.targetName + ' ';
+					counter.offMessage = params.targetName + ' ';
+				}
+				counter.message += spell.param.message;
+				counter.offMessage += spell.param.offMessage;
+				this.controller.addCounter(counter);*/
+				break;
+			case 'blink':
+				// TODO: Implement
+				break;
+			case 'removeField':
+				// TODO: Implement
+				break;
+			case 'revivePlayer':
+				this.party.controller.ui.showMessage(params.spellTarget.name+' is alive');
+				if (params.spellTarget.hitPoints <= 0)
+					params.spellTarget.revive();
 				break;
 		}
 	}

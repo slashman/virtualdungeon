@@ -64,6 +64,18 @@ UI.prototype = {
 		element.id = 'cmbPlayer';
 		td.appendChild(element);
 
+		// Spell Target
+		var tr = DOM.create('tr');
+		actionTable.appendChild(tr);
+		var td = DOM.create('td');
+		tr.appendChild(td);
+		td.innerHTML = 'Spell Target';
+		var td = DOM.create('td');
+		tr.appendChild(td);
+		var element = DOM.create('select');
+		element.id = 'cmbSpellTarget';
+		td.appendChild(element);
+
 		// Body part
 		var tr = DOM.create('tr');
 		actionTable.appendChild(tr);
@@ -125,10 +137,27 @@ UI.prototype = {
 			action: DOM.val('cmbAction'),
 			spell: DOM.val('cmbSpell'),
 			player: DOM.val('cmbPlayer'),
+			spellTarget: DOM.val('cmbSpellTarget'),
 			bodyPart: DOM.val('cmbBodyPart'),
 			direction: DOM.val('cmbDirection')
 		};
+		if (command.action === 'castSpell'){
+			var spell = this.controller.scenario.getSpell(command.spell);
+			var player = this.controller.party.getPlayerByNumber(command.player);
+			if (player.magicPoints < spell.cost){
+				alert('Not enough MP');
+				return;
+			}
+			if (spell.physicalHitCheck){
+				//The spell may fail, requires checking physical hit
+				if (!confirm('Did the spell hit the target?')){
+					this.controller.spellFailed(command);
+					return;
+				}
+			}
+		}
 		this.controller.execute(command);
+		
 	},
 	_bindEvents: function(controller){
 		DOM.onClick('btnMoveNorth', function() { move(0, -1); });
@@ -243,6 +272,12 @@ UI.prototype = {
 			playerOption.value = player.number;
 			playerOption.innerHTML = player.name;
 			cmbPlayer.appendChild(playerOption)
+
+			var cmbSpellPlayer = DOM.byId('cmbSpellTarget');
+			playerOption = DOM.create('option');
+			playerOption.value = player.number;
+			playerOption.innerHTML = player.name;
+			cmbSpellPlayer.appendChild(playerOption)
 		}
 		DOM.selectAll('.selectPlayerCheckbox', function(e){e.style.display = 'none'});
 	},
