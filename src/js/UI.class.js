@@ -4,6 +4,7 @@ var Player = require('./Player.class');
 function UI(controller){
 	this.controller = controller;
 	this._bindEvents(controller);
+	this.initComponents();
 	this.createNewPlayerRow();
 	this.mapCanvas = null;
 	this._disableActionButtons();
@@ -18,6 +19,34 @@ UI.prototype = {
 			sUI.update();
 		});
 	},
+	initComponents: function(){
+		var actionTable = DOM.byId('actionsTable')
+		// Player
+		var tr = DOM.create('tr');
+		actionTable.appendChild(tr);
+		var td = DOM.create('td');
+		tr.appendChild(td);
+		td.innerHTML = 'Player';
+		var td = DOM.create('td');
+		tr.appendChild(td);
+		var bodyPartSelect = this._createBodyPartSelect();
+		bodyPartSelect.id = 'bodyPartSelect';
+		td.appendChild(bodyPartSelect);
+
+
+		// Body part
+		var tr = DOM.create('tr');
+		actionTable.appendChild(tr);
+		var td = DOM.create('td');
+		tr.appendChild(td);
+		td.innerHTML = 'Body Part';
+		var td = DOM.create('td');
+		tr.appendChild(td);
+		var bodyPartSelect = this._createBodyPartSelect();
+		bodyPartSelect.id = 'bodyPartSelect';
+		td.appendChild(bodyPartSelect);
+
+	},
 	_bindEvents: function(controller){
 		DOM.onClick('btnMoveNorth', function() { move(0, -1); });
 		DOM.onClick('btnMoveSouth', function() { move(0, 1); });
@@ -28,7 +57,6 @@ UI.prototype = {
 		DOM.onClick('btnAddStaffPlayer', this.createNewStaffPlayerRow, this);
 		DOM.onClick('btnSelectTargets', this._targetsSelected, this);
 		DOM.onClick('btnEndCombat', this._battleOver, this);
-		DOM.onClick('btnPass', this._passTurn, this);
 	},
 	update: function(){
 		var ctx = this.mapCanvasCtx;
@@ -220,27 +248,37 @@ UI.prototype = {
 				}
 			)+'</p>';
 		}
-		if (room.features.length > 0){
-			html += '<p>'+this._buildList(room.features, 
-				function(element){
-					var description = element.description;
-					var action = "";
-					switch (element.type){
-						case 'upstairs':
-							action = '<button onclick="VirtualDungeon.upstairs();">Go Up</button>';
-							break;
-						case 'downstairs':
-							action = '<button onclick="VirtualDungeon.downstairs();">Go Down</button>';
-							break;
-						case 'winArtifact':
-							action = '<button onclick="VirtualDungeon.winArtifact();">Take the Artifact</button>';
-							break;
-					}
-					return description + action;
-				}
-			)+'</p>';
-		}
 		DOM.byId('roomDescription').innerHTML = html;
+
+		var actions = [];
+		actions.push({code: 'pass', name: 'Stand'});
+		actions.push({code: 'spell', name: 'Cast Spell'});
+		for (var i = 0; i < room.features.length; i++){
+			var feature = room.features[i];
+			switch (feature.type){
+				case 'upstairs':
+					actions.push({code: 'upstairs', name: 'Go Up'});
+					break;
+				case 'downstairs':
+					actions.push({code: 'downstairs', name: 'Go Down'});
+					break;
+				case 'winArtifact':
+					actions.push({code: 'win', name: 'Win Game'});
+					break;
+				case 'fountain':
+					actions.push({code: 'drink', name: 'Drink'});
+					break;
+			}
+		}
+		var roomActionsCmb = DOM.byId('roomActions');
+		roomActionsCmb.innerHTML = ''; // Can be done better but me lazy
+		for (var i = 0; i < actions.length; i++){
+			var actionChild = DOM.create('option');
+			actionChild.value = actions[i].code;
+			actionChild.innerHTML = actions[i].name;
+			roomActionsCmb.appendChild(actionChild);
+		}
+		
 		// Party status
 		for (var i = 0; i < this.controller.party.players.length; i++){
 			var player = this.controller.party.players[i];
