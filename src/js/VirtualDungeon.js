@@ -73,8 +73,14 @@ var VirtualDungeon = {
 	downstairs: function(){
 		this._gotoDepth(this.party.level.depth + 1);
 	},
-	winArtifact: function(){
+	win: function(){
 		this.ui.showMessage('You win the game!!!');
+	},
+	drink: function(params){
+		console.log('drinking');
+	},
+	castSpell: function(params){
+		console.log('casting '+params.spell);
 	},
 	_gotoDepth: function(depth){
 		var level = this.levels[depth];
@@ -116,6 +122,10 @@ var VirtualDungeon = {
 		} else {
 			this.setInputStatus(this.MOVE);
 		}
+	},
+	execute: function(command){
+		console.log(command);
+		this[command.action](command);
 	}
 };
 

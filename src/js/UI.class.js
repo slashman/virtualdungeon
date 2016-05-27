@@ -21,6 +21,37 @@ UI.prototype = {
 	},
 	initComponents: function(){
 		var actionTable = DOM.byId('actionsTable')
+		// Action
+		var tr = DOM.create('tr');
+		actionTable.appendChild(tr);
+		var td = DOM.create('td');
+		tr.appendChild(td);
+		td.innerHTML = 'Action';
+		var td = DOM.create('td');
+		tr.appendChild(td);
+		var element = DOM.create('select');
+		element.id = 'cmbAction';
+		td.appendChild(element);
+
+		// Spells
+		var tr = DOM.create('tr');
+		actionTable.appendChild(tr);
+		var td = DOM.create('td');
+		tr.appendChild(td);
+		td.innerHTML = 'Spell';
+		var td = DOM.create('td');
+		tr.appendChild(td);
+		var element = DOM.create('select');
+		element.id = 'cmbSpell';
+		td.appendChild(element);
+		var spells = this.controller.scenario.spells;
+		for (var i = 0; i < spells.length; i++){
+			var option = DOM.create('option');
+			option.value = spells[i].name;
+			option.innerHTML = spells[i].name + '['+spells[i].cost+']';
+			element.appendChild(option);
+		}
+
 		// Player
 		var tr = DOM.create('tr');
 		actionTable.appendChild(tr);
@@ -29,10 +60,9 @@ UI.prototype = {
 		td.innerHTML = 'Player';
 		var td = DOM.create('td');
 		tr.appendChild(td);
-		var bodyPartSelect = this._createBodyPartSelect();
-		bodyPartSelect.id = 'bodyPartSelect';
-		td.appendChild(bodyPartSelect);
-
+		var element = DOM.create('select');
+		element.id = 'cmbPlayer';
+		td.appendChild(element);
 
 		// Body part
 		var tr = DOM.create('tr');
@@ -43,9 +73,62 @@ UI.prototype = {
 		var td = DOM.create('td');
 		tr.appendChild(td);
 		var bodyPartSelect = this._createBodyPartSelect();
-		bodyPartSelect.id = 'bodyPartSelect';
+		bodyPartSelect.id = 'cmbBodyPart';
 		td.appendChild(bodyPartSelect);
 
+
+		// Directions
+		var tr = DOM.create('tr');
+		actionTable.appendChild(tr);
+		var td = DOM.create('td');
+		tr.appendChild(td);
+		td.innerHTML = 'Direction';
+		var td = DOM.create('td');
+		tr.appendChild(td);
+		var element = DOM.create('select');
+		element.id = 'cmbDirection';
+		td.appendChild(element);
+		var option = DOM.create('option');
+		option.value = 'north';
+		option.innerHTML = 'North';
+		element.appendChild(option);
+		var option = DOM.create('option');
+		option.value = 'south';
+		option.innerHTML = 'South';
+		element.appendChild(option);
+		var option = DOM.create('option');
+		option.value = 'west';
+		option.innerHTML = 'West';
+		element.appendChild(option);
+		var option = DOM.create('option');
+		option.value = 'east';
+		option.innerHTML = 'East';
+		element.appendChild(option);
+
+		// Action Button
+		var tr = DOM.create('tr');
+		actionTable.appendChild(tr);
+		var td = DOM.create('td');
+		td.colSpan = 2;
+		tr.appendChild(td);
+		var button = DOM.create('button');
+		button.innerHTML = 'Execute';
+		var thus = this;
+		button.onclick = function(){
+			thus.executeAction();
+		}
+		td.appendChild(button);
+		
+	},
+	executeAction: function(){
+		var command = {
+			action: DOM.val('cmbAction'),
+			spell: DOM.val('cmbSpell'),
+			player: DOM.val('cmbPlayer'),
+			bodyPart: DOM.val('cmbBodyPart'),
+			direction: DOM.val('cmbDirection')
+		};
+		this.controller.execute(command);
 	},
 	_bindEvents: function(controller){
 		DOM.onClick('btnMoveNorth', function() { move(0, -1); });
@@ -154,6 +237,12 @@ UI.prototype = {
 			playerRow.appendChild(takeDamageButton);
 
 			partyMembers.appendChild(playerRow);
+
+			cmbPlayer = DOM.byId('cmbPlayer');
+			playerOption = DOM.create('option');
+			playerOption.value = player.number;
+			playerOption.innerHTML = player.name;
+			cmbPlayer.appendChild(playerOption)
 		}
 		DOM.selectAll('.selectPlayerCheckbox', function(e){e.style.display = 'none'});
 	},
@@ -251,8 +340,8 @@ UI.prototype = {
 		DOM.byId('roomDescription').innerHTML = html;
 
 		var actions = [];
-		actions.push({code: 'pass', name: 'Stand'});
-		actions.push({code: 'spell', name: 'Cast Spell'});
+		actions.push({code: 'passTurn', name: 'Stand'});
+		actions.push({code: 'castSpell', name: 'Cast Spell'});
 		for (var i = 0; i < room.features.length; i++){
 			var feature = room.features[i];
 			switch (feature.type){
@@ -270,7 +359,7 @@ UI.prototype = {
 					break;
 			}
 		}
-		var roomActionsCmb = DOM.byId('roomActions');
+		var roomActionsCmb = DOM.byId('cmbAction');
 		roomActionsCmb.innerHTML = ''; // Can be done better but me lazy
 		for (var i = 0; i < actions.length; i++){
 			var actionChild = DOM.create('option');
