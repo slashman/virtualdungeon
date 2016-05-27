@@ -113,6 +113,10 @@ var VirtualDungeon = {
 		}
 	},
 	passTurn: function(){
+		if (this.party.getCurrentRoom().enemies.length > 0){
+			this.ui.showMessage('Cannot pass while in combat!');
+			return;
+		}
 		this.party.passTurn();
 		if (Utils.chance(20)){
 			this.ui.showMessage('Ambushed!');
