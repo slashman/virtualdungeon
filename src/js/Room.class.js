@@ -32,6 +32,14 @@ Room.prototype = {
 	endBattle: function(){
 		this.spawnEnemies = false;
 		this.enemies = [];
+	},
+	removeFountain: function(){
+		for (var i = 0; i < this.features.length; i++){
+			if  (this.features[i].type === 'fountain'){
+				this.features.splice(i,1);
+				i--;
+			}
+		}
 	}
 }
 

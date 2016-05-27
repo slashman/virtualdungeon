@@ -45,6 +45,8 @@ var DungeonGenerator = {
 				}
 				specs.isExit = true;
 				specs.gmTips = controller.scenario.endRooms[depth];
+			} else {
+				specs.addFountain = Utils.chance(10);
 			}
 			var newRoom = RoomGenerator.generateRoom(this.level, specs);
 			var corridor = CorridorGenerator.generateCorridor(this.level);

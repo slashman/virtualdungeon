@@ -5,6 +5,17 @@ var Utils = {
 	randomElementOf: function(array){
     	return array[Math.floor(Math.random()*array.length)];
 	},
+	randSplit: function(distrib){
+		var pivot = Math.random();
+		var sum = 0;
+		for (var i = 0; i < distrib.length; i++){
+			sum += distrib[i];
+			if (pivot <= sum){
+				return i;
+			}
+		}
+		return 0;
+	},
 	chance: function(probability){
 		return this.rand(0, 100) <= probability;
 	},

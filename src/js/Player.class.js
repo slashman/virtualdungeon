@@ -150,6 +150,32 @@ Player.prototype = {
 	takeInjury: function(bodyPart){
 		this.sustainInjury(bodyPart);
 		this.hitPoints --;
+	},
+	cureAilments: function(){
+		this.statusAilments = [];
+	},
+	drinkFromFountain: function(){
+		switch (Utils.randSplit([0.3, 0.2, 0.1, 0.2, 0.2])){
+			case 0:
+				this.party.controller.ui.showMessage('"Ahh-Refreshing!" '+ this.name +' recovers 5 hit points.');
+				this.hitPoints += 5;
+				break;
+			case 1:
+				this.party.controller.ui.showMessage('"Hmm--Delicious!" '+ this.name +' recovers from all ailments.');
+				this.cureAilments();
+				break;
+			case 2:
+				this.party.controller.ui.showMessage('"Bleck--Nasty!" '+ this.name +' is hurt by acid for 3 hit points.');
+				this.hitPoints -= 3;
+				break;
+			case 3:
+				this.party.controller.ui.showMessage('"Argh-Choke-Gasp!" '+ this.name +' is poisoned.');
+				this.applyAilment(Player.POISONED);
+				break;
+			case 4:
+				this.party.controller.ui.showMessage('"Hmm--No Effect!"');
+				break;
+		}
 	}
 }
 

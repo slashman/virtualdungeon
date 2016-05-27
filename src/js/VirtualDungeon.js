@@ -74,10 +74,14 @@ var VirtualDungeon = {
 		this._gotoDepth(this.party.level.depth + 1);
 	},
 	win: function(){
+		this.ui.clearMessages();
 		this.ui.showMessage('You win the game!!!');
 	},
 	drink: function(params){
-		console.log('drinking');
+		this.ui.clearMessages();
+		this.party.getPlayerByNumber(params.player).drinkFromFountain();
+		this.party.getCurrentRoom().removeFountain();
+		this.ui.updateRoomData();
 	},
 	castSpell: function(params){
 		console.log('casting '+params.spell);
