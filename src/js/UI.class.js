@@ -558,6 +558,27 @@ UI.prototype = {
 		this.showMessage('** Waiting **');
 		this.controller.passTurn();
 		this.updateRoomData();
+	},
+	addCounter: function(counter){
+		var div = DOM.create('div');
+		div.id = 'counterDiv'+counter.id;
+		div.innerHTML = this._formatSeconds(counter.time)+', '+counter.message;
+		DOM.byId('countersSection').appendChild(div);
+	},
+	updateCounter: function(counter){
+		var message = counter.message;
+		if (counter.time <= 0)
+			message = counter.offMessage;
+		DOM.byId('counterDiv'+counter.id).innerHTML = this._formatSeconds(counter.time)+', '+message;
+	},
+	removeCounter: function(counter){
+		DOM.byId('countersSection').removeChild(DOM.byId('counterDiv'+counter.id));
+	},
+	_formatSeconds: function(seconds){
+		var minutes = Math.floor(seconds/60);
+		var seconds = seconds % 60;
+		seconds = seconds < 10 ? '0'+seconds : seconds;
+		return minutes +':'+seconds;
 	}
 };
 

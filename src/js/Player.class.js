@@ -212,16 +212,18 @@ Player.prototype = {
 				params.spellTarget.heal(params.bodyPart, spell.param);
 				break;
 			case 'counter':
-				/*var counter = {
-					time: spell.param.time
+				var counter = {
+					time: spell.param.time,
+					message: '',
+					offMessage: ''
 				}
 				if (spell.targeted){
-					counter.message = params.targetName + ' ';
-					counter.offMessage = params.targetName + ' ';
+					counter.message = params.spellTarget.name + ' ';
+					counter.offMessage = params.spellTarget.name + ' ';
 				}
 				counter.message += spell.param.message;
 				counter.offMessage += spell.param.offMessage;
-				this.controller.addCounter(counter);*/
+				this.party.controller.addCounter(counter);
 				break;
 			case 'blink':
 				// TODO: Implement

@@ -11,6 +11,7 @@ var VirtualDungeon = {
 	COMBAT: 'combat',
 	inputStatus: null,
 	levels: {},
+	currentCounterId: 0,
 	init: function(){
 		this.scenario = new Scenario();
 		this.ui = new UI(this);
@@ -144,6 +145,28 @@ var VirtualDungeon = {
 	execute: function(command){
 		console.log(command);
 		this[command.action](command);
+	},
+	addCounter: function(counter){
+		counter.id = ++this.currentCounterId;
+		this.ui.addCounter(counter);
+		var thus = this;
+		setTimeout(function(){
+			thus.updateCounter(counter);
+		}, 1000);
+	},
+	updateCounter: function(counter){
+		var thus = this;
+		counter.time --;
+		this.ui.updateCounter(counter);
+		if (counter.time <= 0){
+			setTimeout(function(){
+				thus.ui.removeCounter(counter);
+			}, 10000);
+		} else {
+			setTimeout(function(){
+				thus.updateCounter(counter);
+			}, 1000);
+		}
 	}
 };
 
