@@ -5,3 +5,24 @@
 .gmTip {
 	font-style: italic;
 }
+
+body {
+	font-family: sans-serif;
+}
+
+select {
+    width: 120px;
+    -webkit-appearance: menulist-button;
+    height: 60px;
+} 
+
+
+button {
+    width: 120px;
+    height: 60px;
+}
+
+input[type="text"] {
+    width: 120px;
+    height: 60px;
+} 
