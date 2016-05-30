@@ -26,3 +26,7 @@ input[type="text"] {
     width: 120px;
     height: 60px;
 } 
+
+#actionsTable td {
+	width: 120px;
+}
