@@ -23,6 +23,9 @@ var VirtualDungeon = {
 			return;
 		}
 		this.config = config;
+
+		this.scenario.setDungeon(config.dungeon);
+
 		this.party = new Party({
 			players: config.players
 		}, this);

@@ -1,17 +1,21 @@
 //TODO: gulp script creates this file based on config
-var Abyss = require('./dungeons/Abyss');
 var Ultima4 = require('./scenarios/Ultima4');
+require('./dungeons/Abyss');
+require('./dungeons/AntiVirtue');
 
-function Scenario(){
+function Scenario(dungeon){
 	this.jobs = Ultima4.jobs;
 	this.spells = Ultima4.spells;
 	this.items = Ultima4.items;
-	this.enemies = Abyss.enemies;
-	this.endRooms = Abyss.endRooms;
-	this.compileEcosystems();
 }
 
 Scenario.prototype = {
+	setDungeon: function(dungeon){
+		dungeon = require('./dungeons/'+dungeon);
+		this.enemies = dungeon.enemies;
+		this.endRooms = dungeon.endRooms;
+		this.compileEcosystems();
+	},
 	getJobs: function(){
 		return this.jobs;
 	},

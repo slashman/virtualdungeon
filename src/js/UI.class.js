@@ -378,6 +378,7 @@ UI.prototype = {
 		var dungeonW = parseInt(DOM.val('txtDungeonW'));
 		var dungeonH = parseInt(DOM.val('txtDungeonH'));
 		var roomDensity = DOM.val('cmbRoomDensity');
+		var dungeon = DOM.val('cmbDungeon');
 
 		var players = [];
 		var names = DOM.selectAll('.playerNameText');
@@ -401,6 +402,7 @@ UI.prototype = {
 
 
 		return {
+			dungeon: dungeon,
 			dungeonSize: {
 				w: dungeonW,
 				h: dungeonH
