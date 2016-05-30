@@ -33,13 +33,15 @@ var VirtualDungeon = {
 			staffPlayers: config.staffPlayers
 		}, this);
 		this.party.locate(Math.floor(config.dungeonSize.w / 2), Math.floor(config.dungeonSize.h / 2));
-		var level = DungeonGenerator.generateLevel({
-			w: config.dungeonSize.w,
-			h: config.dungeonSize.h,
-			depth: 1,
-			startingLocation: this.party.location,
-			roomDensity: config.roomDensity
-		}, this);
+		do {
+			var level = DungeonGenerator.generateLevel({
+				w: config.dungeonSize.w,
+				h: config.dungeonSize.h,
+				depth: 1,
+				startingLocation: this.party.location,
+				roomDensity: config.roomDensity
+			}, this);
+		} while (!level);
 		this.levels[1] = level;
 		this.party.setLevel(level);
 		this.ui.hideNewGamePanel();
@@ -109,13 +111,15 @@ var VirtualDungeon = {
 		var level = this.levels[depth];
 		if (!level){
 			var config = this.config;
-			level = DungeonGenerator.generateLevel({
-				w: config.dungeonSize.w,
-				h: config.dungeonSize.h,
-				depth: depth,
-				startingLocation: this.party.location,
-				roomDensity: config.roomDensity
-			}, this);
+			do {
+				level = DungeonGenerator.generateLevel({
+					w: config.dungeonSize.w,
+					h: config.dungeonSize.h,
+					depth: depth,
+					startingLocation: this.party.location,
+					roomDensity: config.roomDensity
+				}, this);
+			} while (!level);
 			this.levels[depth] = level;
 		}
 		this.party.setLevel(level)

@@ -7,6 +7,7 @@ var DungeonGenerator = {
 	potentialCorridors: null,
 	level: null,
 	generateLevel: function(specs, controller){
+		this.controller = controller;
 		this.potentialCorridors = [];
 		var w = specs.w;
 		var h = specs.h;
@@ -23,13 +24,33 @@ var DungeonGenerator = {
 				specs.roomDensity = 0.4;
 				break;
 		}
-		var remainingRooms = Math.floor(w * h * specs.roomDensity) - 1;
-		// Put starting room
-		var startingRoom = RoomGenerator.generateRoom(controller.scenario, this.level, {addStairsUp: depth > 1, isEntrance: true});
-		
-		this.placeRoom(null, specs.startingLocation.x, specs.startingLocation.y, startingRoom);
+		var allRooms = Math.floor(w * h * specs.roomDensity) - 1;
+		specs.sections = 3;
+		for (var i = 0; i < specs.sections; i++){
+			var success = this._generateSection({
+				starting: i == 0,
+				ending: i == specs.sections - 1,
+				rooms: Math.ceil(allRooms / specs.sections)
+			},specs,
+			depth);
+			if (!success){
+				return false;
+			}
+		}
+		return this.level;
+	},
+	_generateSection: function (sectionSpecs, specs, depth){
+		var remainingRooms = sectionSpecs.rooms;
+		if (sectionSpecs.starting){
+			var startingRoom = RoomGenerator.generateRoom(this.controller.scenario, this.level, {addStairsUp: depth > 1, isEntrance: true});
+			this.placeRoom(null, specs.startingLocation.x, specs.startingLocation.y, startingRoom);
+		}
 		while (remainingRooms > 0){
 			var potentialCorridor = Utils.pullRandomElementOf(this.potentialCorridors);
+			if (!potentialCorridor){
+				//Whoops! we hit a dead end :|
+				return false;
+			}
 			var existingRoom = this.level.getRoomAt(potentialCorridor.toX, potentialCorridor.toY);
 			if (existingRoom){
 				continue;
@@ -37,21 +58,28 @@ var DungeonGenerator = {
 			remainingRooms--;
 			var specs = {};
 			if (remainingRooms == 0){
-				if (depth == 8){
-					specs.addWinArtifact = true;
+				if (sectionSpecs.ending){
+					if (depth == 8){
+						specs.addWinArtifact = true;
+					} else {
+						specs.addStairsDown = true;
+					}
+					specs.isExit = true;
+					specs.gmTips = this.controller.scenario.endRooms[depth];
 				} else {
-					specs.addStairsDown = true;
+					// End of section, clear almost all corridors
+					var survivingCorridor = Utils.pullRandomElementOf(this.potentialCorridors);
+					this.potentialCorridors = [];
+					this.potentialCorridors.push(survivingCorridor);
 				}
-				specs.isExit = true;
-				specs.gmTips = controller.scenario.endRooms[depth];
 			} else {
 				specs.addFountain = Utils.chance(10);
 			}
-			var newRoom = RoomGenerator.generateRoom(controller.scenario, this.level, specs);
+			var newRoom = RoomGenerator.generateRoom(this.controller.scenario, this.level, specs);
 			var corridor = CorridorGenerator.generateCorridor(this.level);
 			this.placeRoom(potentialCorridor.room, potentialCorridor.toX, potentialCorridor.toY, newRoom, corridor);
 		}
-		return this.level;
+		return true;
 	},
 	placeRoom: function(fromRoom, x, y, toRoom, corridor){
 		var vector = false;
