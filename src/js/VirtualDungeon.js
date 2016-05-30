@@ -86,8 +86,13 @@ var VirtualDungeon = {
 	},
 	castSpell: function(params){
 		var caster = this.party.getPlayerByNumber(params.player);
-		params.spellTarget = this.party.getPlayerByNumber(params.spellTarget);
 		var spell = this.scenario.getSpell(params.spell);
+		if (spell.targetType === 'enemy'){
+			params.spellTarget = this.party.getCurrentRoom().enemies[parseInt(params.spellTargetEnemy)];
+		} else if (spell.targetType === 'friend'){
+			params.spellTarget = this.party.getPlayerByNumber(params.spellTarget);
+		}
+		console.log(params.spellTarget);
 		caster.castSpell(spell, params);
 		this.ui.updateRoomData();
 	},

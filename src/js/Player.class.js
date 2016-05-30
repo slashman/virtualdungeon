@@ -218,8 +218,11 @@ Player.prototype = {
 					offMessage: ''
 				}
 				if (spell.targeted){
-					counter.message = params.spellTarget.name + ' ';
-					counter.offMessage = params.spellTarget.name + ' ';
+					var name = params.spellTarget.name;
+					if (!name && params.spellTarget.race)
+						name = params.spellTarget.race.name;
+					counter.message = name + ' ';
+					counter.offMessage = name + ' ';
 				}
 				counter.message += spell.param.message;
 				counter.offMessage += spell.param.offMessage;

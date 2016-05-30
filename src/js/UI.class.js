@@ -46,6 +46,8 @@ UI.prototype = {
 		td.appendChild(element);
 		var spells = this.controller.scenario.spells;
 		for (var i = 0; i < spells.length; i++){
+			if (spells[i].effect === 'physical' && !spells[i].physicalHitCheck)
+				continue;
 			var option = DOM.create('option');
 			option.value = spells[i].name;
 			option.innerHTML = spells[i].name + '['+spells[i].cost+']';
@@ -74,6 +76,18 @@ UI.prototype = {
 		tr.appendChild(td);
 		var element = DOM.create('select');
 		element.id = 'cmbSpellTarget';
+		td.appendChild(element);
+
+		// Enemy Spell Target
+		var tr = DOM.create('tr');
+		actionTable.appendChild(tr);
+		var td = DOM.create('td');
+		tr.appendChild(td);
+		td.innerHTML = 'Spell Target (Enemy)';
+		var td = DOM.create('td');
+		tr.appendChild(td);
+		var element = DOM.create('select');
+		element.id = 'cmbSpellTargetEnemy';
 		td.appendChild(element);
 
 		// Body part
@@ -138,6 +152,7 @@ UI.prototype = {
 			spell: DOM.val('cmbSpell'),
 			player: DOM.val('cmbPlayer'),
 			spellTarget: DOM.val('cmbSpellTarget'),
+			spellTargetEnemy: DOM.val('cmbSpellTargetEnemy'),
 			bodyPart: DOM.val('cmbBodyPart'),
 			direction: DOM.val('cmbDirection')
 		};
@@ -360,6 +375,16 @@ UI.prototype = {
 					return element.race.name + ' HP: '+element.hitPoints+' ('+element.staffPlayer.name+')';
 				}
 			)+'</p>';
+			// Monster target for spells
+			var cmbSpellPlayer = DOM.byId('cmbSpellTargetEnemy');
+			cmbSpellPlayer.innerHTML = '';
+			for (var i = 0; i < room.enemies.length; i++){
+				var enemy = room.enemies[i];
+				playerOption = DOM.create('option');
+				playerOption.value = i;
+				playerOption.innerHTML = enemy.race.name + ' ('+enemy.staffPlayer.name+')';
+				cmbSpellPlayer.appendChild(playerOption)
+			}
 		}
 		if (room.items.length > 0){
 			html += '<h3>Items</h3><p>'+this._buildList(room.items, 
@@ -417,6 +442,8 @@ UI.prototype = {
 			var player = this.controller.party.players[i];
 			DOM.byId('player'+player.number+'Status').innerHTML = player.getStatusLine();
 		}
+
+		
 	},
 	_buildList: function(arr, renderer){
 		var html = '<ul>';
