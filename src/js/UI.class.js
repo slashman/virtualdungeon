@@ -19,7 +19,31 @@ UI.prototype = {
 			sUI.update();
 		});
 	},
+	updateTargetComboBoxes: function(){
+		var selectedAction = DOM.val('cmbAction');
+		DOM.selectAll('.commandTargetRow', function(e){e.style.display = 'none'});
+		if (selectedAction === 'castSpell'){
+			DOM.byId('cmbSpellsRow').style.display = 'table-row';
+			spell = this.controller.scenario.getSpell(DOM.val('cmbSpell'));
+			switch (spell.targetType){
+				case 'friend':
+					DOM.byId('cmbPlayerRow').style.display = 'table-row';
+					break;
+				case 'enemy':
+					DOM.byId('cmbTargetEnemyRow').style.display = 'table-row';
+					break;
+				case 'direction':
+					DOM.byId('cmbDirectionsRow').style.display = 'table-row';
+					break;
+				case 'friendLimb':
+					DOM.byId('cmbPlayerRow').style.display = 'table-row';
+					DOM.byId('cmbBodyPartRow').style.display = 'table-row';
+					break;
+			}
+		}
+	},
 	initComponents: function(){
+		var thus = this;
 		var actionTable = DOM.byId('actionsTable')
 		// Action
 		var tr = DOM.create('tr');
@@ -32,12 +56,17 @@ UI.prototype = {
 		var element = DOM.create('select');
 		element.id = 'cmbAction';
 		td.appendChild(element);
+		element.onchange = function(){
+			thus.updateTargetComboBoxes();
+		}
 
 		// Spells
 		var tr = DOM.create('tr');
 		actionTable.appendChild(tr);
 		var td = DOM.create('td');
 		tr.appendChild(td);
+		tr.className = 'commandTargetRow';
+		tr.id = 'cmbSpellsRow';
 		td.innerHTML = 'Spell';
 		var td = DOM.create('td');
 		tr.appendChild(td);
@@ -53,9 +82,14 @@ UI.prototype = {
 			option.innerHTML = spells[i].name + '['+spells[i].cost+']';
 			element.appendChild(option);
 		}
+		element.onchange = function(){
+			thus.updateTargetComboBoxes();
+		}
 
 		// Player
 		var tr = DOM.create('tr');
+		tr.className = 'commandTargetRow';
+		tr.id = 'cmbPlayerRow';
 		actionTable.appendChild(tr);
 		var td = DOM.create('td');
 		tr.appendChild(td);
@@ -68,6 +102,8 @@ UI.prototype = {
 
 		// Spell Target
 		var tr = DOM.create('tr');
+		tr.className = 'commandTargetRow';
+		tr.id = 'cmbSpellRow';
 		actionTable.appendChild(tr);
 		var td = DOM.create('td');
 		tr.appendChild(td);
@@ -80,6 +116,8 @@ UI.prototype = {
 
 		// Enemy Spell Target
 		var tr = DOM.create('tr');
+		tr.className = 'commandTargetRow';
+		tr.id = 'cmbTargetEnemyRow';
 		actionTable.appendChild(tr);
 		var td = DOM.create('td');
 		tr.appendChild(td);
@@ -92,6 +130,8 @@ UI.prototype = {
 
 		// Body part
 		var tr = DOM.create('tr');
+		tr.className = 'commandTargetRow';
+		tr.id = 'cmbBodyPartRow';
 		actionTable.appendChild(tr);
 		var td = DOM.create('td');
 		tr.appendChild(td);
@@ -105,6 +145,8 @@ UI.prototype = {
 
 		// Directions
 		var tr = DOM.create('tr');
+		tr.className = 'commandTargetRow';
+		tr.id = 'cmbDirectionsRow';
 		actionTable.appendChild(tr);
 		var td = DOM.create('td');
 		tr.appendChild(td);
@@ -139,12 +181,14 @@ UI.prototype = {
 		tr.appendChild(td);
 		var button = DOM.create('button');
 		button.innerHTML = 'Execute';
+		button.className = 'actionButton';
+		button.id = 'btnExecute';
 		var thus = this;
 		button.onclick = function(){
 			thus.executeAction();
 		}
 		td.appendChild(button);
-		
+		this.updateTargetComboBoxes();
 	},
 	executeAction: function(){
 		var command = {
@@ -443,7 +487,7 @@ UI.prototype = {
 			DOM.byId('player'+player.number+'Status').innerHTML = player.getStatusLine();
 		}
 
-		
+		this.updateTargetComboBoxes();
 	},
 	_buildList: function(arr, renderer){
 		var html = '<ul>';
@@ -537,12 +581,20 @@ UI.prototype = {
 		DOM.selectAll('.actionButton', function(e){
 			e.style.display = 'none';
 		});
+		DOM.selectAll('.commandTargetRow', function(e){
+			e.style.display = 'none';
+		});
+		DOM.byId('cmbAction').style.display = 'none';
+
 	},
 	enableMovement: function(){
 		this._disableActionButtons();
 		DOM.selectAll('.movementButton', function(e){
 			e.style.display = 'inline';
 		});
+		this.updateTargetComboBoxes();
+		DOM.byId('cmbAction').style.display = 'inline';
+		DOM.byId('btnExecute').style.display = 'inline';
 	},
 	selectTargets: function(cb){
 		this._disableActionButtons();

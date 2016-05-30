@@ -89,7 +89,7 @@ var VirtualDungeon = {
 		var spell = this.scenario.getSpell(params.spell);
 		if (spell.targetType === 'enemy'){
 			params.spellTarget = this.party.getCurrentRoom().enemies[parseInt(params.spellTargetEnemy)];
-		} else if (spell.targetType === 'friend'){
+		} else if (spell.targetType === 'friend' || spell.targetType === 'friendLimb'){
 			params.spellTarget = this.party.getPlayerByNumber(params.spellTarget);
 		}
 		console.log(params.spellTarget);
@@ -143,6 +143,7 @@ var VirtualDungeon = {
 			var enemyParty = this.staff.selectEnemyParty();
 			this.party.getCurrentRoom().enemies = enemyParty;
 			this.setInputStatus(this.COMBAT);
+			this.ui.updateRoomData(this.party.getCurrentRoom());
 		} else {
 			this.setInputStatus(this.MOVE);
 		}
