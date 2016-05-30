@@ -1,4 +1,5 @@
 var Utils = require('./Utils');
+var Stat = require('./Stat.class'); 
 
 function Player(specs, party){
 	this.party = party;
@@ -12,8 +13,8 @@ function Player(specs, party){
 	this.role = specs.role;
 	this.job = party.controller.scenario.getJob(specs.job);
 	this.number = specs.number;
-	this.hitPoints = this.job.str;
-	this.magicPoints = this.job.magic;
+	this.hitPoints = new Stat(this.job.str);
+	this.magicPoints = new Stat(this.job.magic);
 };
 
 Player.LEFT = 'left';
@@ -129,7 +130,7 @@ Player.prototype = {
 		return Utils.chance(evadeChance);
 	},
 	getStatusLine: function(){
-		var line = '<b>'+this.name+'</b> HP: '+this.hitPoints;
+		var line = '<b>'+this.name+'</b> HP: '+this.hitPoints.current+' MP: '+this.magicPoints.current;
 
 		for (var i = 0; i < this.statusAilments.length; i++){
 			line += ' ' + Player.AILMENT_NAMES[this.statusAilments[i].ailment];
@@ -150,11 +151,11 @@ Player.prototype = {
 	},
 	takeInjury: function(bodyPart){
 		this.sustainInjury(bodyPart);
-		this.hitPoints --;
+		this.hitPoints.reduce(1);
 	},
 	heal: function(bodyPart, healing){
 		this.injuredMap[bodyPart] = false;
-		this.hitPoints += healing; //TODO: Cap
+		this.hitPoints.recover(healing);
 	},
 	cureAilments: function(){
 		this.statusAilments = [];
@@ -168,14 +169,14 @@ Player.prototype = {
 		}
 	},
 	revive: function(){
-		if (this.hitPoints <= 0)
-			this.hitPoints = 1;
+		if (this.hitPoints.current <= 0)
+			this.hitPoints.current = 1;
 	},
 	drinkFromFountain: function(){
 		switch (Utils.randSplit([0.3, 0.2, 0.1, 0.2, 0.2])){
 			case 0:
 				this.party.controller.ui.showMessage('"Ahh-Refreshing!" '+ this.name +' recovers 5 hit points.');
-				this.hitPoints += 5;
+				this.hitPoints.recover(5);
 				break;
 			case 1:
 				this.party.controller.ui.showMessage('"Hmm--Delicious!" '+ this.name +' recovers from all ailments.');
@@ -183,7 +184,7 @@ Player.prototype = {
 				break;
 			case 2:
 				this.party.controller.ui.showMessage('"Bleck--Nasty!" '+ this.name +' is hurt by acid for 3 hit points.');
-				this.hitPoints -= 3;
+				this.hitPoints.reduce(3);
 				break;
 			case 3:
 				this.party.controller.ui.showMessage('"Argh-Choke-Gasp!" '+ this.name +' is poisoned.');
@@ -236,10 +237,14 @@ Player.prototype = {
 				break;
 			case 'revivePlayer':
 				this.party.controller.ui.showMessage(params.spellTarget.name+' is alive');
-				if (params.spellTarget.hitPoints <= 0)
+				if (params.spellTarget.hitPoints.current <= 0)
 					params.spellTarget.revive();
 				break;
 		}
+		this.spendMP(spell.cost);
+	},
+	spendMP: function(points){
+		this.magicPoints.reduce(points);
 	}
 }
 

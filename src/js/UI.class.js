@@ -219,7 +219,7 @@ UI.prototype = {
 		if (command.action === 'castSpell'){
 			var spell = this.controller.scenario.getSpell(command.spell);
 			var player = this.controller.party.getPlayerByNumber(command.player);
-			if (player.magicPoints < spell.cost){
+			if (player.magicPoints.current < spell.cost){
 				alert('Not enough MP');
 				return;
 			}
