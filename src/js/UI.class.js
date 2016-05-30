@@ -586,7 +586,7 @@ UI.prototype = {
 		tr.appendChild(td);
 
 		td = DOM.create('td');
-		td.innerHTML = 'Dungeon';
+		td.innerHTML = 'Dwellers';
 		tr.appendChild(td);
 
 		td = DOM.create('td');
