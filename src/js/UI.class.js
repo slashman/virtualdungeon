@@ -7,6 +7,7 @@ function UI(controller){
 	this.initComponents();
 	this.createNewPlayerRow();
 	this.mapCanvas = null;
+	this.showMap = false;
 	this._disableActionButtons();
 };
 
@@ -213,9 +214,14 @@ UI.prototype = {
 			player: DOM.val('cmbPlayer'),
 			spellTarget: DOM.val('cmbSpellTarget'),
 			spellTargetEnemy: DOM.val('cmbSpellTargetEnemy'),
+			// item?
 			bodyPart: DOM.val('cmbBodyPart'),
 			direction: DOM.val('cmbDirection')
 		};
+		if (command.action === 'toogleMap'){
+			this.showMap = !this.showMap;
+			return;
+		}
 		if (command.action === 'castSpell'){
 			var spell = this.controller.scenario.getSpell(command.spell);
 			var player = this.controller.party.getPlayerByNumber(command.player);
@@ -246,6 +252,17 @@ UI.prototype = {
 		DOM.onClick('btnEndCombat', this._battleOver, this);
 	},
 	update: function(){
+		if (this.showMap){
+			this._drawMap();
+		} else {
+			this._drawRoom();
+		}
+		var sUI = this;
+		window.requestAnimationFrame(function(){
+			sUI.update();
+		});
+	},
+	_drawMap: function(){
 		var ctx = this.mapCanvasCtx;
 		var party = this.controller.party;
 		var level = party.level;
@@ -287,20 +304,44 @@ UI.prototype = {
 				ctx.fillStyle = "#00FF00";
 				ctx.fillRect(room.x * scale + blockSize, room.y * scale + blockSize, blockSize, blockSize);
 			}
-			if (room.isEntrance){
+			/*if (room.isEntrance){
 				ctx.fillStyle = "#0000FF";
 				ctx.fillRect(room.x * scale + blockSize, room.y * scale + blockSize, blockSize, blockSize);
-			}
+			}*/
 			// Show party location
 			if (party.location.x == room.x && party.location.y == room.y){
 				ctx.fillStyle = "#FF0000";
 				ctx.fillRect(room.x * scale + blockSize, room.y * scale + blockSize, blockSize, blockSize);
 			}
 		}
-		var sUI = this;
-		window.requestAnimationFrame(function(){
-			sUI.update();
-		});
+	},
+	_drawRoom: function(){
+		var ctx = this.mapCanvasCtx;
+		var party = this.controller.party;
+		var room = party.getCurrentRoom();
+		var level = party.level;
+		var blockSize = 20;
+		var size = blockSize * 3;
+		var scale = 40;
+		var lineWidth = 2;
+		// Fill background
+		ctx.fillStyle = "#FFFFFF";
+		ctx.fillRect(0, 0, 250, 250);
+		// Fill the 4 fixed blocks with blackness
+		ctx.fillStyle = "#000000";
+		ctx.fillRect(2 * scale, 2 * scale, blockSize, blockSize);
+		ctx.fillRect(2 * scale, 2 * scale + 2 * blockSize, blockSize, blockSize);
+		ctx.fillRect(2 * scale + 2 * blockSize, 2 * scale, blockSize, blockSize);
+		ctx.fillRect(2 * scale + 2 * blockSize, 2 * scale + 2 * blockSize, blockSize, blockSize);
+		// Now, fill the corridors
+		if (!room.corridors.north)
+			ctx.fillRect(2 * scale + blockSize, 2 * scale, blockSize, blockSize);
+		if (!room.corridors.south)
+			ctx.fillRect(2 * scale + blockSize, 2 * scale + 2 * blockSize, blockSize, blockSize);
+		if (!room.corridors.west)
+			ctx.fillRect(2 * scale, 2 * scale + blockSize, blockSize, blockSize);
+		if (!room.corridors.east)
+			ctx.fillRect(2 * scale + 2 * blockSize, 2 * scale + blockSize, blockSize, blockSize);
 	},
 	hideNewGamePanel: function(){
 		var ui = this;
@@ -320,6 +361,7 @@ UI.prototype = {
 			var playerInfoDiv = DOM.create('span');
 			playerInfoDiv.id = 'player'+player.number+'Status';
 			playerRow.appendChild(playerInfoDiv);
+			playerRow.appendChild(DOM.create('br'));
 
 			var bodyPartSelect = this._createBodyPartSelect();
 			bodyPartSelect.id = 'bodyPartSelect'+player.number;
@@ -482,6 +524,7 @@ UI.prototype = {
 		var actions = [];
 		actions.push({code: 'passTurn', name: 'Stand'});
 		actions.push({code: 'castSpell', name: 'Cast Spell'});
+		actions.push({code: 'toogleMap', name: 'Toogle Map'});
 		for (var i = 0; i < room.features.length; i++){
 			var feature = room.features[i];
 			switch (feature.type){
