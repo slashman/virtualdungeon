@@ -5,6 +5,7 @@ var Ultima4 = require('./scenarios/Ultima4');
 function Scenario(){
 	this.jobs = Ultima4.jobs;
 	this.spells = Ultima4.spells;
+	this.items = Ultima4.items;
 	this.enemies = Abyss.enemies;
 	this.endRooms = Abyss.endRooms;
 	this.compileEcosystems();

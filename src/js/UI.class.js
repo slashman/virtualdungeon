@@ -40,6 +40,8 @@ UI.prototype = {
 					DOM.byId('cmbBodyPartRow').style.display = 'table-row';
 					break;
 			}
+		} else if (selectedAction === 'takeItem'){
+			DOM.byId('cmbItemRow').style.display = 'table-row';
 		}
 	},
 	initComponents: function(){
@@ -127,6 +129,20 @@ UI.prototype = {
 		var element = DOM.create('select');
 		element.id = 'cmbSpellTargetEnemy';
 		td.appendChild(element);
+
+		// Item Target
+		var tr = DOM.create('tr');
+		tr.className = 'commandTargetRow';
+		tr.id = 'cmbItemRow';
+		actionTable.appendChild(tr);
+		var td = DOM.create('td');
+		tr.appendChild(td);
+		td.innerHTML = 'Item';
+		var td = DOM.create('td');
+		tr.appendChild(td);
+		var element = DOM.create('select');
+		element.id = 'cmbItem';
+		td.appendChild(element);		
 
 		// Body part
 		var tr = DOM.create('tr');
@@ -433,9 +449,18 @@ UI.prototype = {
 		if (room.items.length > 0){
 			html += '<h3>Items</h3><p>'+this._buildList(room.items, 
 				function(element){
-					return element.description;
+					return element.name;
 				}
 			)+'</p>';
+			var cmbItem = DOM.byId('cmbItem');
+			cmbItem.innerHTML = '';
+			for (var i = 0; i < room.items.length; i++){
+				var item = room.items[i];
+				playerOption = DOM.create('option');
+				playerOption.value = i;
+				playerOption.innerHTML = item.name;
+				cmbItem.appendChild(playerOption)
+			}
 		}
 		if (room.features.length > 0) {
 			html += '<h3>Features</h3><p>'+this._buildList(room.features, 
@@ -471,6 +496,9 @@ UI.prototype = {
 					actions.push({code: 'drink', name: 'Drink'});
 					break;
 			}
+		}
+		if (room.items.length > 0){
+			actions.push({code: 'takeItem', name: 'Pick up item'});
 		}
 		var roomActionsCmb = DOM.byId('cmbAction');
 		roomActionsCmb.innerHTML = ''; // Can be done better but me lazy

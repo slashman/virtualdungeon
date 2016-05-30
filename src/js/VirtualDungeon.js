@@ -173,6 +173,10 @@ var VirtualDungeon = {
 				thus.updateCounter(counter);
 			}, 1000);
 		}
+	},
+	takeItem: function(params){
+		this.party.getCurrentRoom().items.splice(params.targetItem, 1);
+		this.ui.updateRoomData();
 	}
 };
 

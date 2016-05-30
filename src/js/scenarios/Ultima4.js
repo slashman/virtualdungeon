@@ -29,5 +29,8 @@ module.exports = {
 		{ name: 'Jinx', cost: 6, words: 'VAS AN XEN EX', description: 'Turns an enemy into an ally temporarily for 30 seconds.',targeted: true, targetType: 'enemy', physicalHitCheck: true, effect: 'counter', param: {message: 'turns into an ally', offMessage: 'is an enemy again', time: 30}},
 		{ name: 'Resurrect', cost: 7, words: 'IN MANI CORP', description: 'Revives a player with 1 HP.', effect: 'revivePlayer', targetType: 'friend'},
 		{ name: 'Tremor', cost: 6, words: 'VAS POR YLEM', description: 'Causes 5 points of physical damage to all non-flying enemies', effect: 'physical'}
+	],
+	items: [
+		{ name: 'Yellow Potion', effect: 'heal', param: 5}
 	]
 };

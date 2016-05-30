@@ -2,7 +2,7 @@ var Room = require('./Room.class');
 var Utils = require('./Utils');
 
 var RoomGenerator = {
-	generateRoom: function(level, specs){
+	generateRoom: function(scenario, level, specs){
 		var features = [];
 		if (specs && specs.addStairsUp){
 			features.push({type:'upstairs', description: 'Stairway going up'});
@@ -25,6 +25,9 @@ var RoomGenerator = {
 			gmTips: specs.gmTips
 		});	
 		room.spawnEnemies = Utils.chance(30);
+		if (Utils.chance(10)){
+			room.items.push(Utils.randomElementOf(scenario.items));
+		}
 
 		if (specs && specs.isEntrance)
 			room.isEntrance = true;
