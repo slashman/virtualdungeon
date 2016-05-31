@@ -35,9 +35,9 @@ Corridor.TRAP_DESCRIPTIONS[Corridor.CALTROPS_TRAP] = 'Sharp caltrops are hidden 
 Corridor.TRAP_DESCRIPTIONS[Corridor.PIT_TRAP] = 'You fall into a pit!';
 
 Corridor.OBSTACLE_DESCRIPTIONS = {};
-Corridor.OBSTACLE_DESCRIPTIONS[Corridor.FIRE_FIELD] = 'a fiery red field';
-Corridor.OBSTACLE_DESCRIPTIONS[Corridor.POISON_FIELD] = 'a nocive green field';
-Corridor.OBSTACLE_DESCRIPTIONS[Corridor.SLEEP_FIELD] = 'a numbing purple field';
+Corridor.OBSTACLE_DESCRIPTIONS[Corridor.FIRE_FIELD] = 'a red field';
+Corridor.OBSTACLE_DESCRIPTIONS[Corridor.POISON_FIELD] = 'a green field';
+Corridor.OBSTACLE_DESCRIPTIONS[Corridor.SLEEP_FIELD] = 'a purple field';
 
 Corridor.HALLWAY = 'hallway';
 Corridor.TUNNEL = 'tunnel';
@@ -56,7 +56,7 @@ Corridor.prototype = {
 	getDescription: function(){
 		var description = this.description;
 		if (this.obstacle){
-			description += ' WARNING!: There is '+Corridor.OBSTACLE_DESCRIPTIONS[this.obstacle.type]+' here.';
+			description += ' with '+Corridor.OBSTACLE_DESCRIPTIONS[this.obstacle.type];
 		}
 		return description;	
 	},

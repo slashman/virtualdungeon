@@ -1,5 +1,6 @@
 var Utils = require('./Utils');
 var Player = require('./Player.class');
+var Corridor = require('./Corridor.class');
 
 function Party(specs, controller){
 	this.controller = controller;
@@ -47,6 +48,22 @@ Party.prototype = {
 		}
 		var party = this;
 		var controller = this.controller;
+		if (corridor.obstacle){
+			switch (corridor.obstacle.type){
+				case Corridor.FIRE_FIELD:
+					this.controller.ui.showMessage('You are engulfed in fire!');
+					this.takeDamage(3);
+					break;
+				case Corridor.POISON_FIELD:
+					this.controller.ui.showMessage('You are poisoned!');
+					this.applyAilment(Player.POISONED);
+					break;
+				case Corridor.SLEEP_FIELD:
+					this.controller.ui.showMessage('You fall asleep.');
+					this.applyAilment(Player.ASLEEP);
+					break;
+			}
+		}
 		if (!corridor.obstacle || corridor.obstacle.canPassThru){
 			if (corridor.trap){
 				if (corridor.trap.slow){
@@ -61,7 +78,7 @@ Party.prototype = {
 						}
 						corridor.trap = false;
 						controller.setInputStatus(controller.MOVE);
-						party._doMove(dx, dy);
+						party._doMove(dx, dy, true);
 					};
 					this.controller.setInputStatus(this.controller.PICK_TARGET);
 					return; // Party doesn't move
@@ -71,10 +88,9 @@ Party.prototype = {
 				}
 			}
 		}
-		here, handle fields, cause damage, poison or sleep
-		this._doMove(dx,dy);
+		this._doMove(dx,dy,true);
 	},
-	_doMove: function(dx, dy){
+	_doMove: function(dx, dy, physically){
 		this.location.x += dx;
 		this.location.y += dy;
 		this.passTurn();
@@ -102,6 +118,16 @@ Party.prototype = {
 			this.players[i].cureAilment(ailment);
 		}	
 	},
+	takeDamage: function(damage){
+		for (var i = 0; i < this.players.length; i++){
+			this.players[i].takeDamage(damage);
+		}
+	},
+	applyAilment: function(ailment, turns){
+		for (var i = 0; i < this.players.length; i++){
+			this.players[i].applyAilment(ailment, turns);
+		}
+	},
 	useItem: function(item, player){
 		player[item.effect](item.param);
 		this.removeItem(item);
@@ -111,7 +137,7 @@ Party.prototype = {
 		var room = this.level.getRoomAt(this.location.x + vector.x, this.location.y + vector.y);
 		if (room){
 			this.controller.ui.showMessage('The party teleports.');
-			this._doMove(vector.x, vector.y);
+			this._doMove(vector.x, vector.y, false);
 		} else {
 			this.controller.ui.showMessage('You can\'t go there.');
 		}

@@ -153,6 +153,9 @@ Player.prototype = {
 		this.sustainInjury(bodyPart);
 		this.hitPoints.reduce(1);
 	},
+	takeDamage: function(damage){
+		this.hitPoints.reduce(damage);
+	},
 	heal: function(bodyPart, healing){
 		this.injuredMap[bodyPart] = false;
 		this.hitPoints.recover(healing);
@@ -268,7 +271,6 @@ Player.prototype = {
 			this.sustainInjury((Utils.chance(50) ? Player.LEFT : Player.RIGHT)+'-'+(Utils.chance(50) ? Player.ARM : Player.LEG));
 		}
 		this.party.getCurrentRoom().items.push(chest.item);
-		
 	}
 }
 

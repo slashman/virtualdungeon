@@ -150,10 +150,10 @@ var VirtualDungeon = {
 			var enemyParty = this.staff.selectEnemyParty();
 			this.party.getCurrentRoom().enemies = enemyParty;
 			this.setInputStatus(this.COMBAT);
-			this.ui.updateRoomData(this.party.getCurrentRoom());
 		} else {
 			this.setInputStatus(this.MOVE);
 		}
+		this.ui.updateRoomData(this.party.getCurrentRoom());
 	},
 	execute: function(command){
 		console.log(command);
