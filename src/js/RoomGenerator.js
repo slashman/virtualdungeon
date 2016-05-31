@@ -16,6 +16,10 @@ var RoomGenerator = {
 		if (specs.addFountain){
 			features.push({type:'fountain', description: 'A fountain'});
 		}
+		if (Utils.chance(10)){
+			features.push({type:'chest', description: 'A chest', item: Utils.randomElementOf(scenario.items)});
+		}
+
 		var enemies = []; // Room can potentially start with a set of enemies
 		var room = new Room(level, {	
 			description: "A plain room.",
@@ -25,7 +29,7 @@ var RoomGenerator = {
 			gmTips: specs.gmTips
 		});	
 		room.spawnEnemies = Utils.chance(30);
-		if (Utils.chance(10)){
+		if (Utils.chance(5)){
 			room.items.push(Utils.randomElementOf(scenario.items));
 		}
 

@@ -46,7 +46,8 @@ UI.prototype = {
 		} else if (selectedAction === 'useItem') {
 			DOM.byId('cmbPlayerRow').style.display = 'table-row';
 			DOM.byId('cmbItemRow').style.display = 'table-row';
-
+		} else if (selectedAction === 'openChest') {
+			DOM.byId('cmbPlayerRow').style.display = 'table-row';
 		}
 	},
 	initComponents: function(){
@@ -576,6 +577,9 @@ UI.prototype = {
 					break;
 				case 'fountain':
 					actions.push({code: 'drink', name: 'Drink'});
+					break;
+				case 'chest':
+					actions.push({code: 'openChest', name: 'Open Chest'});
 					break;
 			}
 		}

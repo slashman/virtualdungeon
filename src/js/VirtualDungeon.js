@@ -86,7 +86,7 @@ var VirtualDungeon = {
 	drink: function(params){
 		this.ui.clearMessages();
 		this.party.getPlayerByNumber(params.player).drinkFromFountain();
-		this.party.getCurrentRoom().removeFountain();
+		this.party.getCurrentRoom().removeFeature('fountain');
 		this.ui.updateRoomData();
 	},
 	castSpell: function(params){
@@ -192,6 +192,12 @@ var VirtualDungeon = {
 		var player = this.party.getPlayerByNumber(params.player);
 		this.party.useItem(item, player);
 		this.ui.updateRoomData();
+	},
+	openChest: function(params){
+		var player = this.party.getPlayerByNumber(params.player);
+		player.openChest();
+		this.party.getCurrentRoom().removeFeature('chest');
+		this.ui.updateRoomData();	
 	}
 };
 

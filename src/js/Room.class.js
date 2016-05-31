@@ -33,13 +33,21 @@ Room.prototype = {
 		this.spawnEnemies = false;
 		this.enemies = [];
 	},
-	removeFountain: function(){
+	removeFeature: function(type){
 		for (var i = 0; i < this.features.length; i++){
-			if  (this.features[i].type === 'fountain'){
+			if  (this.features[i].type === type){
 				this.features.splice(i,1);
 				i--;
 			}
 		}
+	},
+	getFeature: function(type){
+		for (var i = 0; i < this.features.length; i++){
+			if (this.features[i].type === type){
+				return this.features[i];
+			}
+		}
+		return false;
 	}
 }
 

@@ -249,6 +249,15 @@ Player.prototype = {
 	},
 	spendMP: function(points){
 		this.magicPoints.reduce(points);
+	},
+	openChest: function(){
+		var chest = this.party.getCurrentRoom().getFeature('chest');
+		if (!chest.unlocked || Utils.chance(100)){
+			this.party.controller.ui.showMessage('The chest is trapped! BOOM!');
+			this.sustainInjury((Utils.chance(50) ? Player.LEFT : Player.RIGHT)+'-'+(Utils.chance(50) ? Player.ARM : Player.LEG));
+		}
+		this.party.getCurrentRoom().items.push(chest.item);
+		
 	}
 }
 
