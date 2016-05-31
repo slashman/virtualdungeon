@@ -245,7 +245,7 @@ Player.prototype = {
 				this.party.controller.addCounter(counter);
 				break;
 			case 'blink':
-				// TODO: Implement
+				this.party.blink(params.direction);
 				break;
 			case 'removeField':
 				// TODO: Implement

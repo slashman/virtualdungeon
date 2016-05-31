@@ -32,6 +32,8 @@ Level.prototype = {
 		return this.map[location.x][location.y];
 	},
 	getRoomAt: function(x, y){
+		if (!this.isValidRoomLocation(x,y))
+			return false;
 		return this.map[x][y];
 	},
 	isValidRoomLocation: function(x, y){

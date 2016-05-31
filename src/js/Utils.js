@@ -39,6 +39,40 @@ var Utils = {
 				return 'east';
 			}
 		}
+	},
+	DIRECTION_VECTORS: {
+		north: {
+			x: 0,
+			y: -1
+		},
+		south: {
+			x: 0,
+			y: 1
+		},
+		west: {
+			x: -1,
+			y: 0
+		},
+		east: {
+			x: 1,
+			y: 0
+		}
+	},
+	getVector: function(direction){
+		return this.DIRECTION_VECTORS[direction];
+		if (from.x == to.x){
+			if (from.y > to.y){
+				return 'north';
+			} else {
+				return 'south';
+			}
+		} else {
+			if (from.x > to.x){
+				return 'west';
+			} else {
+				return 'east';
+			}
+		}
 	}
 };
 

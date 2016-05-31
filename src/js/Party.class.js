@@ -104,6 +104,16 @@ Party.prototype = {
 	useItem: function(item, player){
 		player[item.effect](item.param);
 		this.removeItem(item);
+	},
+	blink: function(direction){
+		var vector = Utils.getVector(direction);
+		var room = this.level.getRoomAt(this.location.x + vector.x, this.location.y + vector.y);
+		if (room){
+			this.controller.ui.showMessage('The party teleports.');
+			this._doMove(vector.x, vector.y);
+		} else {
+			this.controller.ui.showMessage('You can\'t go there.');
+		}
 	}
 }
 
