@@ -23,7 +23,12 @@ var DungeonGenerator = {
 			case 'low':
 				specs.roomDensity = 0.4;
 				break;
+			case 'increasing':
+				specs.roomDensity = 0.3 + depth * 0.05;
+				break;
 		}
+		if (specs.roomDensity > 0.9)
+			specs.roomDensity = 0.9;
 		var allRooms = Math.floor(w * h * specs.roomDensity) - 1;
 		specs.sections = 3;
 		for (var i = 0; i < specs.sections; i++){
