@@ -47,7 +47,7 @@ UI.prototype = {
 		} else if (selectedAction === 'useItem') {
 			DOM.byId('cmbPlayerRow').style.display = 'table-row';
 			DOM.byId('cmbItemRow').style.display = 'table-row';
-		} else if (selectedAction === 'openChest') {
+		} else if (selectedAction === 'openChest' || selectedAction === 'drink') {
 			DOM.byId('cmbPlayerRow').style.display = 'table-row';
 		}
 	},
