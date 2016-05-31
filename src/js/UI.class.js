@@ -732,7 +732,6 @@ UI.prototype = {
 				targets.push(party.getPlayerByNumber(e.playerId));
 		});
 		this.targetSelectedCb(targets);
-		this.controller.setInputStatus(this.controller.MOVE);
 		this.updateRoomData();
 	},
 	activateCombat: function(){

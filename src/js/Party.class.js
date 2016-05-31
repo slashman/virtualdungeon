@@ -60,6 +60,7 @@ Party.prototype = {
 							corridor.triggerTrapOn(corridor.trap, targets);
 						}
 						corridor.trap = false;
+						controller.setInputStatus(controller.MOVE);
 						party._doMove(dx, dy);
 					};
 					this.controller.setInputStatus(this.controller.PICK_TARGET);
