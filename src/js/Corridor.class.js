@@ -64,7 +64,7 @@ Corridor.prototype = {
 			// Pick a single target
 			var target = Utils.randomElementOf(party.players);
 			if (target.evadesTrap()){
-				this.level.controller.ui.showMessage(target.name + ' evades the '+trap.description);
+				this.level.controller.ui.showMessage(target.name + ' evades the trap');
 			} else {
 				this.applyTrapEffect(trap, target);
 			}
