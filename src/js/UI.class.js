@@ -478,7 +478,7 @@ UI.prototype = {
 	updateRoomData: function(){
 		var party = this.controller.party;
 		var room = this.controller.party.getCurrentRoom();
-		var html = '<p>'+room.description+'</p>';
+		var html = '<p>Level '+party.level.depth+'. '+room.description+'</p>';
 		var corridorsHTML = '';
 		if (room.corridors.north){
 			corridorsHTML += '<strong>North:</strong> '+room.corridors.north.description+ '<br/>';
