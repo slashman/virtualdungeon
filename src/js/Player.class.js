@@ -157,6 +157,10 @@ Player.prototype = {
 		this.injuredMap[bodyPart] = false;
 		this.hitPoints.recover(healing);
 	},
+	recoverHP: function(healing){
+		this.hitPoints.recover(healing);
+		this.party.controller.ui.showMessage(this.name +' recovers '+healing+' hit points.');
+	},
 	cureAilments: function(){
 		this.statusAilments = [];
 	},

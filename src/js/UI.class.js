@@ -42,7 +42,11 @@ UI.prototype = {
 					break;
 			}
 		} else if (selectedAction === 'takeItem'){
+			DOM.byId('cmbItemOnFloorRow').style.display = 'table-row';
+		} else if (selectedAction === 'useItem') {
+			DOM.byId('cmbPlayerRow').style.display = 'table-row';
 			DOM.byId('cmbItemRow').style.display = 'table-row';
+
 		}
 	},
 	initComponents: function(){
@@ -131,6 +135,20 @@ UI.prototype = {
 		element.id = 'cmbSpellTargetEnemy';
 		td.appendChild(element);
 
+		// Item on Floor Target
+		var tr = DOM.create('tr');
+		tr.className = 'commandTargetRow';
+		tr.id = 'cmbItemOnFloorRow';
+		actionTable.appendChild(tr);
+		var td = DOM.create('td');
+		tr.appendChild(td);
+		td.innerHTML = 'Item';
+		var td = DOM.create('td');
+		tr.appendChild(td);
+		var element = DOM.create('select');
+		element.id = 'cmbItemOnFloor';
+		td.appendChild(element);
+
 		// Item Target
 		var tr = DOM.create('tr');
 		tr.className = 'commandTargetRow';
@@ -214,7 +232,8 @@ UI.prototype = {
 			player: DOM.val('cmbPlayer'),
 			spellTarget: DOM.val('cmbSpellTarget'),
 			spellTargetEnemy: DOM.val('cmbSpellTargetEnemy'),
-			// item?
+			itemOnFloor: DOM.val('cmbItemOnFloor'),
+			item: DOM.val('cmbItem'),
 			bodyPart: DOM.val('cmbBodyPart'),
 			direction: DOM.val('cmbDirection')
 		};
@@ -455,6 +474,7 @@ UI.prototype = {
 		}
 	},
 	updateRoomData: function(){
+		var party = this.controller.party;
 		var room = this.controller.party.getCurrentRoom();
 		var html = '<p>'+room.description+'</p>';
 		var corridorsHTML = '';
@@ -496,10 +516,26 @@ UI.prototype = {
 					return element.name;
 				}
 			)+'</p>';
-			var cmbItem = DOM.byId('cmbItem');
+			var cmbItem = DOM.byId('cmbItemOnFloor');
 			cmbItem.innerHTML = '';
 			for (var i = 0; i < room.items.length; i++){
 				var item = room.items[i];
+				playerOption = DOM.create('option');
+				playerOption.value = i;
+				playerOption.innerHTML = item.name;
+				cmbItem.appendChild(playerOption)
+			}
+		}
+		if (party.items.length > 0){
+			html += '<h3>Inventory</h3><p>'+this._buildList(party.items, 
+				function(element){
+					return element.name;
+				}
+			)+'</p>';
+			var cmbItem = DOM.byId('cmbItem');
+			cmbItem.innerHTML = '';
+			for (var i = 0; i < party.items.length; i++){
+				var item = party.items[i];
 				playerOption = DOM.create('option');
 				playerOption.value = i;
 				playerOption.innerHTML = item.name;
@@ -525,6 +561,7 @@ UI.prototype = {
 		actions.push({code: 'passTurn', name: 'Stand'});
 		actions.push({code: 'castSpell', name: 'Cast Spell'});
 		actions.push({code: 'toogleMap', name: 'Toogle Map'});
+		actions.push({code: 'useItem', name: 'Use Item'});
 		for (var i = 0; i < room.features.length; i++){
 			var feature = room.features[i];
 			switch (feature.type){

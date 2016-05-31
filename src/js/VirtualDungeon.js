@@ -182,7 +182,15 @@ var VirtualDungeon = {
 		}
 	},
 	takeItem: function(params){
-		this.party.getCurrentRoom().items.splice(params.targetItem, 1);
+		var item = this.party.getCurrentRoom().items[params.itemOnFloor];
+		this.party.getCurrentRoom().items.splice(params.itemOnFloor, 1);
+		this.party.addItem(item);
+		this.ui.updateRoomData();
+	},
+	useItem: function(params){
+		var item = this.party.items[params.item];
+		var player = this.party.getPlayerByNumber(params.player);
+		this.party.useItem(item, player);
 		this.ui.updateRoomData();
 	}
 };

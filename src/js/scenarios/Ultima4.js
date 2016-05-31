@@ -31,6 +31,6 @@ module.exports = {
 		{ name: 'Tremor', cost: 6, words: 'VAS POR YLEM', description: 'Causes 5 points of physical damage to all non-flying enemies', effect: 'physical'}
 	],
 	items: [
-		{ name: 'Yellow Potion', effect: 'heal', param: 5}
+		{ name: 'Yellow Potion', effect: 'recoverHP', param: 5}
 	]
 };

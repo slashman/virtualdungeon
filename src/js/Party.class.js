@@ -4,6 +4,7 @@ var Player = require('./Player.class');
 function Party(specs, controller){
 	this.controller = controller;
 	this.players = [];
+	this.items = [];
 	for (var i = 0; i < specs.players.length; i++){
 		specs.players[i].number = i + 1;
 		this.players.push(new Player(specs.players[i], this));
@@ -25,6 +26,17 @@ Party.prototype = {
 	},
 	getCurrentRoom: function(){
 		return this.level.getRoom(this.location);
+	},
+	addItem: function(item){
+		this.items.push(item);
+	},
+	removeItem: function(item){
+		for (var i = 0; i < this.items.length; i++){
+			if (this.items[i] == item){
+				this.items.splice(i, 1);
+				return;
+			}
+		}
 	},
 	move: function(dx, dy){
 		var direction = Utils.getDirection(this.location, {x: this.location.x+dx, y: this.location.y+dy})
@@ -87,6 +99,10 @@ Party.prototype = {
 		for (var i = 0; i < this.players.length; i++){
 			this.players[i].cureAilment(ailment);
 		}	
+	},
+	useItem: function(item, player){
+		player[item.effect](item.param);
+		this.removeItem(item);
 	}
 }
 
