@@ -210,7 +210,17 @@ Player.prototype = {
 				params.spellTarget.cureAilments();
 				break;
 			case 'openChest':
-				// TODO: Implement
+				var chest = this.party.getCurrentRoom().getFeature('chest');
+				if (chest){
+					if (Utils.chance(50)){
+						this.party.controller.ui.showMessage('"Click!" a bomb trap is disarmed.');
+					} else {
+						this.party.controller.ui.showMessage('The chest is unlocked.');
+					}
+					chest.unlocked = true;
+				} else {
+					this.party.controller.ui.showMessage('Nothing happens.');
+				}
 				break;
 			case 'heal':
 				this.party.controller.ui.showMessage(params.spellTarget.name+' heals '+spell.param);
@@ -252,7 +262,7 @@ Player.prototype = {
 	},
 	openChest: function(){
 		var chest = this.party.getCurrentRoom().getFeature('chest');
-		if (!chest.unlocked || Utils.chance(100)){
+		if (!chest.unlocked || Utils.chance(50)){
 			this.party.controller.ui.showMessage('The chest is trapped! BOOM!');
 			this.sustainInjury((Utils.chance(50) ? Player.LEFT : Player.RIGHT)+'-'+(Utils.chance(50) ? Player.ARM : Player.LEG));
 		}
