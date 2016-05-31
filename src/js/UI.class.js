@@ -342,27 +342,24 @@ UI.prototype = {
 		var room = party.getCurrentRoom();
 		var level = party.level;
 		var blockSize = 20;
-		var size = blockSize * 3;
-		var scale = 40;
-		var lineWidth = 2;
 		// Fill background
 		ctx.fillStyle = "#FFFFFF";
 		ctx.fillRect(0, 0, 250, 250);
-		// Fill the 4 fixed blocks with blackness
+		// Fill the room border with blackness
 		ctx.fillStyle = "#000000";
-		ctx.fillRect(2 * scale, 2 * scale, blockSize, blockSize);
-		ctx.fillRect(2 * scale, 2 * scale + 2 * blockSize, blockSize, blockSize);
-		ctx.fillRect(2 * scale + 2 * blockSize, 2 * scale, blockSize, blockSize);
-		ctx.fillRect(2 * scale + 2 * blockSize, 2 * scale + 2 * blockSize, blockSize, blockSize);
+		ctx.fillRect(1 * blockSize, 1 * blockSize, blockSize * 7, blockSize * 7);
+		ctx.fillStyle = "#FFFFFF";
+		ctx.fillRect(2 * blockSize, 2 * blockSize, blockSize * 5, blockSize * 5);
+
 		// Now, fill the corridors
-		if (!room.corridors.north)
-			ctx.fillRect(2 * scale + blockSize, 2 * scale, blockSize, blockSize);
-		if (!room.corridors.south)
-			ctx.fillRect(2 * scale + blockSize, 2 * scale + 2 * blockSize, blockSize, blockSize);
-		if (!room.corridors.west)
-			ctx.fillRect(2 * scale, 2 * scale + blockSize, blockSize, blockSize);
-		if (!room.corridors.east)
-			ctx.fillRect(2 * scale + 2 * blockSize, 2 * scale + blockSize, blockSize, blockSize);
+		if (room.corridors.north)
+			ctx.fillRect(4 * blockSize, 1 * blockSize, blockSize, blockSize);
+		if (room.corridors.south)
+			ctx.fillRect(4 * blockSize, 7 * blockSize, blockSize, blockSize);
+		if (room.corridors.west)
+			ctx.fillRect(1 * blockSize, 4 * blockSize, blockSize, blockSize);
+		if (room.corridors.east)
+			ctx.fillRect(7 * blockSize, 4 * blockSize, blockSize, blockSize);
 	},
 	hideNewGamePanel: function(){
 		var ui = this;
