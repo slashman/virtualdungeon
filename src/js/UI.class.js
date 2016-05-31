@@ -25,10 +25,11 @@ UI.prototype = {
 		DOM.selectAll('.commandTargetRow', function(e){e.style.display = 'none'});
 		if (selectedAction === 'castSpell'){
 			DOM.byId('cmbSpellsRow').style.display = 'table-row';
+			DOM.byId('cmbPlayerRow').style.display = 'table-row';
 			spell = this.controller.scenario.getSpell(DOM.val('cmbSpell'));
 			switch (spell.targetType){
 				case 'friend':
-					DOM.byId('cmbPlayerRow').style.display = 'table-row';
+					DOM.byId('cmbSpellTargetRow').style.display = 'table-row';
 					break;
 				case 'enemy':
 					DOM.byId('cmbTargetEnemyRow').style.display = 'table-row';
@@ -37,7 +38,7 @@ UI.prototype = {
 					DOM.byId('cmbDirectionsRow').style.display = 'table-row';
 					break;
 				case 'friendLimb':
-					DOM.byId('cmbPlayerRow').style.display = 'table-row';
+					DOM.byId('cmbSpellTargetRow').style.display = 'table-row';
 					DOM.byId('cmbBodyPartRow').style.display = 'table-row';
 					break;
 			}
@@ -111,7 +112,7 @@ UI.prototype = {
 		// Spell Target
 		var tr = DOM.create('tr');
 		tr.className = 'commandTargetRow';
-		tr.id = 'cmbSpellRow';
+		tr.id = 'cmbSpellTargetRow';
 		actionTable.appendChild(tr);
 		var td = DOM.create('td');
 		tr.appendChild(td);

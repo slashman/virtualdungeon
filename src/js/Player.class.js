@@ -200,6 +200,7 @@ Player.prototype = {
 		}
 	},
 	castSpell: function(spell, params){
+		this.party.controller.ui.showMessage(this.name+ ' casts '+spell.name+'.');
 		switch (spell.effect){
 			case 'removeAilmentFromAll':
 				this.party.controller.ui.showMessage('All party members are healed from '+spell.param+'.');
