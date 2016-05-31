@@ -1,5 +1,6 @@
 var DOM = require('./DOM');
 var Player = require('./Player.class');
+var Utils = require('./Utils');
 
 function UI(controller){
 	this.controller = controller;
@@ -226,6 +227,42 @@ UI.prototype = {
 		}
 		td.appendChild(button);
 		this.updateTargetComboBoxes();
+
+		// Add environmental theme buttons
+
+		var musicSection = DOM.byId('musicSection');
+		var musicButton = DOM.create('button');
+		musicButton.innerHTML = 'Play Combat';
+		musicButton.onclick = function(){
+			thus.playMusic('combat');
+		}
+		musicSection.appendChild(musicButton);
+		musicButton = DOM.create('button');
+		musicButton.innerHTML = 'Play Exploration';
+		musicButton.onclick = function(){
+			thus.playMusic('explore');
+		}
+		musicSection.appendChild(musicButton);
+		musicButton = DOM.create('button');
+		musicButton.innerHTML = 'Play Victory';
+		musicButton.onclick = function(){
+			thus.playMusic('victory');
+		}
+		musicSection.appendChild(musicButton);
+		musicButton = DOM.create('button');
+		musicButton.innerHTML = 'Play Death';
+		musicButton.onclick = function(){
+			thus.playMusic('death');
+		}
+		musicSection.appendChild(musicButton);
+
+		musicSection.appendChild(musicButton);
+		musicButton = DOM.create('button');
+		musicButton.innerHTML = 'Stop Music';
+		musicButton.onclick = function(){
+			thus.stopMusic();
+		}
+		musicSection.appendChild(musicButton);
 	},
 	executeAction: function(){
 		var command = {
@@ -769,6 +806,34 @@ UI.prototype = {
 		var seconds = seconds % 60;
 		seconds = seconds < 10 ? '0'+seconds : seconds;
 		return minutes +':'+seconds;
+	},
+	playMusic: function(theme){
+		var looped = false;
+		if (theme === 'combat' || theme === 'explore'){
+			theme += Utils.rand(1,4);
+		}
+		if (theme.indexOf('combat')!=-1 || theme.indexOf('explore')!=-1){
+			looped = true;
+		}
+		var track = 'mp3/'+theme+'.mp3';
+		if (this.currentAudio == null){
+			this.currentAudio = new Audio(track);
+		} else {
+			this.currentAudio.pause();
+			this.currentAudio.src = track;
+		}
+		this.currentAudio.play();
+		if (looped){
+			var thus = this;
+			this.currentAudio.onended=function(){thus.playMusic(theme);}
+		} else {
+			this.currentAudio.onended=function(){delete this.currentAudio}
+		}
+	},
+	stopMusic: function(){
+		if (this.currentAudio){
+			this.currentAudio.pause();
+		}
 	}
 };
 
