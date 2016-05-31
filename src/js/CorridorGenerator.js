@@ -67,7 +67,7 @@ var CorridorGenerator = {
 			}
 		}
 		var obstacle = false;
-		if (Utils.chance(5)){
+		if (corridorType === Corridor.HALLWAY && Utils.chance(5)){
 			obstacle = {
 				type: Utils.randomElementOf([Corridor.FIRE_FIELD, Corridor.POISON_FIELD, Corridor.SLEEP_FIELD]),
 				canPassThru: true
