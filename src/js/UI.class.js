@@ -1,5 +1,6 @@
 var DOM = require('./DOM');
 var Player = require('./Player.class');
+var Corridor = require('./Corridor.class');
 var Utils = require('./Utils');
 
 function UI(controller){
@@ -343,14 +344,14 @@ UI.prototype = {
 			ctx.fillRect(room.x * scale + 2 * blockSize, room.y * scale, blockSize, blockSize);
 			ctx.fillRect(room.x * scale + 2 * blockSize, room.y * scale + 2 * blockSize, blockSize, blockSize);
 			// Now, fill the corridors
-			if (!room.corridors.north)
-				ctx.fillRect(room.x * scale + blockSize, room.y * scale, blockSize, blockSize);
-			if (!room.corridors.south)
-				ctx.fillRect(room.x * scale + blockSize, room.y * scale + 2 * blockSize, blockSize, blockSize);
-			if (!room.corridors.west)
-				ctx.fillRect(room.x * scale, room.y * scale + blockSize, blockSize, blockSize);
-			if (!room.corridors.east)
-				ctx.fillRect(room.x * scale + 2 * blockSize, room.y * scale + blockSize, blockSize, blockSize);
+			ctx.fillStyle = this._getCorridorColor(room.corridors.north);
+			ctx.fillRect(room.x * scale + blockSize, room.y * scale, blockSize, blockSize);
+			ctx.fillStyle = this._getCorridorColor(room.corridors.south);
+			ctx.fillRect(room.x * scale + blockSize, room.y * scale + 2 * blockSize, blockSize, blockSize);
+			ctx.fillStyle = this._getCorridorColor(room.corridors.west);
+			ctx.fillRect(room.x * scale, room.y * scale + blockSize, blockSize, blockSize);
+			ctx.fillStyle = this._getCorridorColor(room.corridors.east);
+			ctx.fillRect(room.x * scale + 2 * blockSize, room.y * scale + blockSize, blockSize, blockSize);
 			// Show enemies
 			if (room.spawnEnemies || room.enemies.length > 0){
 				ctx.lineWidth= lineWidth;
@@ -359,7 +360,7 @@ UI.prototype = {
 			}
 			// Add stairs down and up
 			if (room.isExit){
-				ctx.fillStyle = "#00FF00";
+				ctx.fillStyle = "#0000FF";
 				ctx.fillRect(room.x * scale + blockSize, room.y * scale + blockSize, blockSize, blockSize);
 			}
 			/*if (room.isEntrance){
@@ -368,7 +369,7 @@ UI.prototype = {
 			}*/
 			// Show party location
 			if (party.location.x == room.x && party.location.y == room.y){
-				ctx.fillStyle = "#FF0000";
+				ctx.fillStyle = "#888888";
 				ctx.fillRect(room.x * scale + blockSize, room.y * scale + blockSize, blockSize, blockSize);
 			}
 		}
@@ -389,14 +390,37 @@ UI.prototype = {
 		ctx.fillRect(2 * blockSize, 2 * blockSize, blockSize * 5, blockSize * 5);
 
 		// Now, fill the corridors
-		if (room.corridors.north)
+		if (room.corridors.north){
+			ctx.fillStyle = this._getCorridorColor(room.corridors.north);
 			ctx.fillRect(4 * blockSize, 1 * blockSize, blockSize, blockSize);
-		if (room.corridors.south)
+		}
+		if (room.corridors.south){
+			ctx.fillStyle = this._getCorridorColor(room.corridors.south);
 			ctx.fillRect(4 * blockSize, 7 * blockSize, blockSize, blockSize);
-		if (room.corridors.west)
+		}
+		if (room.corridors.west){
+			ctx.fillStyle = this._getCorridorColor(room.corridors.west);
 			ctx.fillRect(1 * blockSize, 4 * blockSize, blockSize, blockSize);
-		if (room.corridors.east)
+		}
+		if (room.corridors.east){
+			ctx.fillStyle = this._getCorridorColor(room.corridors.east);
 			ctx.fillRect(7 * blockSize, 4 * blockSize, blockSize, blockSize);
+		}
+	},
+	_getCorridorColor: function(corridor){
+		if (!corridor)
+			return '#000000';
+		if (corridor.obstacle){
+			switch (corridor.obstacle.type){
+				case Corridor.FIRE_FIELD:
+					return '#FF0000';
+				case Corridor.POISON_FIELD:
+					return '#00FF00';
+				case Corridor.SLEEP_FIELD:
+					return '#FF00FF';
+			}
+		}
+		return "#FFFFFF";
 	},
 	hideNewGamePanel: function(){
 		var ui = this;
