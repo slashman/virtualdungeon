@@ -20,8 +20,11 @@ Corridor.CLAMPING_TRAP = 'clamping-trap';
 Corridor.CALTROPS_TRAP = 'caltrops-trap';
 Corridor.PIT_TRAP = 'pit-trap';
 
-Corridor.TRAP_DESCRIPTIONS = {};
+Corridor.FIRE_FIELD = 'fire-field';
+Corridor.POISON_FIELD = 'poison-field';
+Corridor.SLEEP_FIELD = 'sleep-field';
 
+Corridor.TRAP_DESCRIPTIONS = {};
 Corridor.TRAP_DESCRIPTIONS[Corridor.ARROWS_TRAP] = 'Arrows fly from everywhere!';
 Corridor.TRAP_DESCRIPTIONS[Corridor.FALLING_TRAP] = 'A bunch of rocks fall from the ceiling!';
 Corridor.TRAP_DESCRIPTIONS[Corridor.BOMB_TRAP] = 'BOOM! A bomb is set off!';
@@ -30,6 +33,11 @@ Corridor.TRAP_DESCRIPTIONS[Corridor.SPIKES_TRAP] = 'You fall into a pit of sharp
 Corridor.TRAP_DESCRIPTIONS[Corridor.CLAMPING_TRAP] = 'You step on a clamping trap';
 Corridor.TRAP_DESCRIPTIONS[Corridor.CALTROPS_TRAP] = 'Sharp caltrops are hidden in the floor!';
 Corridor.TRAP_DESCRIPTIONS[Corridor.PIT_TRAP] = 'You fall into a pit!';
+
+Corridor.OBSTACLE_DESCRIPTIONS = {};
+Corridor.OBSTACLE_DESCRIPTIONS[Corridor.FIRE_FIELD] = 'a fiery red field';
+Corridor.OBSTACLE_DESCRIPTIONS[Corridor.POISON_FIELD] = 'a nocive green field';
+Corridor.OBSTACLE_DESCRIPTIONS[Corridor.SLEEP_FIELD] = 'a numbing purple field';
 
 Corridor.HALLWAY = 'hallway';
 Corridor.TUNNEL = 'tunnel';
@@ -44,6 +52,13 @@ Corridor.prototype = {
 		this.description = features.description;
 		this.trap = features.trap;
 		this.obstacle = features.obstacle;
+	},
+	getDescription: function(){
+		var description = this.description;
+		if (this.obstacle){
+			description += ' WARNING!: There is '+Corridor.OBSTACLE_DESCRIPTIONS[this.obstacle.type]+' here.';
+		}
+		return description;	
 	},
 	showTrapTriggered: function(trap){
 		this.level.controller.ui.showMessage(Corridor.TRAP_DESCRIPTIONS[trap.description ? trap.description : trap.type]);

@@ -66,11 +66,18 @@ var CorridorGenerator = {
 					break;
 			}
 		}
+		var obstacle = false;
+		if (Utils.chance(5)){
+			obstacle = {
+				type: Utils.randomElementOf([Corridor.FIRE_FIELD, Corridor.POISON_FIELD, Corridor.SLEEP_FIELD]),
+				canPassThru: true
+			}
+		}
 		return new Corridor(level, {	
 			description: this.getDescription(corridorType),
 			type: corridorType,
 			trap: trap,
-			obstacle: null
+			obstacle: obstacle
 		});
 	},
 	getDescription: function(corridorType){

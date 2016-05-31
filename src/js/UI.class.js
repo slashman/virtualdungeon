@@ -478,16 +478,16 @@ UI.prototype = {
 		var html = '<p>Level '+party.level.depth+'. '+room.description+'</p>';
 		var corridorsHTML = '';
 		if (room.corridors.north){
-			corridorsHTML += '<strong>North:</strong> '+room.corridors.north.description+ '<br/>';
+			corridorsHTML += '<strong>North:</strong> '+room.corridors.north.getDescription()+ '<br/>';
 		}
 		if (room.corridors.south){
-			corridorsHTML += '<strong>South:</strong> '+room.corridors.south.description+ '<br/>';
+			corridorsHTML += '<strong>South:</strong> '+room.corridors.south.getDescription()+ '<br/>';
 		}
 		if (room.corridors.west){
-			corridorsHTML += '<strong>West:</strong> '+room.corridors.west.description+ '<br/>';
+			corridorsHTML += '<strong>West:</strong> '+room.corridors.west.getDescription()+ '<br/>';
 		}
 		if (room.corridors.east){
-			corridorsHTML += '<strong>East:</strong> '+room.corridors.east.description+ '<br/>';
+			corridorsHTML += '<strong>East:</strong> '+room.corridors.east.getDescription()+ '<br/>';
 		}
 		if (corridorsHTML.length > 0){
 			html += '<p>'+corridorsHTML+'</p>';

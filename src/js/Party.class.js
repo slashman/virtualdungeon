@@ -47,7 +47,7 @@ Party.prototype = {
 		}
 		var party = this;
 		var controller = this.controller;
-		if (!corridor.obstacle){
+		if (!corridor.obstacle || corridor.obstacle.canPassThru){
 			if (corridor.trap){
 				if (corridor.trap.slow){
 					corridor.showTrapTriggered(corridor.trap);
@@ -71,6 +71,7 @@ Party.prototype = {
 				}
 			}
 		}
+		here, handle fields, cause damage, poison or sleep
 		this._doMove(dx,dy);
 	},
 	_doMove: function(dx, dy){
