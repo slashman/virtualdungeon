@@ -741,7 +741,7 @@ UI.prototype = {
 			var job = this.controller.scenario.jobs[i];
 			child = DOM.create('option');
 			child.value = job.code ? job.code : job.name;
-			child.innerHTML = job.name;
+			child.innerHTML = job.name + ' HP: '+job.str+' MP: '+job.magic;
 			component.appendChild(child);	
 		}
 		td.appendChild(component);
