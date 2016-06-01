@@ -267,7 +267,13 @@ Player.prototype = {
 				this.party.blink(params.direction);
 				break;
 			case 'removeField':
-				// TODO: Implement
+				var corridor = this.party.getCurrentRoom().corridors[params.direction];
+				if (corridor && corridor.obstacle){
+					corridor.obstacle = null; // TODO: Only for fields when other type of obstacles implemented
+					this.party.controller.ui.showMessage('The field disappears');
+				} else {
+					this.party.controller.ui.showMessage('Nothing happens');
+				}
 				break;
 			case 'revivePlayer':
 				this.party.controller.ui.showMessage(params.spellTarget.name+' is alive');
