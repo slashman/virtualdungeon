@@ -127,6 +127,9 @@ Player.prototype = {
 	},
 	passTurn: function(){
 		this.turnHeal();
+		if (Utils.chance(20)){
+			this.magicPoints.recover(1);
+		}
 	},
 	evadesTrap: function(){
 		var evadeChance = this.job.dex * 2;
