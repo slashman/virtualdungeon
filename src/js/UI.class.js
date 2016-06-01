@@ -87,11 +87,12 @@ UI.prototype = {
 		td.appendChild(element);
 		var spells = this.controller.scenario.spells;
 		for (var i = 0; i < spells.length; i++){
-			if (spells[i].effect === 'physical' && !spells[i].physicalHitCheck)
-				continue;
 			var option = DOM.create('option');
 			option.value = spells[i].name;
-			option.innerHTML = spells[i].name + '['+spells[i].cost+']';
+			if (spells[i].effect === 'physical')
+				option.innerHTML = '* '+spells[i].name + '['+spells[i].cost+']';
+			else
+				option.innerHTML = spells[i].name + '['+spells[i].cost+']';
 			element.appendChild(option);
 		}
 		element.onchange = function(){
