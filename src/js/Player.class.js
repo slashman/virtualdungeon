@@ -69,6 +69,15 @@ Player.AILMENT_NAMES[Player.POISONED] = 'Poisoned';
 Player.AILMENT_NAMES[Player.MUTE] = 'Mute';
 Player.AILMENT_NAMES[Player.CLAMPED] = 'Clamped';
 
+Player.AILMENT_CODES = {};
+Player.AILMENT_CODES[Player.UNCONSCIOUS] = 'UN';
+Player.AILMENT_CODES[Player.BLIND] = 'BL';
+Player.AILMENT_CODES[Player.PARALYZED] = 'PA';
+Player.AILMENT_CODES[Player.ASLEEP] = 'SL';
+Player.AILMENT_CODES[Player.POISONED] = 'PO';
+Player.AILMENT_CODES[Player.MUTE] = 'MU';
+Player.AILMENT_CODES[Player.CLAMPED] = 'CL';
+
 
 Player.prototype = {
 	sustainInjury: function(bodyPart, turns){
@@ -146,6 +155,13 @@ Player.prototype = {
 		}
 		if (this.statusAilments.length == 0 && injuries === ''){
 			line += ' OK';
+		}
+		return line;
+	},
+	getAilmentsCode: function(){
+		var line = '';
+		for (var i = 0; i < this.statusAilments.length; i++){
+			line += Player.AILMENT_CODES[this.statusAilments[i].ailment];
 		}
 		return line;
 	},

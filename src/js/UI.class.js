@@ -17,6 +17,7 @@ UI.prototype = {
 	initMap: function(){
 		this.mapCanvas = DOM.byId('mapCanvas');
 		this.mapCanvasCtx = this.mapCanvas.getContext("2d");
+		this.mapCanvasCtx.font = '14px sans-serif';
 		var sUI = this;
 		window.requestAnimationFrame(function(){
 			sUI.update();
@@ -311,15 +312,51 @@ UI.prototype = {
 		DOM.onClick('btnEndCombat', this._battleOver, this);
 	},
 	update: function(){
+		// Fill background
+		this.mapCanvasCtx.fillStyle = "#FFFFFF";
+		this.mapCanvasCtx.fillRect(0, 0, 340, 440);
 		if (this.showMap){
 			this._drawMap();
 		} else {
 			this._drawRoom();
 		}
+		this._drawPartyStatus();
 		var sUI = this;
 		window.requestAnimationFrame(function(){
 			sUI.update();
 		});
+	},
+	_drawPartyStatus: function(){
+		var party = this.controller.party;
+		for (var i = 0; i < party.players.length; i++){
+			var player = party.players[i];
+			this._drawPlayerIcon(i * 80 + 20, 270, player);
+		}
+	},
+	_drawPlayerIcon: function(x, y, player){
+		var ctx = this.mapCanvasCtx;
+		var size = 20;
+		ctx.fillStyle = '#000000';
+		ctx.fillText(player.name, x, y + 100);
+		ctx.fillText('HP ' + player.hitPoints.current, x, y + 120);
+		ctx.fillText('MP ' + player.magicPoints.current, x, y + 140);
+		ctx.fillText(player.getAilmentsCode(), x, y + 160);
+		ctx.fillRect(x+size, y, size, size*3);
+		ctx.fillStyle = this._getBodyPartColor(player, Player.LEFT_LEG);
+		ctx.fillRect(x, y+size*3, size, size);
+		ctx.fillStyle = this._getBodyPartColor(player, Player.RIGHT_LEG);
+		ctx.fillRect(x+size*2, y+size*3, size, size);
+		ctx.fillStyle = this._getBodyPartColor(player, Player.LEFT_ARM);
+		ctx.fillRect(x, y+size, size, size);
+		ctx.fillStyle = this._getBodyPartColor(player, Player.RIGHT_ARM);
+		ctx.fillRect(x+size*2, y+size, size, size);
+	},
+	_getBodyPartColor: function (player, bodyPart){
+		if (player.injuredMap[bodyPart]){
+			return '#FF0000';
+		} else {
+			return '#000000';
+		}
 	},
 	_drawMap: function(){
 		var ctx = this.mapCanvasCtx;
@@ -329,14 +366,11 @@ UI.prototype = {
 		var size = blockSize * 3;
 		var scale = 40;
 		var lineWidth = 2;
-		// Fill background
-		ctx.fillStyle = "#FFFFFF";
-		ctx.fillRect(0, 0, 250, 250);
 		for (var i = 0; i < level.rooms.length; i++){
 			var room = level.rooms[i];
 			// Base white room
 			ctx.fillStyle = "#FFFFFF";
-			ctx.fillRect(room.x * scale, room.y * scale, size, size);
+			ctx.fillRect(0, 0, size, size);
 			// Fill the 4 fixed blocks with blackness
 			ctx.fillStyle = "#000000";
 			ctx.fillRect(room.x * scale, room.y * scale, blockSize, blockSize);
@@ -380,9 +414,6 @@ UI.prototype = {
 		var room = party.getCurrentRoom();
 		var level = party.level;
 		var blockSize = 20;
-		// Fill background
-		ctx.fillStyle = "#FFFFFF";
-		ctx.fillRect(0, 0, 250, 250);
 		// Fill the room border with blackness
 		ctx.fillStyle = "#000000";
 		ctx.fillRect(1 * blockSize, 1 * blockSize, blockSize * 7, blockSize * 7);
