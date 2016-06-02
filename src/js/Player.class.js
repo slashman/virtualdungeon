@@ -295,7 +295,8 @@ Player.prototype = {
 			this.party.controller.ui.showMessage('The chest is trapped! BOOM!');
 			this.sustainInjury((Utils.chance(50) ? Player.LEFT : Player.RIGHT)+'-'+(Utils.chance(50) ? Player.ARM : Player.LEG));
 		}
-		this.party.getCurrentRoom().items.push(chest.item);
+		this.party.controller.ui.showMessage('The chest contains a '+chest.item.name);
+		this.party.addItem(chest.item);
 	}
 }
 
