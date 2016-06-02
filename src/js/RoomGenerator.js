@@ -28,7 +28,7 @@ var RoomGenerator = {
 			features: features,
 			gmTips: specs.gmTips
 		});	
-		room.spawnEnemies = Utils.chance(30);
+		room.spawnEnemies = Utils.chance(55);
 		if (Utils.chance(5)){
 			room.items.push(Utils.randomElementOf(scenario.items));
 		}
