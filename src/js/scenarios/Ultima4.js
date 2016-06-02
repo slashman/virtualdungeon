@@ -32,5 +32,114 @@ module.exports = {
 	],
 	items: [
 		{ name: 'Yellow Potion', effect: 'recoverHP', param: 5}
+	],
+	enemies: [
+		{name: 'Skeleton', from: 1, to: 2, intrisics: 'Undead'},
+		{name: 'Headless', from: 1, to: 2},
+		{name: 'Orc', from: 1, to: 3},
+		{name: 'Rogue', from: 1, to: 3},
+		{name: 'Troll', from: 2, to: 3, 
+			skills: [{
+				name: 'Throw Rock', 
+				description: 'Causes 2 points of physical damage'
+			}],
+			sp: 2},
+		{name: 'Lava Lizard', from: 2, to: 4, intrinsics: 'Fire Resistant', 
+			skills: [{
+				name: 'Fireball',
+				description: 'Causes 2 points of fire damage'
+			}],
+			sp: 2
+		},
+		{name: 'Ettin', from: 2, to: 4, 
+			skills: [{
+				name: 'Throw Boulder',
+				description: 'Causes 3 points of physical damage'
+			}],
+			sp: 2
+		},
+		{name: 'Daemon', from: 3, to: 4,
+			intrinsics: 'Fire Resistant, Flying', 
+			skills: [{
+				name: 'Magic Missile',
+				description: 'Causes 3 points of physical damage'
+			}],
+			sp: 3
+		},
+		{name: 'Cyclops', from: 3, to: 5,
+			skills: [{
+				name: 'Throw Boulder',
+				description: 'Causes 3 points of physical damage'
+			}],
+			sp: 2
+		},
+		{name: 'Mage', from: 3, to: 5,
+			skills: [{
+				name: 'Magic Missile',
+				description: 'Causes 2 points of physical damage'
+			}],
+			sp: 3
+		},
+		{name: 'Liche', from: 4, to: 5,
+			intrisics: 'Undead',
+			skills: [{
+				name: 'Magic Missile',
+				description: 'Causes 3 points of physical damage'
+			}],
+			sp: 3
+		},
+		{name: 'Hydra', from: 4, to: 6,
+			intrinsics: 'Fire Resistant', 
+			skills: [{
+				name: 'Fireball',
+				description: 'Causes 5 points of fire damage'
+			}],
+			sp: 3
+		},
+		{name: 'Dragon', from: 5, to: 6,
+			intrinsics: 'Fire Resistant, Flying', 
+			skills: [{
+				name: 'Fireball',
+				description: 'Causes 4 points of fire damage'
+			}],
+			sp: 3
+		},
+		{name: 'Zorn', from: 5, to: 7,
+			skills: [{
+				name: 'Negate',
+				description: 'Stops magic for 1 minute'
+			}],
+			sp: 1
+		},
+		{name: 'Gazer', from: 6, to: 7,
+			intrinsics: 'Flying', 
+			skills: [{
+				name: 'Sleep',
+				description: 'Puts enemies to sleep for 30 seconds'
+			}],
+			sp: 1
+		},
+		{name: 'Reaper', from: 6, to: 8,
+			intrinsics: 'Inmobile', 
+			skills: [{
+				name: 'Sleep',
+				description: 'Puts enemies to sleep for 30 seconds'
+			}],
+			sp: 5
+		},
+		{
+			name: 'Balron', from: 7, to: 8,
+			intrinsics: 'Fire Resistant, Flying', 
+			skills: [{
+				name: 'Sleep',
+				description: 'Puts enemies to sleep for 30 seconds'
+			},
+			{
+				name: 'Fireball',
+				description: 'Causes 5 points of fire damage'
+			}
+			],
+			sp: 3
+		}
 	]
 };
