@@ -613,32 +613,34 @@ UI.prototype = {
 					return element.name;
 				}
 			)+'</p>';
-			var cmbItem = DOM.byId('cmbItemOnFloor');
-			cmbItem.innerHTML = '';
-			for (var i = 0; i < room.items.length; i++){
-				var item = room.items[i];
-				playerOption = DOM.create('option');
-				playerOption.value = i;
-				playerOption.innerHTML = item.name;
-				cmbItem.appendChild(playerOption)
-			}
 		}
+		var cmbItem = DOM.byId('cmbItemOnFloor');
+		cmbItem.innerHTML = '';
+		for (var i = 0; i < room.items.length; i++){
+			var item = room.items[i];
+			playerOption = DOM.create('option');
+			playerOption.value = i;
+			playerOption.innerHTML = item.name;
+			cmbItem.appendChild(playerOption)
+		}
+			
 		if (party.items.length > 0){
 			html += '<h3>Inventory</h3><p>'+this._buildList(party.items, 
 				function(element){
 					return element.name;
 				}
 			)+'</p>';
-			var cmbItem = DOM.byId('cmbItem');
-			cmbItem.innerHTML = '';
-			for (var i = 0; i < party.items.length; i++){
-				var item = party.items[i];
-				playerOption = DOM.create('option');
-				playerOption.value = i;
-				playerOption.innerHTML = item.name;
-				cmbItem.appendChild(playerOption)
-			}
+		}	
+		var cmbItem = DOM.byId('cmbItem');
+		cmbItem.innerHTML = '';
+		for (var i = 0; i < party.items.length; i++){
+			var item = party.items[i];
+			playerOption = DOM.create('option');
+			playerOption.value = i;
+			playerOption.innerHTML = item.name;
+			cmbItem.appendChild(playerOption)
 		}
+		
 		if (room.features.length > 0) {
 			html += '<h3>Features</h3><p>'+this._buildList(room.features, 
  				function(element){
