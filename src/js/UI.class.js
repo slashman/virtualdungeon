@@ -593,7 +593,21 @@ UI.prototype = {
 		if (room.enemies.length > 0){
 			html += '<h3>Monsters!</h3><p>'+this._buildList(room.enemies, 
 				function(element){
-					return element.race.name + ' HP: '+element.hitPoints+' ('+element.staffPlayer.name+')';
+					var html = element.race.name +' ('+element.staffPlayer.name+')' + ' HP: '+element.hitPoints;
+					if (element.race.sp)
+						html += ' SP: '+element.race.sp;
+					if (element.race.intrinsics){
+						html += '<br>Intrinsics: '+element.race.intrinsics;
+					}
+					if (element.race.skills){
+						html += '<br>Skills:<br>';
+						for (var i = 0; i < element.race.skills.length; i++){
+							var skill = element.race.skills[i];
+							html += skill.name+': '+skill.description+'<br>';
+						}
+					}
+
+					return html;
 				}
 			)+'</p>';
 			// Monster target for spells
