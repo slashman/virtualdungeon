@@ -279,6 +279,11 @@ UI.prototype = {
 			bodyPart: DOM.val('cmbBodyPart'),
 			direction: DOM.val('cmbDirection')
 		};
+		var action = this.currentAvailableActions[command.action];
+		if (this.controller.inputStatus === this.controller.COMBAT && !action.onBattle){
+			this.showMessage('Cannot do this while on combat!!');
+			return;
+		}
 		if (command.action === 'toogleMap'){
 			this.showMap = !this.showMap;
 			return;
@@ -650,39 +655,41 @@ UI.prototype = {
 		DOM.byId('roomDescription').innerHTML = html;
 
 		var actions = [];
-		actions.push({code: 'passTurn', name: 'Stand'});
-		actions.push({code: 'castSpell', name: 'Cast Spell'});
-		actions.push({code: 'toogleMap', name: 'Toogle Map'});
-		actions.push({code: 'useItem', name: 'Use Item'});
+		actions.push({code: 'passTurn', name: 'Stand', onBattle: false});
+		actions.push({code: 'castSpell', name: 'Cast Spell', onBattle: true});
+		actions.push({code: 'toogleMap', name: 'Toogle Map', onBattle: true});
+		actions.push({code: 'useItem', name: 'Use Item', onBattle: true});
 		for (var i = 0; i < room.features.length; i++){
 			var feature = room.features[i];
 			switch (feature.type){
 				case 'upstairs':
-					actions.push({code: 'upstairs', name: 'Go Up'});
+					actions.push({code: 'upstairs', name: 'Go Up', onBattle: false});
 					break;
 				case 'downstairs':
-					actions.push({code: 'downstairs', name: 'Go Down'});
+					actions.push({code: 'downstairs', name: 'Go Down', onBattle: false});
 					break;
 				case 'winArtifact':
-					actions.push({code: 'win', name: 'Win Game'});
+					actions.push({code: 'win', name: 'Win Game', onBattle: false});
 					break;
 				case 'fountain':
-					actions.push({code: 'drink', name: 'Drink'});
+					actions.push({code: 'drink', name: 'Drink', onBattle: false});
 					break;
 				case 'chest':
-					actions.push({code: 'openChest', name: 'Open Chest'});
+					actions.push({code: 'openChest', name: 'Open Chest', onBattle: false});
 					break;
 			}
 		}
 		if (room.items.length > 0){
-			actions.push({code: 'takeItem', name: 'Pick up item'});
+			actions.push({code: 'takeItem', name: 'Pick up item', onBattle: false});
 		}
 		var roomActionsCmb = DOM.byId('cmbAction');
 		roomActionsCmb.innerHTML = ''; // Can be done better but me lazy
+		this.currentAvailableActions = {};
 		for (var i = 0; i < actions.length; i++){
 			var actionChild = DOM.create('option');
 			actionChild.value = actions[i].code;
 			actionChild.innerHTML = actions[i].name;
+			this.currentAvailableActions[actions[i].code] = actions[i];
 			roomActionsCmb.appendChild(actionChild);
 		}
 		
@@ -825,7 +832,10 @@ UI.prototype = {
 		this.updateRoomData();
 	},
 	activateCombat: function(){
-		this._disableActionButtons();
+		DOM.selectAll('.movementButton', function(e){
+			e.style.display = 'none';
+		});
+		this.updateTargetComboBoxes();
 		DOM.selectAll('.combatComponent', function(e){
 			e.style.display = 'inline';
 		});
