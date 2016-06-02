@@ -291,7 +291,7 @@ Player.prototype = {
 	},
 	openChest: function(){
 		var chest = this.party.getCurrentRoom().getFeature('chest');
-		if (!chest.unlocked || Utils.chance(50)){
+		if (!chest.unlocked && Utils.chance(50)){
 			this.party.controller.ui.showMessage('The chest is trapped! BOOM!');
 			this.sustainInjury((Utils.chance(50) ? Player.LEFT : Player.RIGHT)+'-'+(Utils.chance(50) ? Player.ARM : Player.LEG));
 		}
