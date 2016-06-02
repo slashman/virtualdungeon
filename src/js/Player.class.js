@@ -130,6 +130,11 @@ Player.prototype = {
 		if (Utils.chance(20)){
 			this.magicPoints.recover(1);
 		}
+		if (this.getAilment(Player.POISONED)){
+			if (Utils.chance(40)){
+				this.hitPoints.reduce(1);
+			}
+		}
 	},
 	evadesTrap: function(){
 		var evadeChance = this.job.dex * 2;
