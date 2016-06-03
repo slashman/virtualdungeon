@@ -376,7 +376,7 @@ UI.prototype = {
 			var room = level.rooms[i];
 			// Base white room
 			ctx.fillStyle = "#FFFFFF";
-			ctx.fillRect(0, 0, size, size);
+			ctx.fillRect(room.x * scale, room.y * scale, size, size);
 			// Fill the 4 fixed blocks with blackness
 			ctx.fillStyle = "#000000";
 			ctx.fillRect(room.x * scale, room.y * scale, blockSize, blockSize);
