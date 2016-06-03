@@ -535,6 +535,7 @@ UI.prototype = {
 	getNewGameConfig: function(){
 		var dungeonW = parseInt(DOM.val('txtDungeonW'));
 		var dungeonH = parseInt(DOM.val('txtDungeonH'));
+		var startingLevel = parseInt(DOM.val('txtStartingLevel'));
 		var roomDensity = DOM.val('cmbRoomDensity');
 		var dungeon = DOM.val('cmbDungeon');
 
@@ -565,6 +566,7 @@ UI.prototype = {
 				w: dungeonW,
 				h: dungeonH
 			},
+			startingLevel: startingLevel,
 			roomDensity: roomDensity,
 			players: players,
 			staffPlayers: staffPlayers

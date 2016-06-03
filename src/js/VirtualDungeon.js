@@ -37,12 +37,12 @@ var VirtualDungeon = {
 			var level = DungeonGenerator.generateLevel({
 				w: config.dungeonSize.w,
 				h: config.dungeonSize.h,
-				depth: 1,
+				depth: config.startingLevel,
 				startingLocation: this.party.location,
 				roomDensity: config.roomDensity
 			}, this);
 		} while (!level);
-		this.levels[1] = level;
+		this.levels[config.startingLevel] = level;
 		this.party.setLevel(level);
 		this.ui.hideNewGamePanel();
 		this.ui.updateRoomData();
