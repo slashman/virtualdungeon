@@ -56,6 +56,9 @@ var VirtualDungeon = {
 		if (config.staffPlayers.length == 0){
 			return "At least one dweller is required.";
 		}
+		if (config.staffPlayers.length < config.players.length){
+			return "At least "+config.players.length+" dwellers are required.";
+		}
 		for (var i = 0;  i < config.players.length; i++){
 			if (config.players[i].name.trim() === ''){
 				return "Please provide a name for all players.";
