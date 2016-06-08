@@ -513,6 +513,7 @@ UI.prototype = {
 			cmbSpellPlayer.appendChild(playerOption)
 		}
 		DOM.selectAll('.selectPlayerCheckbox', function(e){e.style.display = 'none'});
+		DOM.byId('inGame').style.display = 'block';
 	},
 	_createBodyPartSelect: function(){
 		var select = DOM.create('select');
@@ -541,12 +542,10 @@ UI.prototype = {
 
 		var players = [];
 		var names = DOM.selectAll('.playerNameText');
-		var roles = DOM.selectAll('.playerRoleCombo');
 		var classes = DOM.selectAll('.playerClassCombo');
 		for (var i = 0; i < names.length; i++){
 			players.push({
 				name: names[i].value,
-				role: roles[i].value,
 				job: classes[i].value
 			});
 		}
@@ -739,25 +738,7 @@ UI.prototype = {
 		tr.appendChild(td);
 
 		td = DOM.create('td');
-		td.innerHTML = 'Heroes';
-		tr.appendChild(td);
-
-		td = DOM.create('td');
-		component = DOM.create('select');
-		component.className = 'playerRoleCombo';
-		child = DOM.create('option');
-		child.value = 'leader';
-		child.innerHTML = 'Leader';
-		component.appendChild(child);
-		child = DOM.create('option');
-		child.value = 'mapper';
-		child.innerHTML = 'Mapper';
-		component.appendChild(child);
-		child = DOM.create('option');
-		child.value = 'none';
-		child.innerHTML = 'None';
-		component.appendChild(child);
-		td.appendChild(component);
+		td.innerHTML = 'Adventurers';
 		tr.appendChild(td);
 
 		td = DOM.create('td');
@@ -790,11 +771,7 @@ UI.prototype = {
 		tr.appendChild(td);
 
 		td = DOM.create('td');
-		td.innerHTML = 'Any';
-		tr.appendChild(td);
-
-		td = DOM.create('td');
-		td.innerHTML = 'Any';
+		td.innerHTML = 'Monster';
 		tr.appendChild(td);
 
 		table.appendChild(tr);

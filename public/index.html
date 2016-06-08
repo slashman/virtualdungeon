@@ -6,23 +6,19 @@
 <link rel="stylesheet" type="text/css" href="virtualDungeon.css">
 </head>
 <body onload = "bootstrap();">
+<h1>EXODUS</h1>
 <section id = "newGame">
-	<section>
-		<h1>EXODUS</h1>
-		<h2>Create New Game</h2>
-		<table id = "tblPlayersInfo">
-			<tr>
-				<td>Name</td>
-				<td>Team</td>
-				<td>Role</td>
-				<td>Class</td>
-				<td></td>
-			</tr>
-		</table>
-		<button id = "btnAddPlayer">Add Hero</button>
-		<button id = "btnAddStaffPlayer">Add Dweller</button>
-	</section>
-	<table>
+	<h2>Create New Game</h2>
+	<table id = "tblPlayersInfo">
+		<tr>
+			<td>Name</td>
+			<td>Team</td>
+			<td>Class</td>
+		</tr>
+	</table>
+	<button id = "btnAddPlayer">Add Adventurer</button>
+	<button id = "btnAddStaffPlayer">Add Dungeon Dweller</button>
+	<table id = "tblDungeonInfo">
 		<tr>
 			<td>
 				Dungeon
@@ -41,8 +37,8 @@
 				Dungeon Size
 			</td>
 			<td>
-				<input type = "text" id = "txtDungeonW" value="4"> x
-				<input type = "text" id = "txtDungeonH" value="4">
+				<input type = "text" id = "txtDungeonW" class = "txtSingleNumber" value="4"> x
+				<input type = "text" id = "txtDungeonH" class = "txtSingleNumber" value="4">
 			</td>
 		</tr>
 		<tr>
@@ -63,32 +59,28 @@
 				Starting Level
 			</td>
 			<td>
-				<input type = "text" id = "txtStartingLevel" value="1">
-			</td>
-		</tr>
-		<tr>
-			<td>
-			</td>
-			<td>
-				<button id = "btnStartGame">Start Game</button>
+				<input type = "text" id = "txtStartingLevel" value="1" class = "txtSingleNumber">
 			</td>
 		</tr>
 	</table>
+	<button id = "btnStartGame">Start Game</button>
 </section>
-<canvas id = "mapCanvas" width="340" height = "440"></canvas>
-<section id = "movementButtons">
-	<button id = "btnMoveNorth" class = "movementButton actionButton">North</button>
-	<button id = "btnMoveSouth" class = "movementButton actionButton">South</button>
-	<button id = "btnMoveWest"  class = "movementButton actionButton">West</button>
-	<button id = "btnMoveEast"  class = "movementButton actionButton">East</button>
-	<button id = "btnSelectTargets" class = "actionButton">Select Targets</button>
-	<button id = "btnEndCombat" class = "actionButton combatComponent">All Enemies Vanquished</button>
-	<table id = 'actionsTable'></table>
+<section id = "inGame">
+	<canvas id = "mapCanvas" width="340" height = "440"></canvas>
+	<section id = "movementButtons">
+		<button id = "btnMoveNorth" class = "movementButton actionButton">North</button>
+		<button id = "btnMoveSouth" class = "movementButton actionButton">South</button>
+		<button id = "btnMoveWest"  class = "movementButton actionButton">West</button>
+		<button id = "btnMoveEast"  class = "movementButton actionButton">East</button>
+		<button id = "btnSelectTargets" class = "actionButton">Select Targets</button>
+		<button id = "btnEndCombat" class = "actionButton combatComponent">All Enemies Vanquished</button>
+		<table id = 'actionsTable'></table>
+	</section>
+	<section id = "roomDescription"></section>
+	<section id = "partyMembersSection"></section>
+	<section id = "countersSection"></section>
+	<section id = "messageArea"></section>
 </section>
-<section id = "roomDescription"></section>
-<section id = "partyMembersSection"></section>
-<section id = "countersSection"></section>
-<section id = "messageArea"></section>
 <section id = "musicSection"></section>
 </body>
 </html>
