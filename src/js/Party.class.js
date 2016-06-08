@@ -95,11 +95,10 @@ Party.prototype = {
 		this.location.y += dy;
 		this.passTurn();
 		if (this.getCurrentRoom().spawnEnemies){
-			// Select an enemy party
 			var enemyParty = this.controller.staff.selectEnemyParty();
 			this.getCurrentRoom().enemies = enemyParty;
-			// Enter combat mode!
 			this.controller.setInputStatus(this.controller.COMBAT);
+			this.controller.ui.playMusic('combat');
 		}
 	},
 	passTurn: function(){
@@ -122,6 +121,14 @@ Party.prototype = {
 		for (var i = 0; i < this.players.length; i++){
 			this.players[i].takeDamage(damage);
 		}
+	},
+	checkGameOver: function(){
+		for (var i = 0; i < this.players.length; i++){
+			if (this.players[i].hitPoints.current > 0)
+				return;
+		}
+		this.controller.ui.playMusic('death');
+		this.controller.ui.showMessage('Game Over...');
 	},
 	applyAilment: function(ailment, turns){
 		for (var i = 0; i < this.players.length; i++){

@@ -230,42 +230,6 @@ UI.prototype = {
 		}
 		td.appendChild(button);
 		this.updateTargetComboBoxes();
-
-		// Add environmental theme buttons
-
-		var musicSection = DOM.byId('musicSection');
-		var musicButton = DOM.create('button');
-		musicButton.innerHTML = 'Play Combat';
-		musicButton.onclick = function(){
-			thus.playMusic('combat');
-		}
-		musicSection.appendChild(musicButton);
-		musicButton = DOM.create('button');
-		musicButton.innerHTML = 'Play Exploration';
-		musicButton.onclick = function(){
-			thus.playMusic('explore');
-		}
-		musicSection.appendChild(musicButton);
-		musicButton = DOM.create('button');
-		musicButton.innerHTML = 'Play Victory';
-		musicButton.onclick = function(){
-			thus.playMusic('victory');
-		}
-		musicSection.appendChild(musicButton);
-		musicButton = DOM.create('button');
-		musicButton.innerHTML = 'Play Death';
-		musicButton.onclick = function(){
-			thus.playMusic('death');
-		}
-		musicSection.appendChild(musicButton);
-
-		musicSection.appendChild(musicButton);
-		musicButton = DOM.create('button');
-		musicButton.innerHTML = 'Stop Music';
-		musicButton.onclick = function(){
-			thus.stopMusic();
-		}
-		musicSection.appendChild(musicButton);
 	},
 	executeAction: function(){
 		var command = {
@@ -286,6 +250,10 @@ UI.prototype = {
 		}
 		if (command.action === 'toogleMap'){
 			this.showMap = !this.showMap;
+			return;
+		}
+		if (command.action === 'stopMusic'){
+			this.stopMusic();
 			return;
 		}
 		if (command.action === 'castSpell'){
@@ -514,6 +482,7 @@ UI.prototype = {
 		}
 		DOM.selectAll('.selectPlayerCheckbox', function(e){e.style.display = 'none'});
 		DOM.byId('inGame').style.display = 'block';
+		this.playMusic('explore');
 	},
 	_createBodyPartSelect: function(){
 		var select = DOM.create('select');
@@ -699,6 +668,7 @@ UI.prototype = {
 		if (room.items.length > 0){
 			actions.push({code: 'takeItem', name: 'Pick up item', onBattle: false});
 		}
+		actions.push({code: 'stopMusic', name: '* Stop Music', onBattle: true});
 		var roomActionsCmb = DOM.byId('cmbAction');
 		roomActionsCmb.innerHTML = ''; // Can be done better but me lazy
 		this.currentAvailableActions = {};
@@ -840,6 +810,7 @@ UI.prototype = {
 		this.controller.party.getCurrentRoom().endBattle();
 		this.controller.setInputStatus(this.controller.MOVE);
 		this.updateRoomData();
+		this.playMusic('victory', 'explore');
 	},
 	_passTurn: function(){
 		this.clearMessages();
@@ -868,7 +839,7 @@ UI.prototype = {
 		seconds = seconds < 10 ? '0'+seconds : seconds;
 		return minutes +':'+seconds;
 	},
-	playMusic: function(theme){
+	playMusic: function(theme, then){
 		var looped = false;
 		if (theme === 'combat' || theme === 'explore'){
 			theme += Utils.rand(1,4);
@@ -884,11 +855,21 @@ UI.prototype = {
 			this.currentAudio.src = track;
 		}
 		this.currentAudio.play();
+		var thus = this;
 		if (looped){
-			var thus = this;
 			this.currentAudio.onended=function(){thus.playMusic(theme);}
 		} else {
-			this.currentAudio.onended=function(){delete this.currentAudio}
+			this.currentAudio.onended=function(){
+				delete thus.currentAudio;
+				if (thus.thenPlay){
+					thus.playMusic(thus.thenPlay);
+				}
+			}
+		}
+		if (then){
+			this.thenPlay = then;
+		} else {
+			this.thenPlay = false;
 		}
 	},
 	stopMusic: function(){

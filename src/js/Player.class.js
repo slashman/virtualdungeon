@@ -132,7 +132,7 @@ Player.prototype = {
 		}
 		if (this.getAilment(Player.POISONED)){
 			if (Utils.chance(40)){
-				this.hitPoints.reduce(1);
+				this.takeDamage(1);
 			}
 		}
 	},
@@ -175,10 +175,11 @@ Player.prototype = {
 	},
 	takeInjury: function(bodyPart){
 		this.sustainInjury(bodyPart);
-		this.hitPoints.reduce(1);
+		this.takeDamage(1);
 	},
 	takeDamage: function(damage){
 		this.hitPoints.reduce(damage);
+		this.party.checkGameOver();
 	},
 	heal: function(bodyPart, healing){
 		this.injuredMap[bodyPart] = false;
@@ -215,7 +216,7 @@ Player.prototype = {
 				break;
 			case 2:
 				this.party.controller.ui.showMessage('"Bleck--Nasty!" '+ this.name +' is hurt by acid for 3 hit points.');
-				this.hitPoints.reduce(3);
+				this.takeDamage(3);
 				break;
 			case 3:
 				this.party.controller.ui.showMessage('"Argh-Choke-Gasp!" '+ this.name +' is poisoned.');
