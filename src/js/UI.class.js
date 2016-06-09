@@ -441,22 +441,20 @@ UI.prototype = {
 		bodypartHitSelection.appendChild(bodypartTitle);
 		for (var i = 0; i < this.controller.party.players.length; i++){
 			var player = this.controller.party.players[i];
+			// Add a row for the target selection section with a checkbox
 			var playerRow = DOM.create('div');
-			
 			var selectPlayerCheckbox = DOM.create('input');
 			selectPlayerCheckbox.type = 'checkbox';
 			selectPlayerCheckbox.className = 'selectPlayerCheckbox';
 			selectPlayerCheckbox.playerId = player.number;
 			playerRow.appendChild(selectPlayerCheckbox);
-
 			var playerInfoDiv = DOM.create('span');
-			playerInfoDiv.id = 'player'+player.number+'Status';
+			playerInfoDiv.innerHTML = player.name;
 			playerRow.appendChild(playerInfoDiv);
-			playerRow.appendChild(DOM.create('br'));
 			partyMembers.appendChild(playerRow);
 
+			// Add a row to the bodypart hit section
 			playerRow = DOM.create('div');
-			
 			var playerNameSpan = DOM.create('span');
 			playerNameSpan.innerHTML = player.name;
 			playerRow.appendChild(playerNameSpan);
@@ -480,9 +478,9 @@ UI.prototype = {
 				});
 			})(player);
 			playerRow.appendChild(takeDamageButton);
-
 			bodypartHitSelection.appendChild(playerRow);
 
+			// Fill player comboboxes
 			cmbPlayer = DOM.byId('cmbPlayer');
 			playerOption = DOM.create('option');
 			playerOption.value = player.number;
@@ -679,12 +677,6 @@ UI.prototype = {
 			roomActionsCmb.appendChild(actionChild);
 		}
 		
-		// Party status
-		for (var i = 0; i < this.controller.party.players.length; i++){
-			var player = this.controller.party.players[i];
-			DOM.byId('player'+player.number+'Status').innerHTML = player.getStatusLine();
-		}
-
 		this.updateTargetComboBoxes();
 		this.setMovementButtons();
 	},

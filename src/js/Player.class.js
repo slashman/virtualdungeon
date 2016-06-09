@@ -80,11 +80,14 @@ Player.AILMENT_CODES[Player.CLAMPED] = 'CL';
 
 
 Player.prototype = {
-	sustainInjury: function(bodyPart, turns){
+	sustainInjury: function(bodyPart, turns, silent){
 		if (!turns){
 			turns = Utils.rand(3, 6); 
 		}
 		this.injuredMap[bodyPart] = {turns: turns};
+		if (!silent){
+			this.party.controller.ui.showMessage(this.name +'\'s '+Player.BODY_PART_NAMES[bodyPart]+' is injured!');	
+		}
 	},
 	applyAilment: function(ailment, turns){
 		if (!turns){
@@ -145,7 +148,7 @@ Player.prototype = {
 		}
 		return Utils.chance(evadeChance);
 	},
-	getStatusLine: function(){
+	/*getStatusLine: function(){
 		var line = '<b>'+this.name+'</b> HP: '+this.hitPoints.current+' MP: '+this.magicPoints.current;
 
 		for (var i = 0; i < this.statusAilments.length; i++){
@@ -164,7 +167,7 @@ Player.prototype = {
 			line += ' OK';
 		}
 		return line;
-	},
+	},*/
 	getAilmentsCode: function(){
 		var line = '';
 		for (var i = 0; i < this.statusAilments.length; i++){
@@ -173,7 +176,7 @@ Player.prototype = {
 		return line;
 	},
 	takeInjury: function(bodyPart){
-		this.sustainInjury(bodyPart);
+		this.sustainInjury(bodyPart, false, true);
 		this.takeDamage(1);
 	},
 	takeDamage: function(damage){
