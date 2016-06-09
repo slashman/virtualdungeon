@@ -85,7 +85,6 @@ Player.prototype = {
 			turns = Utils.rand(3, 6); 
 		}
 		this.injuredMap[bodyPart] = {turns: turns};
-		this.party.controller.ui.showMessage(this.name +'\'s '+Player.BODY_PART_NAMES[bodyPart]+' is injured!');
 	},
 	applyAilment: function(ailment, turns){
 		if (!turns){

@@ -750,6 +750,7 @@ UI.prototype = {
 		var component = DOM.create('p');
 		component.innerHTML = message;
 		DOM.byId('messageArea').appendChild(component);
+		alert(message);
 	},
 	clearMessages: function(){
 		DOM.byId('messageArea').innerHTML = '';
@@ -809,7 +810,6 @@ UI.prototype = {
 		this.updateRoomData();
 	},
 	_battleOver: function(){
-		this.showMessage('All enemies are vanquished!');
 		this.controller.party.getCurrentRoom().endBattle();
 		this.controller.setInputStatus(this.controller.MOVE);
 		this.updateRoomData();

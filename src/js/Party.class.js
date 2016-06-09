@@ -51,15 +51,15 @@ Party.prototype = {
 		if (corridor.obstacle){
 			switch (corridor.obstacle.type){
 				case Corridor.FIRE_FIELD:
-					this.controller.ui.showMessage('You are engulfed in fire!');
+					this.controller.ui.showMessage('As you walk through the field, you are engulfed in fire!');
 					this.takeDamage(3);
 					break;
 				case Corridor.POISON_FIELD:
-					this.controller.ui.showMessage('You are poisoned!');
+					this.controller.ui.showMessage('As you walk through the field, you are poisoned!');
 					this.applyAilment(Player.POISONED);
 					break;
 				case Corridor.SLEEP_FIELD:
-					this.controller.ui.showMessage('You fall asleep.');
+					this.controller.ui.showMessage('As you walk through the field, you fall asleep.');
 					this.applyAilment(Player.ASLEEP);
 					break;
 			}
