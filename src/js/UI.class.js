@@ -431,6 +431,7 @@ UI.prototype = {
 		var ui = this;
 		DOM.byId('newGame').style.display = 'none';
 		DOM.byId('movementButtons').style.display = 'block';
+		this.setMovementButtons();
 		var partyMembers = DOM.byId('partyMembersSection');
 		for (var i = 0; i < this.controller.party.players.length; i++){
 			var player = this.controller.party.players[i];
@@ -544,22 +545,6 @@ UI.prototype = {
 		var party = this.controller.party;
 		var room = this.controller.party.getCurrentRoom();
 		var html = '<p>Level '+party.level.depth+'. '+room.description+'</p>';
-		var corridorsHTML = '';
-		if (room.corridors.north){
-			corridorsHTML += '<strong>North:</strong> '+room.corridors.north.getDescription()+ '<br/>';
-		}
-		if (room.corridors.south){
-			corridorsHTML += '<strong>South:</strong> '+room.corridors.south.getDescription()+ '<br/>';
-		}
-		if (room.corridors.west){
-			corridorsHTML += '<strong>West:</strong> '+room.corridors.west.getDescription()+ '<br/>';
-		}
-		if (room.corridors.east){
-			corridorsHTML += '<strong>East:</strong> '+room.corridors.east.getDescription()+ '<br/>';
-		}
-		if (corridorsHTML.length > 0){
-			html += '<p>'+corridorsHTML+'</p>';
-		}
 		if (room.enemies.length > 0){
 			html += '<h3>Monsters!</h3><p>'+this._buildList(room.enemies, 
 				function(element){
@@ -766,9 +751,7 @@ UI.prototype = {
 	},
 	enableMovement: function(){
 		this._disableActionButtons();
-		DOM.selectAll('.movementButton', function(e){
-			e.style.display = 'inline';
-		});
+		this.setMovementButtons();
 		this.updateTargetComboBoxes();
 		DOM.byId('cmbAction').style.display = 'inline';
 		DOM.byId('btnExecute').style.display = 'inline';
@@ -875,6 +858,28 @@ UI.prototype = {
 	stopMusic: function(){
 		if (this.currentAudio){
 			this.currentAudio.pause();
+		}
+	},
+	setMovementButtons: function(){
+		var room = this.controller.party.getCurrentRoom();
+		DOM.selectAll('.movementButton', function(e){
+			e.style.display = 'none';
+		});
+		if (room.corridors.north){
+			DOM.byId('btnMoveNorth').style.display = 'inline';
+			DOM.byId('btnMoveNorth').innerHTML = 'North: '+room.corridors.north.getDescription();
+		}
+		if (room.corridors.south){
+			DOM.byId('btnMoveSouth').style.display = 'inline';
+			DOM.byId('btnMoveSouth').innerHTML = 'South: '+room.corridors.south.getDescription();
+		}
+		if (room.corridors.west){
+			DOM.byId('btnMoveWest').style.display = 'inline';
+			DOM.byId('btnMoveWest').innerHTML = 'West: '+room.corridors.west.getDescription();
+		}
+		if (room.corridors.east){
+			DOM.byId('btnMoveEast').style.display = 'inline';
+			DOM.byId('btnMoveEast').innerHTML = 'East: '+room.corridors.east.getDescription();
 		}
 	}
 };

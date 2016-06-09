@@ -99,6 +99,8 @@ Party.prototype = {
 			this.getCurrentRoom().enemies = enemyParty;
 			this.controller.setInputStatus(this.controller.COMBAT);
 			this.controller.ui.playMusic('combat');
+		} else {
+			this.controller.ui.setMovementButtons();
 		}
 	},
 	passTurn: function(){
