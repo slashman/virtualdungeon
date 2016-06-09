@@ -434,6 +434,11 @@ UI.prototype = {
 		DOM.byId('movementButtons').style.display = 'block';
 		this.setMovementButtons();
 		var partyMembers = DOM.byId('partyMembersSection');
+		var bodypartHitSelection = DOM.byId('bodypartHitSelection');
+		var bodypartTitle = DOM.create('p');
+		bodypartTitle.className = 'gmTip';
+		bodypartTitle.innerHTML = 'When all enemies are down, register all the hits sustained by the party';
+		bodypartHitSelection.appendChild(bodypartTitle);
 		for (var i = 0; i < this.controller.party.players.length; i++){
 			var player = this.controller.party.players[i];
 			var playerRow = DOM.create('div');
@@ -448,6 +453,14 @@ UI.prototype = {
 			playerInfoDiv.id = 'player'+player.number+'Status';
 			playerRow.appendChild(playerInfoDiv);
 			playerRow.appendChild(DOM.create('br'));
+			partyMembers.appendChild(playerRow);
+
+			playerRow = DOM.create('div');
+			
+			var playerNameSpan = DOM.create('span');
+			playerNameSpan.innerHTML = player.name;
+			playerRow.appendChild(playerNameSpan);
+			playerRow.appendChild(DOM.create('br'));
 
 			var bodyPartSelect = this._createBodyPartSelect();
 			bodyPartSelect.id = 'bodyPartSelect'+player.number;
@@ -456,7 +469,7 @@ UI.prototype = {
 			playerRow.appendChild(bodyPartSelect);
 
 			var takeDamageButton = DOM.create('button');
-			takeDamageButton.innerHTML = 'Hit!';
+			takeDamageButton.innerHTML = 'Hit '+player.name+'!';
 			takeDamageButton.className = 'combatComponent';
 			takeDamageButton.classList.add('actionButton');
 			(function(player){
@@ -468,7 +481,7 @@ UI.prototype = {
 			})(player);
 			playerRow.appendChild(takeDamageButton);
 
-			partyMembers.appendChild(playerRow);
+			bodypartHitSelection.appendChild(playerRow);
 
 			cmbPlayer = DOM.byId('cmbPlayer');
 			playerOption = DOM.create('option');
@@ -792,12 +805,15 @@ UI.prototype = {
 		DOM.selectAll('.combatComponent', function(e){
 			e.style.display = 'inline';
 		});
+		DOM.byId('bodypartHitSelection').style.display = 'block';
+		this.updateRoomData();
 	},
 	_battleOver: function(){
 		this.showMessage('All enemies are vanquished!');
 		this.controller.party.getCurrentRoom().endBattle();
 		this.controller.setInputStatus(this.controller.MOVE);
 		this.updateRoomData();
+		DOM.byId('bodypartHitSelection').style.display = 'none';
 		this.playMusic('victory', 'explore');
 	},
 	_passTurn: function(){
