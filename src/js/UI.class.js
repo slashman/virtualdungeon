@@ -389,28 +389,30 @@ UI.prototype = {
 		var room = party.getCurrentRoom();
 		var level = party.level;
 		var blockSize = 20;
+		var x = 100;
+		var y = 20;
 		// Fill the room border with blackness
 		ctx.fillStyle = "#000000";
-		ctx.fillRect(1 * blockSize, 1 * blockSize, blockSize * 7, blockSize * 7);
+		ctx.fillRect(x, y, blockSize * 7, blockSize * 7);
 		ctx.fillStyle = "#FFFFFF";
-		ctx.fillRect(2 * blockSize, 2 * blockSize, blockSize * 5, blockSize * 5);
+		ctx.fillRect(x+blockSize, y+blockSize, blockSize * 5, blockSize * 5);
 
 		// Now, fill the corridors
 		if (room.corridors.north){
 			ctx.fillStyle = this._getCorridorColor(room.corridors.north);
-			ctx.fillRect(4 * blockSize, 1 * blockSize, blockSize, blockSize);
+			ctx.fillRect(x+3 * blockSize, y, blockSize, blockSize);
 		}
 		if (room.corridors.south){
 			ctx.fillStyle = this._getCorridorColor(room.corridors.south);
-			ctx.fillRect(4 * blockSize, 7 * blockSize, blockSize, blockSize);
+			ctx.fillRect(x+3 * blockSize, y+6 * blockSize, blockSize, blockSize);
 		}
 		if (room.corridors.west){
 			ctx.fillStyle = this._getCorridorColor(room.corridors.west);
-			ctx.fillRect(1 * blockSize, 4 * blockSize, blockSize, blockSize);
+			ctx.fillRect(x, y + 3 * blockSize, blockSize, blockSize);
 		}
 		if (room.corridors.east){
 			ctx.fillStyle = this._getCorridorColor(room.corridors.east);
-			ctx.fillRect(7 * blockSize, 4 * blockSize, blockSize, blockSize);
+			ctx.fillRect(x + 6 * blockSize, y + 3 * blockSize, blockSize, blockSize);
 		}
 	},
 	_getCorridorColor: function(corridor){
