@@ -67,17 +67,20 @@
 </section>
 <section id = "inGame">
 	<canvas id = "mapCanvas" width="340" height = "440"></canvas>
+	<section id = "roomDescription"></section>
 	<section id = "movementButtons">
 		<button id = "btnMoveNorth" class = "movementButton actionButton">North</button>
 		<button id = "btnMoveSouth" class = "movementButton actionButton">South</button>
 		<button id = "btnMoveWest"  class = "movementButton actionButton">West</button>
 		<button id = "btnMoveEast"  class = "movementButton actionButton">East</button>
-		<button id = "btnSelectTargets" class = "actionButton">Select Targets</button>
 		<button id = "btnEndCombat" class = "actionButton combatComponent">All Enemies Vanquished</button>
 		<table id = 'actionsTable'></table>
 	</section>
-	<section id = "roomDescription"></section>
-	<section id = "partyMembersSection"></section>
+	<section id = "playersActionSelection">
+		<section id = "lblSelectTargetsMessage"></section>
+		<section id = "partyMembersSection"></section>
+		<button id = "btnSelectTargets">Select Targets</button>
+	</section>
 	<section id = "countersSection"></section>
 	<section id = "messageArea"></section>
 </section>

@@ -22,7 +22,7 @@ var CorridorGenerator = {
 						effect: effect,
 						multiTarget: Utils.chance(20),
 						slow: Utils.chance(50),
-						evadeMessage: 'Duck quickly to evade the trap'
+						evadeMessage: 'Players must duck quickly to evade the trap'
 					};
 					break;
 				case 1:
@@ -37,7 +37,7 @@ var CorridorGenerator = {
 						effect: effect,
 						multiTarget: description !== Corridor.CLAMPING_TRAP,
 						slow: Utils.chance(50),
-						evadeMessage: 'Jump quickly to evade the trap'
+						evadeMessage: 'Players must jump quickly to evade the trap'
 					};
 					break;
 				case 2:
@@ -45,7 +45,7 @@ var CorridorGenerator = {
 						type: Corridor.FALLING_TRAP,
 						multiTarget: true,
 						slow: Utils.chance(50),
-						evadeMessage: 'Run quickly to the next room to evade the trap'
+						evadeMessage: 'Players must run quickly to the next room to evade the trap'
 					};
 					break;
 				case 3:
@@ -61,7 +61,7 @@ var CorridorGenerator = {
 						effect: effect,
 						multiTarget: true,
 						slow: Utils.chance(50),
-						evadeMessage: 'Cover your nose, close your eyes and mouth and crawl quickly to the next room to evade the trap'
+						evadeMessage: 'Players must cover their nose, close their eyes and mouth and crawl quickly to the next room to evade the trap'
 					};
 					break;
 			}

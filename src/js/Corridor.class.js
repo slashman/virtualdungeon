@@ -60,11 +60,11 @@ Corridor.prototype = {
 		}
 		return description;	
 	},
-	showTrapTriggered: function(trap){
-		this.level.controller.ui.showMessage(Corridor.TRAP_DESCRIPTIONS[trap.description ? trap.description : trap.type]);
+	getTrapTriggeredDescription: function(trap){
+		return Corridor.TRAP_DESCRIPTIONS[trap.description ? trap.description : trap.type];
 	},
 	triggerTrap: function(trap){
-		this.showTrapTriggered(trap);
+		this.level.controller.ui.showMessage(this.getTrapTriggeredDescription(trap));
 		var party = this.level.controller.party;
 		if (trap.multiTarget){
 			// Try to hit all players in the Party

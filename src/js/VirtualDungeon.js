@@ -74,7 +74,6 @@ var VirtualDungeon = {
 	move: function(dx, dy){
 		this.ui.clearMessages();
 		this.party.move(dx, dy);
-		this.ui.updateRoomData();
 	},
 	upstairs: function(){
 		this._gotoDepth(this.party.level.depth - 1);

@@ -57,3 +57,16 @@ input[type="text"] {
 #inGame {
     display: none;
 }
+
+#actionsTable {
+    width: 100%;
+}
+
+#playersActionSelection {
+    display: none;
+}
+
+#partyMembersSection div {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}

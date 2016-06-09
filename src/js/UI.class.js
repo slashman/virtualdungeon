@@ -59,6 +59,7 @@ UI.prototype = {
 		var actionTable = DOM.byId('actionsTable')
 		// Action
 		var tr = DOM.create('tr');
+		tr.id = 'commandActionRow';
 		actionTable.appendChild(tr);
 		var td = DOM.create('td');
 		tr.appendChild(td);
@@ -672,6 +673,7 @@ UI.prototype = {
 		}
 
 		this.updateTargetComboBoxes();
+		this.setMovementButtons();
 	},
 	_buildList: function(arr, renderer){
 		var html = '<ul>';
@@ -740,25 +742,27 @@ UI.prototype = {
 		DOM.byId('messageArea').innerHTML = '';
 	},
 	_disableActionButtons: function(){
+
 		DOM.selectAll('.actionButton', function(e){
 			e.style.display = 'none';
 		});
 		DOM.selectAll('.commandTargetRow', function(e){
 			e.style.display = 'none';
 		});
-		DOM.byId('cmbAction').style.display = 'none';
+		DOM.byId('commandActionRow').style.display = 'none';
 
 	},
 	enableMovement: function(){
 		this._disableActionButtons();
 		this.setMovementButtons();
 		this.updateTargetComboBoxes();
-		DOM.byId('cmbAction').style.display = 'inline';
+		DOM.byId('commandActionRow').style.display = 'table-row';
 		DOM.byId('btnExecute').style.display = 'inline';
 	},
 	selectTargets: function(cb){
 		this._disableActionButtons();
-		DOM.byId('btnSelectTargets').style.display = 'inline';
+		DOM.byId('playersActionSelection').style.display = 'block';
+		this._disableMovemenButtons();
 
 		DOM.selectAll('.selectPlayerCheckbox', function(e){
 			e.checked = false;
@@ -777,6 +781,7 @@ UI.prototype = {
 				targets.push(party.getPlayerByNumber(e.playerId));
 		});
 		this.targetSelectedCb(targets);
+		DOM.byId('playersActionSelection').style.display = 'none';
 		this.updateRoomData();
 	},
 	activateCombat: function(){
@@ -865,6 +870,9 @@ UI.prototype = {
 		DOM.selectAll('.movementButton', function(e){
 			e.style.display = 'none';
 		});
+		if (room.enemies.length > 0){
+			return;
+		}
 		if (room.corridors.north){
 			DOM.byId('btnMoveNorth').style.display = 'inline';
 			DOM.byId('btnMoveNorth').innerHTML = 'North: '+room.corridors.north.getDescription();
@@ -881,6 +889,14 @@ UI.prototype = {
 			DOM.byId('btnMoveEast').style.display = 'inline';
 			DOM.byId('btnMoveEast').innerHTML = 'East: '+room.corridors.east.getDescription();
 		}
+	},
+	_disableMovemenButtons: function(){
+		DOM.selectAll('.movementButton', function(e){
+			e.style.display = 'none';
+		});
+	},
+	setSelectTargetsMessage: function(message){
+		DOM.byId('lblSelectTargetsMessage').innerHTML = message;
 	}
 };
 

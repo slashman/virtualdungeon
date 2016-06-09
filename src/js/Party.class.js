@@ -67,9 +67,10 @@ Party.prototype = {
 		if (!corridor.obstacle || corridor.obstacle.canPassThru){
 			if (corridor.trap){
 				if (corridor.trap.slow){
-					corridor.showTrapTriggered(corridor.trap);
-					controller.ui.showMessage(corridor.trap.evadeMessage);
-					controller.ui.showMessage('Select the party members who couldn\'t evade the trap.');
+					var html = '<p>'+corridor.getTrapTriggeredDescription(corridor.trap)+'</p>';
+					html += '<p class = "gmTip">'+corridor.trap.evadeMessage+'.</p>';
+					html += '<p>Select the party members who couldn\'t evade the trap.</p>';
+					controller.ui.setSelectTargetsMessage(html);
 					this.controller.pickTargetCallback = function(targets){
 						if (targets.length == 0){
 							controller.ui.showMessage('All party members evade the trap.');
