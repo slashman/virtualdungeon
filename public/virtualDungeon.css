@@ -74,3 +74,9 @@ input[type="text"] {
 #bodypartHitSelection {
     display: none;   
 }
+
+#wrapper {
+    width: 340px;
+    margin-left: auto;
+    margin-right: auto;
+}
