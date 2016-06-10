@@ -740,6 +740,15 @@ UI.prototype = {
 		td.appendChild(component);
 		tr.appendChild(td);
 
+		td = DOM.create('td');
+		component = DOM.create('button');
+		component.innerHTML = 'X';
+		component.onclick = function(){
+			table.removeChild(tr);
+		}
+		td.appendChild(component);
+		tr.appendChild(td);
+
 		table.appendChild(tr);
 	},
 	createNewStaffPlayerRow: function(){
@@ -758,6 +767,15 @@ UI.prototype = {
 
 		td = DOM.create('td');
 		td.innerHTML = 'Monster';
+		tr.appendChild(td);
+
+		td = DOM.create('td');
+		component = DOM.create('button');
+		component.innerHTML = 'X';
+		component.onclick = function(){
+			table.removeChild(tr);
+		}
+		td.appendChild(component);
 		tr.appendChild(td);
 
 		table.appendChild(tr);
