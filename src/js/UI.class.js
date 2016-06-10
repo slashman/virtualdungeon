@@ -6,6 +6,7 @@ var Utils = require('./Utils');
 function UI(controller){
 	this.controller = controller;
 	this._bindEvents(controller);
+	this._initTitleScreen();
 	this.initComponents();
 	this.createNewPlayerRow();
 	this.mapCanvas = null;
@@ -14,6 +15,12 @@ function UI(controller){
 };
 
 UI.prototype = {
+	_initTitleScreen: function(){
+		if (window.exodusConfig.musicCredits)
+			DOM.byId('lblMusicCredits').innerHTML = window.exodusConfig.musicCredits;
+		DOM.byId('lblBuildInfo').innerHTML = window.exodusConfig.buildTitle + ' v' + window.exodusConfig.version;
+		this.exodusConfig = window.exodusConfig;
+	},
 	initMap: function(){
 		this.mapCanvas = DOM.byId('mapCanvas');
 		this.mapCanvasCtx = this.mapCanvas.getContext("2d");
@@ -842,15 +849,23 @@ UI.prototype = {
 		seconds = seconds < 10 ? '0'+seconds : seconds;
 		return minutes +':'+seconds;
 	},
-	playMusic: function(theme, then){
+	playMusic: function(theme, then, keep){
 		var looped = false;
-		if (theme === 'combat' || theme === 'explore'){
-			theme += Utils.rand(1,4);
+		var track = '';
+		if (keep){
+			track = this.selectedTrack;
+		} else {
+			if (typeof this.exodusConfig.music[theme] === 'string'){
+				track = this.exodusConfig.music[theme];
+			} else {
+				track = Utils.randomElementOf(this.exodusConfig.music[theme]);
+			}
+			this.selectedTrack = track;
 		}
-		if (theme.indexOf('combat')!=-1 || theme.indexOf('explore')!=-1){
+		if (theme === 'combat' || theme === 'explore'){
 			looped = true;
 		}
-		var track = 'mp3/'+theme+'.mp3';
+		track = 'mp3/'+track;
 		if (this.currentAudio == null){
 			this.currentAudio = new Audio(track);
 		} else {
@@ -860,7 +875,7 @@ UI.prototype = {
 		this.currentAudio.play();
 		var thus = this;
 		if (looped){
-			this.currentAudio.onended=function(){thus.playMusic(theme);}
+			this.currentAudio.onended=function(){thus.playMusic(theme, false, true);}
 		} else {
 			this.currentAudio.onended=function(){
 				delete thus.currentAudio;
