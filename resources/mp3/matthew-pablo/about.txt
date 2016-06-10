@@ -1,0 +1,8 @@
+Music by Matthew Pablo
+http://www.matthewpablo.com
+
+title.mp3 http://opengameart.org/content/woodland-fantasy
+victory.mp3 http://opengameart.org/content/lively-meadow-victory-fanfare-and-song
+combat.mp3 http://opengameart.org/content/colossal-boss-battle-theme
+explore.mp3 http://opengameart.org/content/desolate
+death.mp3 http://opengameart.org/content/soliloquy
