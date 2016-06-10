@@ -1,18 +1,16 @@
-//TODO: gulp script creates this file based on config
-var Ultima4 = require('./scenarios/Ultima4');
-require('./dungeons/Abyss');
-require('./dungeons/AntiVirtue');
+var LoadScenario = require('./LoadScenario');
 
 function Scenario(dungeon){
-	this.jobs = Ultima4.jobs;
-	this.spells = Ultima4.spells;
-	this.items = Ultima4.items;
-	this.enemies = Ultima4.enemies;
+	var scenario = LoadScenario.getScenario(window.exodusConfig.scenario);
+	this.jobs = scenario.jobs;
+	this.spells = scenario.spells;
+	this.items = scenario.items;
+	this.enemies = scenario.enemies;
 }
 
 Scenario.prototype = {
 	setDungeon: function(dungeon){
-		dungeon = require('./dungeons/'+dungeon);
+		dungeon = LoadScenario.getDungeon(dungeon);
 		this.endRooms = dungeon.endRooms;
 		this.compileEcosystems();
 	},

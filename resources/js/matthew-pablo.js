@@ -8,5 +8,12 @@ var exodusConfig = {
 		explore: 'explore.mp3',
 		victory: 'victory.mp3'
 	},
-	musicCredits: '<p>Featuring Music by Matthew Pablo</p><p>http://www.matthewpablo.com</p>'
+	musicCredits: '<p>Featuring Music by Matthew Pablo</p><p>http://www.matthewpablo.com</p>',
+	scenario: 'Basic',
+	dungeons: [
+		{
+			name: 'Basic Dungeon',
+			module: 'Basic'
+		}
+	]
 };

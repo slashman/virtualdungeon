@@ -238,6 +238,16 @@ UI.prototype = {
 		}
 		td.appendChild(button);
 		this.updateTargetComboBoxes();
+
+		// Dungeons
+		var cmbDungeon = DOM.byId('cmbDungeon');
+		var dungeons = this.exodusConfig.dungeons;
+		for (var i = 0; i < dungeons.length; i++){
+			option = DOM.create('option');
+			option.value = dungeons[i].module;
+			option.innerHTML = dungeons[i].name;
+			cmbDungeon.appendChild(option);
+		}
 	},
 	executeAction: function(){
 		var command = {
