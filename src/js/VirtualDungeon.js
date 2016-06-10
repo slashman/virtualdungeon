@@ -15,6 +15,7 @@ var VirtualDungeon = {
 	init: function(){
 		this.scenario = new Scenario();
 		this.ui = new UI(this);
+		this.ui.playMusic('title');
 	},
 	startGame: function(){
 		var config = this.ui.getNewGameConfig();

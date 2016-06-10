@@ -285,6 +285,7 @@ UI.prototype = {
 		DOM.onClick('btnAddStaffPlayer', this.createNewStaffPlayerRow, this);
 		DOM.onClick('btnSelectTargets', this._targetsSelected, this);
 		DOM.onClick('btnEndCombat', this._battleOver, this);
+		DOM.onClick('btnNewGame', this._hideTitle, this);
 	},
 	update: function(){
 		// Fill background
@@ -429,6 +430,10 @@ UI.prototype = {
 			}
 		}
 		return "#FFFFFF";
+	},
+	_hideTitle: function(){
+		DOM.byId('titleSection').style.display = 'none';
+		DOM.byId('newGame').style.display = 'block';
 	},
 	hideNewGamePanel: function(){
 		var ui = this;
