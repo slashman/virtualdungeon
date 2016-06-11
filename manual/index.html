@@ -1,0 +1,211 @@
+<html>
+<head>
+<title>EXODUS - Virtual Dungeon Engine - Manual</title>
+</head>
+<body>
+<section id = "wrapper">
+<h2>General Guidelines</h2>
+<ul>
+<li>Fair play for fun: It's up to each player to abide to the game rules to the best of his knowledge,
+it makes no sense to "cheat", since the main point of the game is to have fun with friends and
+immerse into the experience.</li>
+<li>Performing and mimicking actions is encouraged.</li>
+</ul>
+<h2>The Game Team</h2>
+<p>The game should be played by at least 2 players plus the Game Master.</p>
+<ul>
+<li>Game Master: Uses the virtualDungeon program to guide the adventuring party through the dungeon.</li>
+<li>The player's party: 1 to 4 players adventuring inside the dungeon</li>
+<li>The staff party: 1 to 4 players acting as monsters and NPCs into the dungeon.</li>
+</ul>
+<p>The optimal setup is 8 players; if an 8 players party cannot be assembled, the following is the
+suggested distribution:</p>
+<pre>
+Total Players     8 7 6 5 4 3 2
+Player's Party    4 4 3 3 2 1 1
+Staff             4 3 3 2 2 2 1
+</pre>
+<p>The game is better played if there are at least 5 players, it can potentially be played by any
+number of players, but things may get out of hand.</p>
+<h2>The Playing Field</h2>
+<pre>
++----+----+-2--+----+----+
+|    |    |    |    |    |
+|    |    |    |    |    |
++----+----+----+----+----+     +----+
+|    |    |    |    |    |     | 3  |
+|    |    |    |    |    |     |    |
++----+----+----+----+----+     +----+
+2    |    | 1  |    |    2
+|    |    |    |    |    |
++----+----+----+----+----+
+|    |    |    |    |    |
+|    |    |    |    |    |
++----+----+----+----+----+
+|    |    |    |    |    |
+|    |    |    |    |    |
++----+----+-2--+----+----+
+</pre>
+<p>1 - Main field: This is where most of the action happens, it is a big open space, about 25x25 
+meters. Before starting the game, the Game Master prepares the field by placing markers on the
+boundaries (2)</p>
+<p>2 - Field boundaries: The Game Master uses these to properly locate the party on the playing field.</p>
+<p>3 - The Dungeon Armory: The Staff Players await here for indications from the Dungeon Master to get
+into battle; the armory contains equipment for both the players and the monsters to use.</p>
+<h2>Equipment</h2>
+<p>Basic equipment for the game consists of:</p>
+<ul>
+<li>The VirtualDungeon game program, loaded on a portable device.</li>
+<li>One weapon for each player participating (At least 2, 8 is p)</li>
+<li>Shields for participating players (Optional)</li>
+</ul>
+<pre>
+          Minimum Setup     Optimal
+Weapons         2              8
+Shields         0              8
+</pre>
+
+<h2>Stats</h2>
+<p>There are 3 base stats which are determined by the player choice of Job/Class. The available choices
+depend on the scenario being played.</p>
+<ul>
+<li>Strength</li>
+<li>Magic</li>
+<li>Dexterity</li>
+</ul>
+<p>These 3 base stats are used by the game to calculate the following secondary stats:</p>
+<ul>
+<li>Max Hit Points = STR</li>
+<li>Max Magic Points = INT</li>
+<li>Evade Trap Chance = (DEX * 2)%</li>
+</ul>
+<h2>Status Ailments</h2>
+<p>Combat or traps may cause a player to become injured or otherwise have his movement and combat
+capabilities diminished; as always, it's up to each player to do fair play and assume the correct
+behavior based on his status ailments.</p>
+
+<p>Following is a list of status ailments and their required behavior.</p>
+
+<ul>
+<li>Blind: Must wear a blindfold.</li>
+<li>Paralyzed: Cannot move at all.</li>
+<li>Unconscious: Cannot move at all. Cannot talk nor cast spells. Must keep eyes closed.</li>
+<li>Asleep: Cannot move at all. Cannot talk nor cast spells. Must keep eyes closed.</li>
+<li>Mute: Cannot talk nor cast spells</li>
+<li>Poisoned: Must walk slowly and in pain</li>
+<li>Single Leg Injury: The player must move using only the other leg. When in battle the player may
+choose to kneel over the injured leg.</li>
+<li>Both Legs Injury: The player must crawl around to move. When in battle the player may kneel in
+both legs.</li>
+<li>Single Arm Injury: The player cannot use the injured hand.</li>
+<li>Both Arms Injury: The player cannot use his hands.</li>
+<li>Clamped: Player cannot move until battle is over, afterwards he sustains Single Leg Injury.</li>
+</ul>
+<p>When a party member cannot move (Paralyzed or Unconscious for example), other party members should
+carry him around when moving between rooms.</p>
+
+<p>Blind party members should also be guided around to new rooms in order to complete a movement phase
+successfully.</p>
+
+<p>Party members might also help players with leg injuries or any other limiting ailment, but it is not
+required.</p>
+
+<p>All status ailments are temporary, the game will keep track of the time and let players know when
+the status has expired.</p>
+
+<h2>Traps</h2>
+<p>Traps found in the dungeon can cause any of the status ailments to one or more members of the party.</p>
+<p>Some traps can be avoided with quick reaction by the player, in those cases, it's up to the dungeon
+guide to determine what players for the party evaded the trap.</p>
+
+<p>Players also have a chance to evade traps based on their Dexterity stat.</p>
+<ul>
+<li>Arrow traps: Injure a single body part to one or all party members. Can be avoided by quickly 
+ducking.</li>
+<li>Poisoned arrow traps: Same as arrow traps, but may cause Poisoned status in addition to injury.</li>
+<li>Stun arrow traps: Same as arrow traps, but may cause Paralyzed status in addition to injury.</li>
+<li>Spikes, Clamping Traps, Caltrops, Pit traps: Cause damage to one or both legs. Can be avoided by
+quickly jumping.</li>
+<li>Falling Rocks: Cause damage to one or both arms, or may cause unconsciousness. Can be avoided by 
+quickly running to the next room.</li>
+<li>Bomb Traps: May cause injuries to any body part (and more than one), as well as unconsciousness.</li>
+<li>Powder traps: May cause Blindness, Paralysis, Asleep, Poisoned or Mute ailments. Can be avoided by
+covering the nose, closing eyes and mouth quickly and crawling to the next room.</li>
+</ul>
+<h2>Magic - Outside of Combat</h2>
+<p>Several spells can be cast outside of combat; during the exploration phase, the party leader may
+inform the game master than one of the members of the party will cast an Spell. This may result
+on one of the party members recovering from illness or injury, or the party moving around or
+obtaining additional information, based on the spells defined on the scenario.</p>
+
+<h2>Starting Combat</h2>
+<p>Combat in the game can happen in two different situations:</p>
+<ul>
+<li>Entering a room with enemies</li>
+<li>Waiting on a room ("Passing a turn") may make monsters show up</li>
+</ul>
+<p>Whenever combat starts, the game will pick players from the staff in order from them to play as
+monsters, assigning a monster race to each one of them, as well as their equipment (weapon type
+and shield)</p>
+
+<p>When one of the staff players is assigned as a monster, he may pick the mask representing the
+monster race, as well as his equipment from the dungeon armory. He will then proceed to attack the
+player's party.</p>
+
+<h2>Weapons</h2>
+<p>All weapons inside the game are covered with foam. There may be different shapes and lengths to
+simulate different types of weapons such as:</p>
+<ul>
+<li>Small weapons: Up to 30cm long</li>
+<li>Swords: Up to 50cm long</li>
+<li>Two Handed Weapons: Up to 100cm long</li>
+</ul>
+
+<h2>Shields</h2>
+<p>Players may decide to wear a shield in exchange for a two handed weapon</p>
+
+<h2>Attack Styles</h2>
+<p>Broadly speaking, there are three different kinds of attacks which can be used by players inside the
+game; but it's up to the player to use the most effective fighting style based on the weapon type he
+is wielding (it will not be strongly enforced).</p>
+<ul>
+<li>Slash: Cut the enemy with one side of the weapon. Effective for swords.</li>
+<li>Hack: Similar to slash, but also combining concussive effect. Effective for axes.</li>
+<li>Thrust: Pierce the enemy with the pointy end of the weapon. Effective for swords, daggers
+and some polearms.</li>
+<li>Bash: Hit the enemy with either the sides or the tip of the weapon for concussion damage. 
+Effective for hammers and maces.</li>
+</ul>
+<h2>Rules for Combat</h2>
+<p>The goal of the combat is to make soft contact with the enemy, reducing his hitpoints and taking
+him down. Each successful hit reduces one hit point, regardless of the hit area.</p>
+
+<p>Excessive agression is NOT allowed, neither are head hits. If a player feels another player is being
+overly agressive he will notify the Game Master about it, and the player may be given a warning or
+removed from the game.</p>
+
+<p>When hit by an enemy on a leg or arm, that part becomes injured and cannot be used (as described in
+the status ailments section). This applies to both players and monsters.</p>
+
+<p>Monsters have a number of hitpoints when they are assigned, staff players should keep their hitpoint
+count in mind, and drop to the floor when the player has defeated them.</p>
+
+<p>Players also have a number of hitpoints; the game master will help keep track of them using the
+game, and registering the hits he sees. Players keep track of their injuries the same way as 
+monsters, but should also drop dead by command of the Game Master if notified.</p>
+
+<h2>Magic - Combat</h2>
+<p>When a magic spell is cast on combat, the player (either from the heroes or the dungeon party) will
+yell "SPELL" followed by the spell name. All players should immediately freeze, while the caster
+performs the spell following the indications of the game master.</p>
+
+<p>Targetted spells will require the spell caster to throw a magic token to the target; if the token
+misses, the spell won't have any effect. Else it will cause the amount of damage or the status 
+ailment as told by the game master.</p>
+
+<p>Non-targetted spells will cause an immediate effect on the players as defined by the game master.</p>
+
+<p>After the spell has been cast, the game master will yell "RESUME!" and the combat will continue.</p>
+</section>
+</body>
+</html>
