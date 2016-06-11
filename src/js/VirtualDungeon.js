@@ -155,6 +155,7 @@ var VirtualDungeon = {
 			var enemyParty = this.staff.selectEnemyParty();
 			this.party.getCurrentRoom().enemies = enemyParty;
 			this.setInputStatus(this.COMBAT);
+			this.ui.playMusic('combat');
 		} else {
 			this.setInputStatus(this.MOVE);
 		}
