@@ -1,0 +1,9 @@
+body {
+	font-family: sans-serif;
+}
+
+#wrapper {
+	width: 600px;
+	margin-left: auto;
+	margin-right: auto;
+}

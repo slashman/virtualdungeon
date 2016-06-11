@@ -1,6 +1,7 @@
 <html>
 <head>
 <title>EXODUS - Virtual Dungeon Engine - Manual</title>
+<link rel="stylesheet" type="text/css" href="manual.css">
 </head>
 <body>
 <section id = "wrapper">
@@ -12,72 +13,40 @@ immerse into the experience.</li>
 <li>Performing and mimicking actions is encouraged.</li>
 </ul>
 <h2>The Game Team</h2>
-<p>The game should be played by at least 2 players plus the Game Master.</p>
+<p>The game should be played by at least 2 players. Each player assumed one of the following roles</p>
 <ul>
-<li>Game Master: Uses the virtualDungeon program to guide the adventuring party through the dungeon.</li>
-<li>The player's party: 1 to 4 players adventuring inside the dungeon</li>
-<li>The staff party: 1 to 4 players acting as monsters and NPCs into the dungeon.</li>
+<li>Game Master: Uses the EXODUS program to guide the adventuring party through the dungeon. If there are only two players, he acts as a Dungeon Dweller.</li>
+<li>The Adventurers party: 1 to 4 players adventuring inside the dungeon</li>
+<li>The Dungeon Dwellers: Players acting as monsters into the dungeon, must be at least same number of players as the adventurers party.</li>
 </ul>
-<p>The optimal setup is 8 players; if an 8 players party cannot be assembled, the following is the
-suggested distribution:</p>
-<pre>
-Total Players     8 7 6 5 4 3 2
-Player's Party    4 4 3 3 2 1 1
-Staff             4 3 3 2 2 2 1
-</pre>
 <p>The game is better played if there are at least 5 players, it can potentially be played by any
 number of players, but things may get out of hand.</p>
 <h2>The Playing Field</h2>
-<pre>
-+----+----+-2--+----+----+
-|    |    |    |    |    |
-|    |    |    |    |    |
-+----+----+----+----+----+     +----+
-|    |    |    |    |    |     | 3  |
-|    |    |    |    |    |     |    |
-+----+----+----+----+----+     +----+
-2    |    | 1  |    |    2
-|    |    |    |    |    |
-+----+----+----+----+----+
-|    |    |    |    |    |
-|    |    |    |    |    |
-+----+----+----+----+----+
-|    |    |    |    |    |
-|    |    |    |    |    |
-+----+----+-2--+----+----+
-</pre>
-<p>1 - Main field: This is where most of the action happens, it is a big open space, about 25x25 
+<p>All action happens in a big open space, with a recommended size of about 25x25 
 meters. Before starting the game, the Game Master prepares the field by placing markers on the
-boundaries (2)</p>
-<p>2 - Field boundaries: The Game Master uses these to properly locate the party on the playing field.</p>
-<p>3 - The Dungeon Armory: The Staff Players await here for indications from the Dungeon Master to get
-into battle; the armory contains equipment for both the players and the monsters to use.</p>
+boundaries</p>
+<p>When the game starts, the adventurers party is located in the middle of the playing field. As they move in the dungeon, their movements must be replicated inside the field</p>
+<p>Combat also takes place in the playing field, although the party is not restricted to their current location on it for the battle (they can move anywhere as long as they are inside the field)</p>
+<p>The game can also be played in a smaller field, in which case the party movement is restricted.</p>
 <h2>Equipment</h2>
-<p>Basic equipment for the game consists of:</p>
+<p>The basic equipment for the game consists of:</p>
 <ul>
-<li>The VirtualDungeon game program, loaded on a portable device.</li>
-<li>One weapon for each player participating (At least 2, 8 is p)</li>
-<li>Shields for participating players (Optional)</li>
+<li>The EXODUS game program, loaded on a portable device.</li>
+<li>One role playing weapon for each player participating (from both Adventurers and Dungeon Dwellers)</li>
 </ul>
-<pre>
-          Minimum Setup     Optimal
-Weapons         2              8
-Shields         0              8
-</pre>
+<p>Players may bring additional equipment into the game, such as armor and shields.</p>
+<ul>
+<li>Armor blocks one point of damage per battle when hit.</li>
+<li>Shields can be used to block attacks, they won't break.</li>
+</ul>
 
 <h2>Stats</h2>
 <p>There are 3 base stats which are determined by the player choice of Job/Class. The available choices
-depend on the scenario being played.</p>
+depend on the scenario being played. These 3 base stats are used by the game to calculate the following secondary stats.</p>
 <ul>
-<li>Strength</li>
-<li>Magic</li>
-<li>Dexterity</li>
-</ul>
-<p>These 3 base stats are used by the game to calculate the following secondary stats:</p>
-<ul>
-<li>Max Hit Points = STR</li>
-<li>Max Magic Points = INT</li>
-<li>Evade Trap Chance = (DEX * 2)%</li>
+<li>Max Hit Points = Strength</li>
+<li>Max Magic Points = Magic</li>
+<li>Evade Trap Chance = (Dexterity * 2)%</li>
 </ul>
 <h2>Status Ailments</h2>
 <p>Combat or traps may cause a player to become injured or otherwise have his movement and combat
@@ -87,7 +56,7 @@ behavior based on his status ailments.</p>
 <p>Following is a list of status ailments and their required behavior.</p>
 
 <ul>
-<li>Blind: Must wear a blindfold.</li>
+<li>Blind: Must wear a blindfold or close eyes.</li>
 <li>Paralyzed: Cannot move at all.</li>
 <li>Unconscious: Cannot move at all. Cannot talk nor cast spells. Must keep eyes closed.</li>
 <li>Asleep: Cannot move at all. Cannot talk nor cast spells. Must keep eyes closed.</li>
@@ -144,13 +113,10 @@ obtaining additional information, based on the spells defined on the scenario.</
 <li>Entering a room with enemies</li>
 <li>Waiting on a room ("Passing a turn") may make monsters show up</li>
 </ul>
-<p>Whenever combat starts, the game will pick players from the staff in order from them to play as
-monsters, assigning a monster race to each one of them, as well as their equipment (weapon type
-and shield)</p>
+<p>Whenever combat starts, the game will pick players from the dungeon dwellers in order from them to play as
+monsters, assigning a monster race to each one of them, as well as their special skills and instrinsic abilities</p>
 
-<p>When one of the staff players is assigned as a monster, he may pick the mask representing the
-monster race, as well as his equipment from the dungeon armory. He will then proceed to attack the
-player's party.</p>
+<p>Combat starts at command of the Game Master.</p>
 
 <h2>Weapons</h2>
 <p>All weapons inside the game are covered with foam. There may be different shapes and lengths to
@@ -190,14 +156,15 @@ the status ailments section). This applies to both players and monsters.</p>
 <p>Monsters have a number of hitpoints when they are assigned, staff players should keep their hitpoint
 count in mind, and drop to the floor when the player has defeated them.</p>
 
-<p>Players also have a number of hitpoints; the game master will help keep track of them using the
-game, and registering the hits he sees. Players keep track of their injuries the same way as 
-monsters, but should also drop dead by command of the Game Master if notified.</p>
+<p>Players also have a number of hitpoints; players should keep track of the
+hits they receive and drop dead in the middle of combat if his hitpoints are depleted. When all monsters are defeated, the Game Master will record the
+hits received by each player.</p>
 
 <h2>Magic - Combat</h2>
 <p>When a magic spell is cast on combat, the player (either from the heroes or the dungeon party) will
-yell "SPELL" followed by the spell name. All players should immediately freeze, while the caster
-performs the spell following the indications of the game master.</p>
+yell "SPELL!". All players should immediately freeze, while the caster
+performs the spell following the indications of the game master. Once the spell is cast, the player will have to 
+wait 20 seconds before he can cast another spell.</p>
 
 <p>Targetted spells will require the spell caster to throw a magic token to the target; if the token
 misses, the spell won't have any effect. Else it will cause the amount of damage or the status 
