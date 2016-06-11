@@ -744,7 +744,10 @@ UI.prototype = {
 		component = DOM.create('button');
 		component.innerHTML = 'X';
 		component.onclick = function(){
-			table.removeChild(tr);
+			var players = DOM.selectAll('.playerNameText').length + DOM.selectAll('.staffPlayerNameText').length;
+			if (players > 1){
+				table.removeChild(tr);
+			}
 		}
 		td.appendChild(component);
 		tr.appendChild(td);
@@ -773,7 +776,10 @@ UI.prototype = {
 		component = DOM.create('button');
 		component.innerHTML = 'X';
 		component.onclick = function(){
-			table.removeChild(tr);
+			var players = DOM.selectAll('.playerNameText').length + DOM.selectAll('.staffPlayerNameText').length;
+			if (players > 1){
+				table.removeChild(tr);
+			}
 		}
 		td.appendChild(component);
 		tr.appendChild(td);

@@ -49,6 +49,10 @@ input[type="text"] {
     text-align: center;
 }
 
+#tblPlayersInfo button{
+    margin-bottom: 0px !important;
+}
+
 .txtSingleNumber {
     width: 60px !important;
     text-align: center;
