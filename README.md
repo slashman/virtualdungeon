@@ -37,3 +37,8 @@ and any obstacles they can find on the way.
 The party leader consults with they party and then lets the game master know what direction to move,
 the game master registers the movement, and in turns lets the party know of all the events unfolded
 from their move, which may be falling into traps, meeting with monsters and more.
+
+# Development
+Run build-basic.sh, it will generated an html package ready to be used at the distro directory.
+
+Run cordova-basic.sh to test the game on Android. 
