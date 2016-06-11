@@ -219,6 +219,22 @@ var VirtualDungeon = {
 	endBattle: function(){
 		this.party.getCurrentRoom().endBattle();
 		this.ui.removeAllBattleCounters();
+	},
+	enemySleepAll: function(){
+		this.addCounter({
+			time: 30,
+			isBattleCounter: true,
+			message: 'The party falls asleep!',
+			offMessage: 'The party wakes up!',
+		});
+	},
+	enemyNegateTime: function(){
+		this.addCounter({
+			time: 60,
+			isBattleCounter: true,
+			message: 'Magic is negated!',
+			offMessage: 'Magic can be used again!',
+		});
 	}
 };
 

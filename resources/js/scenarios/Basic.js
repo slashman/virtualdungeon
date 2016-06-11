@@ -107,7 +107,8 @@ module.exports = {
 		{name: 'Zorn', from: 5, to: 7,
 			skills: [{
 				name: 'Negate',
-				description: 'Stops magic for 1 minute'
+				description: 'Stops magic for 1 minute',
+				special: 'negate'
 			}],
 			sp: 1
 		},
@@ -115,7 +116,8 @@ module.exports = {
 			intrinsics: 'Flying', 
 			skills: [{
 				name: 'Sleep',
-				description: 'Puts enemies to sleep for 30 seconds'
+				description: 'Puts enemies to sleep for 30 seconds',
+				special: 'sleep'
 			}],
 			sp: 1
 		},
@@ -123,7 +125,8 @@ module.exports = {
 			intrinsics: 'Inmobile', 
 			skills: [{
 				name: 'Sleep',
-				description: 'Puts enemies to sleep for 30 seconds'
+				description: 'Puts enemies to sleep for 30 seconds',
+				special: 'sleep'
 			}],
 			sp: 5
 		},
@@ -132,7 +135,8 @@ module.exports = {
 			intrinsics: 'Fire Resistant, Flying', 
 			skills: [{
 				name: 'Sleep',
-				description: 'Puts enemies to sleep for 30 seconds'
+				description: 'Puts enemies to sleep for 30 seconds',
+				special: 'sleep'
 			},
 			{
 				name: 'Fireball',

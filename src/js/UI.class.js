@@ -704,6 +704,28 @@ UI.prototype = {
 		if (!inBattle) if (room.items.length > 0){
 			actions.push({code: 'takeItem', name: 'Pick up item', onBattle: false});
 		}
+		if (inBattle){
+			var canSleep = false;
+			var canNegate = false;
+			for (var i = 0; i < room.enemies.length; i++){
+				var enemy = room.enemies[i];
+				if (enemy.race.skills) for (var j = 0; j < enemy.race.skills.length; j++){
+					var skill = enemy.race.skills[j];
+					if (skill.special && skill.special === 'negate'){
+						canNegate = true;
+					}
+					if (skill.special && skill.special === 'sleep'){
+						canSleep = true;	
+					}
+				}
+			}
+			if (canSleep){
+				actions.push({code: 'enemySleepAll', name: '* Enemy Sleep All', onBattle: true});
+			}
+			if (canNegate){
+				actions.push({code: 'enemyNegateTime', name: '* Enemy Negate Time', onBattle: true});
+			}
+		}
 		actions.push({code: 'stopMusic', name: '* Stop Music', onBattle: true});
 		var roomActionsCmb = DOM.byId('cmbAction');
 		roomActionsCmb.innerHTML = ''; // Can be done better but me lazy
