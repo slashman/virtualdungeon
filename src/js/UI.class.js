@@ -6,6 +6,7 @@ var Utils = require('./Utils');
 function UI(controller){
 	this.controller = controller;
 	this._bindEvents(controller);
+	this._initCordova();
 	this._initTitleScreen();
 	this.initComponents();
 	this.createNewPlayerRow();
@@ -1002,6 +1003,19 @@ UI.prototype = {
 	},
 	setSelectTargetsMessage: function(message){
 		DOM.byId('lblSelectTargetsMessage').innerHTML = message;
+	},
+	_initCordova: function(){
+		function onDeviceReady(){
+			function onBackKeyDown() {
+				if (confirm("Exit EXODUS? Your game will be lost")){
+					navigator.app.exitApp()
+				} else {
+					return false;
+				}
+			}
+			document.addEventListener("backbutton", onBackKeyDown, false);
+		}
+		document.addEventListener("deviceready", onDeviceReady, false);
 	}
 };
 
