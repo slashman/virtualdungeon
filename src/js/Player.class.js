@@ -261,7 +261,8 @@ Player.prototype = {
 				var counter = {
 					time: spell.param.time,
 					message: '',
-					offMessage: ''
+					offMessage: '',
+					isBattleCounter: true
 				}
 				if (spell.targeted){
 					var name = params.spellTarget.name;
@@ -291,6 +292,14 @@ Player.prototype = {
 				if (params.spellTarget.hitPoints.current <= 0)
 					params.spellTarget.revive();
 				break;
+		}
+		if (this.party.getCurrentRoom().enemies.length > 0){
+			this.party.controller.addCounter({
+				time: 20,
+				message: this.name+' is recovering power',
+				offMessage: this.name+' can cast spells now',
+				isBattleCounter: true
+			});	
 		}
 		this.spendMP(spell.cost);
 	},

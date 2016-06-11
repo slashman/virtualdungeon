@@ -100,8 +100,10 @@ var VirtualDungeon = {
 		} else if (spell.targetType === 'friend' || spell.targetType === 'friendLimb'){
 			params.spellTarget = this.party.getPlayerByNumber(params.spellTarget);
 		}
-		console.log(params.spellTarget);
 		caster.castSpell(spell, params);
+		if (this.ui.timeFrozen){
+			this.ui.toogleTimeFreeze();
+		}
 		this.ui.updateRoomData();
 	},
 	spellFailed: function(params){
@@ -172,8 +174,10 @@ var VirtualDungeon = {
 	},
 	updateCounter: function(counter){
 		var thus = this;
-		counter.time --;
-		this.ui.updateCounter(counter);
+		if (!this.ui.timeFrozen){
+			counter.time --;
+			this.ui.updateCounter(counter);
+		}
 		if (counter.time <= 0){
 			setTimeout(function(){
 				thus.ui.removeCounter(counter);
@@ -201,6 +205,20 @@ var VirtualDungeon = {
 		player.openChest();
 		this.party.getCurrentRoom().removeFeature('chest');
 		this.ui.updateRoomData();	
+	},
+	useEnemySkill: function(params){
+		var enemy = this.party.getCurrentRoom().enemies[parseInt(params.spellTargetEnemy)];
+		this.addCounter({
+			time: 20,
+			isBattleCounter: true,
+			message: enemy.staffPlayer.name+' is recovering power',
+			offMessage: enemy.staffPlayer.name+' can use skills now',
+		});
+		this.ui.toogleTimeFreeze();
+	},
+	endBattle: function(){
+		this.party.getCurrentRoom().endBattle();
+		this.ui.removeAllBattleCounters();
 	}
 };
 

@@ -11,6 +11,7 @@ function UI(controller){
 	this.createNewPlayerRow();
 	this.mapCanvas = null;
 	this.showMap = false;
+	this.counters = [];
 	this._disableActionButtons();
 };
 
@@ -52,6 +53,8 @@ UI.prototype = {
 					DOM.byId('cmbBodyPartRow').style.display = 'table-row';
 					break;
 			}
+		} else if (selectedAction === 'useEnemySkill'){
+			DOM.byId('cmbTargetEnemyRow').style.display = 'table-row';
 		} else if (selectedAction === 'takeItem'){
 			DOM.byId('cmbItemOnFloorRow').style.display = 'table-row';
 		} else if (selectedAction === 'useItem') {
@@ -249,6 +252,11 @@ UI.prototype = {
 			cmbDungeon.appendChild(option);
 		}
 	},
+	toogleTimeFreeze: function(){
+		this.timeFrozen = !this.timeFrozen;
+		DOM.byId('btnFreezeTime').innerHTML = this.timeFrozen ? 'Resume Game': 'Spell! (Freeze Time)';
+		this.updateRoomData();
+	},
 	executeAction: function(){
 		var command = {
 			action: DOM.val('cmbAction'),
@@ -302,6 +310,7 @@ UI.prototype = {
 		DOM.onClick('btnAddStaffPlayer', this.createNewStaffPlayerRow, this);
 		DOM.onClick('btnSelectTargets', this._targetsSelected, this);
 		DOM.onClick('btnEndCombat', this._battleOver, this);
+		DOM.onClick('btnFreezeTime', this.toogleTimeFreeze, this);
 		DOM.onClick('btnNewGame', this._hideTitle, this);
 	},
 	update: function(){
@@ -581,7 +590,8 @@ UI.prototype = {
 		var party = this.controller.party;
 		var room = this.controller.party.getCurrentRoom();
 		var html = '<p>Level '+party.level.depth+'. '+room.description+'</p>';
-		if (room.enemies.length > 0){
+		var inBattle = room.enemies.length > 0;
+		if (inBattle){
 			html += '<h3>Monsters!</h3><p>'+this._buildList(room.enemies, 
 				function(element){
 					var html = element.race.name +' ('+element.staffPlayer.name+')' + ' HP: '+element.hitPoints;
@@ -662,11 +672,15 @@ UI.prototype = {
 		DOM.byId('roomDescription').innerHTML = html;
 
 		var actions = [];
-		actions.push({code: 'passTurn', name: 'Stand', onBattle: false});
-		actions.push({code: 'castSpell', name: 'Cast Spell', onBattle: true});
+		if (!inBattle)
+			actions.push({code: 'passTurn', name: 'Stand', onBattle: false});
+		if (!inBattle || this.timeFrozen)
+			actions.push({code: 'castSpell', name: 'Cast Spell', onBattle: true});
+		if (inBattle && this.timeFrozen)
+			actions.push({code: 'useEnemySkill', name: 'Use Enemy Skill', onBattle: true});
 		actions.push({code: 'toogleMap', name: 'Toogle Map', onBattle: true});
 		actions.push({code: 'useItem', name: 'Use Item', onBattle: true});
-		for (var i = 0; i < room.features.length; i++){
+		if (!inBattle) for (var i = 0; i < room.features.length; i++){
 			var feature = room.features[i];
 			switch (feature.type){
 				case 'upstairs':
@@ -686,7 +700,7 @@ UI.prototype = {
 					break;
 			}
 		}
-		if (room.items.length > 0){
+		if (!inBattle) if (room.items.length > 0){
 			actions.push({code: 'takeItem', name: 'Pick up item', onBattle: false});
 		}
 		actions.push({code: 'stopMusic', name: '* Stop Music', onBattle: true});
@@ -850,10 +864,13 @@ UI.prototype = {
 		this.updateRoomData();
 	},
 	_battleOver: function(){
-		this.controller.party.getCurrentRoom().endBattle();
+		this.controller.endBattle();
 		this.controller.setInputStatus(this.controller.MOVE);
 		this.updateRoomData();
 		DOM.byId('bodypartHitSelection').style.display = 'none';
+		if (this.timeFrozen){
+			this.toogleTimeFreeze();
+		}
 		this.playMusic('victory', 'explore');
 	},
 	_passTurn: function(){
@@ -866,16 +883,40 @@ UI.prototype = {
 		var div = DOM.create('div');
 		div.id = 'counterDiv'+counter.id;
 		div.innerHTML = this._formatSeconds(counter.time)+', '+counter.message;
+		this.counters.push(counter);
 		DOM.byId('countersSection').appendChild(div);
 	},
 	updateCounter: function(counter){
+		if (counter.killed)
+			return;
 		var message = counter.message;
-		if (counter.time <= 0)
+		if (counter.time <= 0){
 			message = counter.offMessage;
+			this.showMessage(message);
+		}
 		DOM.byId('counterDiv'+counter.id).innerHTML = this._formatSeconds(counter.time)+', '+message;
 	},
 	removeCounter: function(counter){
+		if (counter.killed)
+			return;
 		DOM.byId('countersSection').removeChild(DOM.byId('counterDiv'+counter.id));
+		counter.killed = true;
+		for (var i = 0; i < this.counters.length; i++){
+			var xcounter = this.counters[i];
+			if (xcounter == counter){
+				this.counters.splice(i,1);
+				break;
+			}
+		}
+	},
+	removeAllBattleCounters: function(){
+		for (var i = 0; i < this.counters.length; i++){
+			var counter = this.counters[i];
+			if (counter.isBattleCounter){
+				this.removeCounter(counter);
+				i--;
+			}
+		}
 	},
 	_formatSeconds: function(seconds){
 		var minutes = Math.floor(seconds/60);
