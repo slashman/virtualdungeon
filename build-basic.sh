@@ -18,6 +18,9 @@ cp resources/js/matthew-pablo.js distro/js/exodus-cfg.js
 cp resources/html/index.html distro
 cp resources/css/virtualDungeon.css distro
 cp resources/mp3/matthew-pablo/* distro/mp3
+# Bundle the manual
+mkdir distro/manual
+cp -r manual/* distro/manual
 cd src/js
 browserify VirtualDungeon.js -o ../../distro/js/virtualDungeon-min.js
 # watchify VirtualDungeon.js -o ../../distro/js/virtualDungeon-min.js --debug
