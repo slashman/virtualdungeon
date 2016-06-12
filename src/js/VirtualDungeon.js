@@ -1,6 +1,7 @@
 var UI = require('./UI.class');
 var DungeonGenerator = require('./DungeonGenerator');
 var Party = require('./Party.class');
+var Player = require('./Player.class');
 var Staff = require('./Staff.class');
 var Scenario = require('./Scenario.class');
 var Utils = require('./Utils');
@@ -222,6 +223,7 @@ var VirtualDungeon = {
 	},
 	endBattle: function(){
 		this.party.getCurrentRoom().endBattle();
+		this.party.cureAilment(Player.ASLEEP, true);
 		this.ui.removeAllBattleCounters();
 	},
 	enemySleepAll: function(){
