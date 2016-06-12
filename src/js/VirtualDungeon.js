@@ -60,6 +60,9 @@ var VirtualDungeon = {
 		if (config.staffPlayers.length < config.players.length){
 			return "At least "+config.players.length+" dwellers are required.";
 		}
+		if (config.players.length > 4){
+			return "A maximum of 4 players can play in the adventurers party.";
+		}
 		for (var i = 0;  i < config.players.length; i++){
 			if (config.players[i].name.trim() === ''){
 				return "Please provide a name for all players.";
