@@ -680,7 +680,9 @@ UI.prototype = {
 		if (inBattle && this.timeFrozen)
 			actions.push({code: 'useEnemySkill', name: 'Use Enemy Skill', onBattle: true});
 		actions.push({code: 'toogleMap', name: 'Toogle Map', onBattle: true});
-		actions.push({code: 'useItem', name: 'Use Item', onBattle: true});
+		if (party.items.length > 0 && (!inBattle || this.timeFrozen)){
+			actions.push({code: 'useItem', name: 'Use Item', onBattle: true});
+		}
 		if (!inBattle) for (var i = 0; i < room.features.length; i++){
 			var feature = room.features[i];
 			switch (feature.type){
