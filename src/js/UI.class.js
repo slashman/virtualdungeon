@@ -323,7 +323,7 @@ UI.prototype = {
 	update: function(){
 		// Fill background
 		this.mapCanvasCtx.fillStyle = "#FFFFFF";
-		this.mapCanvasCtx.fillRect(0, 0, 340, 440);
+		this.mapCanvasCtx.fillRect(0, 0, 340, 355);
 		if (this.showMap){
 			this._drawMap();
 		} else {
@@ -346,10 +346,6 @@ UI.prototype = {
 		var ctx = this.mapCanvasCtx;
 		var size = 20;
 		ctx.fillStyle = '#000000';
-		ctx.fillText(player.name, x, y + 100);
-		ctx.fillText('HP ' + player.hitPoints.current, x, y + 120);
-		ctx.fillText('MP ' + player.magicPoints.current, x, y + 140);
-		ctx.fillText(player.getAilmentsCode(), x, y + 160);
 		ctx.fillRect(x+size, y, size, size*3);
 		ctx.fillStyle = this._getBodyPartColor(player, Player.LEFT_LEG);
 		ctx.fillRect(x, y+size*3, size, size);
@@ -520,6 +516,12 @@ UI.prototype = {
 			playerRow.appendChild(takeDamageButton);
 			bodypartHitSelection.appendChild(playerRow);
 
+			// Add player status div
+			var playerStatusDiv = DOM.create('div');
+			DOM.byId('playersStatusSection').appendChild(playerStatusDiv);
+			playerStatusDiv.id = 'playerStatusDiv_'+i;
+			playerStatusDiv.className = 'playerStatusDiv';
+
 			// Fill player comboboxes
 			cmbPlayer = DOM.byId('cmbPlayer');
 			playerOption = DOM.create('option');
@@ -597,6 +599,9 @@ UI.prototype = {
 		var party = this.controller.party;
 		var room = this.controller.party.getCurrentRoom();
 		var html = '<p>You are in level '+party.level.depth+' of the dungeon</p>';
+		for (var i = 0; i < this.controller.party.players.length; i++){
+			DOM.byId('playerStatusDiv_'+i).innerHTML = this.controller.party.players[i].getStatusLine();
+		}
 		var inBattle = room.enemies.length > 0;
 		if (inBattle){
 			html += '<h3>Monsters!</h3><p>'+this._buildList(room.enemies, 

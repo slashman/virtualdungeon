@@ -148,10 +148,9 @@ Player.prototype = {
 		}
 		return Utils.chance(evadeChance);
 	},
-	/*getStatusLine: function(){
-		var line = '<b>'+this.name+'</b> HP: '+this.hitPoints.current+' MP: '+this.magicPoints.current;
-
-		for (var i = 0; i < this.statusAilments.length; i++){
+	getStatusLine: function(){
+		var line = '<b>'+this.name+'</b><br/>HP: '+this.hitPoints.current+'<br/>MP: '+this.magicPoints.current+'<br/>'+this.getAilmentsCode();
+		/*for (var i = 0; i < this.statusAilments.length; i++){
 			line += ' ' + Player.AILMENT_NAMES[this.statusAilments[i].ailment];
 		}
 		var injuries = '';
@@ -165,9 +164,9 @@ Player.prototype = {
 		}
 		if (this.statusAilments.length == 0 && injuries === ''){
 			line += ' OK';
-		}
+		}*/
 		return line;
-	},*/
+	},
 	getAilmentsCode: function(){
 		var line = '';
 		for (var i = 0; i < this.statusAilments.length; i++){

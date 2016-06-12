@@ -88,3 +88,15 @@ input[type="text"] {
 #titleSection{
     text-align: center;
 }
+
+.playerStatusDiv{
+    width: 80px;
+    height: 100px;
+    display: inline-block;
+    vertical-align: top;
+}
+
+#playersStatusSection{
+    height: 100px;
+    margin-left: 20px;
+}
