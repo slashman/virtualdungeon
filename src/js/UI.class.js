@@ -98,6 +98,12 @@ UI.prototype = {
 		element.id = 'cmbSpell';
 		td.appendChild(element);
 		var spells = this.controller.scenario.spells;
+		spells.sort(function(a,b){
+			if (a.name > b.name)
+				return 1;
+			else
+				return -1;
+		});
 		for (var i = 0; i < spells.length; i++){
 			var option = DOM.create('option');
 			option.value = spells[i].name;
@@ -552,7 +558,7 @@ UI.prototype = {
 	getNewGameConfig: function(){
 		var dungeonW = parseInt(DOM.val('txtDungeonW'));
 		var dungeonH = parseInt(DOM.val('txtDungeonH'));
-		var startingLevel = parseInt(DOM.val('txtStartingLevel'));
+		var startingLevel = 1;
 		var roomDensity = DOM.val('cmbRoomDensity');
 		var dungeon = DOM.val('cmbDungeon');
 
