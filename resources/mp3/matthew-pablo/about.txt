@@ -4,5 +4,5 @@ http://www.matthewpablo.com
 title.mp3 http://opengameart.org/content/woodland-fantasy
 victory.mp3 http://opengameart.org/content/lively-meadow-victory-fanfare-and-song
 combat.mp3 http://opengameart.org/content/colossal-boss-battle-theme
-explore.mp3 http://opengameart.org/content/desolate
+explore.mp3 http://opengameart.org/content/the-dark-amulet-dark-mage-theme
 death.mp3 http://opengameart.org/content/soliloquy
