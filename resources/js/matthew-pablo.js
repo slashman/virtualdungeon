@@ -1,6 +1,6 @@
 var exodusConfig = {
 	buildTitle: 'Standard Dungeon Build',
-	version: 0.1,
+	version: 0.2,
 	music: {
 		title: 'title.mp3',
 		combat: 'combat.mp3',
@@ -8,7 +8,7 @@ var exodusConfig = {
 		explore: 'explore.mp3',
 		victory: 'victory.mp3'
 	},
-	musicCredits: '<p>Featuring Music by Matthew Pablo</p><p>http://www.matthewpablo.com</p>',
+	musicCredits: '<p>Featuring Music by Matthew Pablo</p><p><a href = "http://www.matthewpablo.com">http://www.matthewpablo.com</a></p>',
 	scenario: 'Basic',
 	dungeons: [
 		{

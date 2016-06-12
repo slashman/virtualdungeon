@@ -1,10 +1,10 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="co.slashware.exodus" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="co.slashware.exodus" version="0.2.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>EXODUS</name>
     <description>
-        A dungeon simulator for playing in open fields.
+        A dungeon simulator for live action roleplaying.
     </description>
-    <author email="slash@slashware.net" href="http://slashware.co">
+    <author email="slash@slashware.net" href="http://slashwareint.com">
         Slash, Slashware Interactive
     </author>
     <content src="index.html" />
