@@ -590,7 +590,7 @@ UI.prototype = {
 	updateRoomData: function(){
 		var party = this.controller.party;
 		var room = this.controller.party.getCurrentRoom();
-		var html = '<p>Level '+party.level.depth+'. '+room.description+'</p>';
+		var html = '<p>You are in level '+party.level.depth+' of the dungeon</p>';
 		var inBattle = room.enemies.length > 0;
 		if (inBattle){
 			html += '<h3>Monsters!</h3><p>'+this._buildList(room.enemies, 
