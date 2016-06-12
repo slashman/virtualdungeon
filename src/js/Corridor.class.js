@@ -26,7 +26,7 @@ Corridor.SLEEP_FIELD = 'sleep-field';
 
 Corridor.TRAP_DESCRIPTIONS = {};
 Corridor.TRAP_DESCRIPTIONS[Corridor.ARROWS_TRAP] = 'Arrows fly from everywhere!';
-Corridor.TRAP_DESCRIPTIONS[Corridor.FALLING_TRAP] = 'A bunch of rocks fall from the ceiling!';
+Corridor.TRAP_DESCRIPTIONS[Corridor.FALLING_TRAP] = 'Rocks fall from the ceiling!';
 Corridor.TRAP_DESCRIPTIONS[Corridor.BOMB_TRAP] = 'BOOM! A bomb is set off!';
 Corridor.TRAP_DESCRIPTIONS[Corridor.POWDER_TRAP] = 'A cloud of smoke covers the party!';
 Corridor.TRAP_DESCRIPTIONS[Corridor.SPIKES_TRAP] = 'You fall into a pit of sharp spikes';
