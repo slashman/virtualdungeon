@@ -188,8 +188,12 @@ Player.prototype = {
 		this.hitPoints.recover(healing);
 	},
 	recoverHP: function(healing){
-		this.hitPoints.recover(healing);
-		this.party.controller.ui.showMessage(this.name +' recovers '+healing+' hit points.');
+		if (this.hitPoints.current == 0){
+			this.party.controller.ui.showMessage(this.name+' is dead.');
+		} else {		
+			this.hitPoints.recover(healing);
+			this.party.controller.ui.showMessage(this.name +' recovers '+healing+' hit points.');
+		}
 	},
 	cureAilments: function(){
 		this.statusAilments = [];
@@ -254,8 +258,12 @@ Player.prototype = {
 				}
 				break;
 			case 'heal':
-				this.party.controller.ui.showMessage(params.spellTarget.name+' heals '+spell.param);
-				params.spellTarget.heal(params.bodyPart, spell.param);
+				if (params.spellTarget.hitPoints.current == 0){
+					this.party.controller.ui.showMessage(params.spellTarget.name+' is dead.');
+				} else {
+					this.party.controller.ui.showMessage(params.spellTarget.name+' recovers '+spell.param+' hitpoints.');
+					params.spellTarget.heal(params.bodyPart, spell.param);
+				}
 				break;
 			case 'counter':
 				var counter = {
