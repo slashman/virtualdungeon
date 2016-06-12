@@ -102,6 +102,7 @@ Party.prototype = {
 			this.controller.ui.playMusic('combat');
 		} else {
 			this.controller.ui.setMovementButtons();
+			this.controller.ui.updateRoomData(this.getCurrentRoom());
 		}
 	},
 	passTurn: function(){
